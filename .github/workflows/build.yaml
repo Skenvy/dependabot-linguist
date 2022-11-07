@@ -159,7 +159,7 @@ jobs:
         export SHORTSHA=$(git rev-parse --short HEAD)
         git fetch origin gh-pages:gh-pages
         git symbolic-ref HEAD refs/heads/gh-pages
-        cd .. && mv doc ../MERGE_TARGET
+        mv doc ../MERGE_TARGET
         git rm -rf . && git clean -fxd && git reset
         shopt -s dotglob && mv ../MERGE_TARGET/* ./
         git add .
