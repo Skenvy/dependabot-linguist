@@ -1,0 +1,22 @@
+name: Feature Request
+description: Provide details about a feature you'd like to see.
+labels: enhancement
+body:
+- type: textarea
+  id: what
+  attributes:
+    label: What would you like to be added?
+  validations:
+    required: true
+- type: textarea
+  id: why
+  attributes:
+    label: Why is this needed?
+  validations:
+    required: true
+- type: textarea
+  id: version_of_this
+  attributes:
+    label: What version, if any older version, of dependabot-linguist would you like this added to retroactively (specify the <major>.<minor> version)?
+  validations:
+    required: false
