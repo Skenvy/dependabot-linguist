@@ -161,7 +161,7 @@ jobs:
         git symbolic-ref HEAD refs/heads/gh-pages
         cd .. && mv doc ../MERGE_TARGET
         git rm -rf . && git clean -fxd && git reset
-        shopt -s dotglob && mkdir doc && mv ../MERGE_TARGET/* doc/
+        shopt -s dotglob && mv ../MERGE_TARGET/* ./
         git add .
         git commit -m "Build based on $SHORTSHA" --allow-empty
         git push --set-upstream origin gh-pages

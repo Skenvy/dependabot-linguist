@@ -8,8 +8,9 @@ Gem::Specification.new do |spec|
   spec.licenses = ["GPL-3.0-only", "Nonstandard"]
   spec.authors = ["Nathan Levett"]
   spec.email   = ["nathan.a.z.levett@gmail.com"]
-  spec.summary = "Use linguist to check the contents of a repository, and then scan for dependabot-core ecosystems relevant to those languages!"
-  spec.description = "Add the README.md's Usage note when it's written"
+  spec.summary = "Automate generating dependabot config with linguist and dependabot-core!"
+  spec.description = "Use linguist to check the contents of a repository,
+  and then scan for dependabot-core ecosystems relevant to those languages!"
   spec.homepage = "https://skenvy.github.io/dependabot-linguist"
   spec.required_ruby_version = ">= 2.7.0"
   spec.metadata["homepage_uri"] = spec.homepage

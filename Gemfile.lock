@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dependabot-linguist (0.0.0)
+    dependabot-linguist (0.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -51,6 +51,10 @@ GEM
 
 PLATFORMS
   x86_64-linux
+  x86_64-darwin-19
+  x64-mingw32
+  x64-mingw-ucrt
+
 
 DEPENDENCIES
   dependabot-linguist!
