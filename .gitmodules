@@ -1,3 +1,0 @@
-[submodule "smoke-tests"]
-	path = smoke-tests
-	url = https://github.com/Skenvy/smoke-tests.git
