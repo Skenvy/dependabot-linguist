@@ -3,7 +3,8 @@ PATH
   specs:
     dependabot-linguist (0.0.1)
       dependabot-omnibus (= 0.212.0)
-      github-linguist (~> 7.23.0)
+      github-linguist (= 7.23.0)
+      rugged (~> 1.5.0)
 
 GEM
   remote: https://rubygems.org/
@@ -214,6 +215,7 @@ GEM
     unicode-display_width (2.3.0)
 
 PLATFORMS
+  ruby
   x64-mingw32
   x64-unknown
   x86_64-darwin-19

@@ -25,7 +25,8 @@ Gem::Specification.new do |spec|
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
 
-  spec.add_dependency "github-linguist", "~> 7.23.0"
+  spec.add_dependency "rugged", "~> 1.5.0"
+  spec.add_dependency "github-linguist", "7.23.0"
   # All ecosystem gems from https://rubygems.org/profiles/dependabot can be
   # required via https://rubygems.org/gems/dependabot-omnibus/versions/0.212.0
   spec.add_dependency "dependabot-omnibus", "0.212.0"
