@@ -2,7 +2,6 @@
 
 require 'rugged'
 require 'linguist/repository'
-# require_relative 'blob_helper'
 require_relative 'language'
 # require_relative 'language_to_ecosystem'
 # require 'dependabot/source'

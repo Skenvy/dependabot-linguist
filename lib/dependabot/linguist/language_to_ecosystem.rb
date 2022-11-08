@@ -58,9 +58,8 @@ module Dependabot
     # LANGUAGE_TO_PACKAGE_MANAGER -- should map any language linguist
     # can discover to a corresponding GitHub dependabot ecosystem
     # List of languages; https://github.com/github/linguist/blob/v7.23.0/lib/linguist/languages.yml
-    # Even though the blob_helper patch is left as a comment, as is the patch to the group function
-    # in the language patch, any language listed below could still be surfaced by being added to
-    # the lib/dependabot/linguist/languages_to_patch.txt file, so they should exist in this map.
+    # Any language listed below could be surfaced by being added to the file
+    # lib/dependabot/linguist/languages_to_patch.txt, so they should exist in this map.
     LANGUAGE_TO_PACKAGE_MANAGER = {
       "1C Enterprise" => nil,
       "2-Dimensional Array" => nil,

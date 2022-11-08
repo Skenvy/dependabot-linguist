@@ -13,3 +13,6 @@ require "dependabot/linguist"
 
 require "irb"
 IRB.start(__FILE__)
+
+# this_repo = Dependabot::Linguist::LocalRepo.new('.', 'some_name')
+# this_repo.linguist_languages

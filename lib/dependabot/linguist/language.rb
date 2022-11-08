@@ -7,18 +7,21 @@
 # which is then used to determine the `@group`. Do away with groups by patching group to return
 # the `self.name` that would be assigned to the group_name if there was no group option input.
 
-# Alternatively, because this would surface a lot of extra information, we can open up
-# selectively the ecosystem specific languages. This also goes in parallel with the contents of
-# the blob_helper patch that if it were uncommented and included, it would "detect" everything.
+# module Linguist
+#   class Language
+#     def group
+#       @group ||= Language.find_by_name(self.name)
+#     end
+#   end
+# end
+
+# Alternatively, because this would surface a lot of extra information,
+# we can open up selectively the ecosystem specific languages.
 
 require 'linguist'
 
 module Linguist
   class Language
-    # def group
-    #   @group ||= Language.find_by_name(self.name)
-    # end
-
     def ungroup_language
       @group_name = self.name
       self
