@@ -7,6 +7,8 @@ AllCops:
 
 Gemspec/DeprecatedAttributeAssignment:
   Enabled: true
+Gemspec/OrderedDependencies:
+  Enabled: false
 Gemspec/RequireMFA:
   Enabled: false
 
@@ -63,6 +65,8 @@ Lint/ConstantOverwrittenInRescue:
 Lint/DeprecatedConstants:
   Enabled: true
 Lint/DuplicateBranch:
+  Enabled: true
+Lint/DuplicateMagicComment: # new in 1.37
   Enabled: true
 Lint/DuplicateRegexpCharacterClassElement:
   Enabled: true
@@ -175,15 +179,21 @@ Style/ObjectThen:
   Enabled: true
 Style/OpenStructUse:
   Enabled: true
+Style/OperatorMethodCall: # new in 1.37
+  Enabled: true
 Style/QuotedSymbols:
   Enabled: true
 Style/RedundantArgument:
+  Enabled: true
+Style/RedundantEach: # new in 1.38
   Enabled: true
 Style/RedundantInitialize:
   Enabled: true
 Style/RedundantSelf:
   Enabled: false
 Style/RedundantSelfAssignmentBranch:
+  Enabled: true
+Style/RedundantStringEscape: # new in 1.37
   Enabled: true
 Style/SelectByRegexp:
   Enabled: true

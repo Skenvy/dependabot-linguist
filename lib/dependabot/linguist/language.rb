@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The language yaml file https://github.com/github/linguist/blob/v7.23.0/lib/linguist/languages.yml
 # is read in at https://github.com/github/linguist/blob/v7.23.0/lib/linguist/language.rb#L495 and
 # loaded as yaml at https://github.com/github/linguist/blob/v7.23.0/lib/linguist/language.rb#L502
@@ -18,7 +20,7 @@
 # Alternatively, because this would surface a lot of extra information,
 # we can open up selectively the ecosystem specific languages.
 
-require 'linguist'
+require "linguist"
 
 module Linguist
   class Language
@@ -36,7 +38,7 @@ module Linguist
     end
 
     # A list of dependabot relevant ecosystem linguist languages
-    patch_file = File.expand_path("../languages_to_patch.txt",  __FILE__)
+    patch_file = File.expand_path("../languages_to_patch.txt", __FILE__)
     languages_to_patch = File.readlines(patch_file, chomp: true)
 
     languages_to_patch.each do |lang_name|

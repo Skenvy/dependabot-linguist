@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'rugged'
-require 'linguist/repository'
-require_relative 'language'
-# require_relative 'language_to_ecosystem'
-# require 'dependabot/source'
+require "rugged"
+require "linguist/repository"
+require_relative "language"
+# require_relative "language_to_ecosystem"
+# require "dependabot/source"
 
 module Dependabot
   module Linguist

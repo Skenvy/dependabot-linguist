@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 # cloned_commit was added in 0.213.0; so we need to patch it in for 0.212.0 with an edit that
 # removes the `SharedHelpers.with_git_configured(credentials: credentials) do` wrap
 
-require 'dependabot/file_fetchers'
+require "dependabot/file_fetchers"
 
 module Dependabot
   module FileFetchers
@@ -12,6 +14,7 @@ module Dependabot
           return SharedHelpers.run_shell_command("git rev-parse HEAD")&.strip
         end
       end
+
       def commit
         return cloned_commit if cloned_commit
         return source.commit if source.commit
