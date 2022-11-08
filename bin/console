@@ -14,5 +14,10 @@ require "dependabot/linguist"
 require "irb"
 IRB.start(__FILE__)
 
-# this_repo = Dependabot::Linguist::LocalRepo.new('.', 'some_name')
-# this_repo.linguist_languages
+# https://github.com/github/linguist/issues/1205
+# https://github.com/github/linguist/issues/3229
+# Linguists dev's wont implement an option to include submodules in a scan, so
+# the best option without adding that functionality in a patch is to keep the smoke
+# test repo parallel to this one, and run the following to test that.
+# smoke_tests = Dependabot::Linguist::LocalRepo.new('../smoke-tests', 'some_name')
+# smoke_tests.linguist_languages
