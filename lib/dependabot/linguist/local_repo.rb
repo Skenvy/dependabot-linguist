@@ -3,7 +3,7 @@
 require "rugged"
 require "linguist/repository"
 require_relative "language"
-# require_relative "language_to_ecosystem"
+require_relative "language_to_ecosystem"
 # require "dependabot/source"
 
 module Dependabot

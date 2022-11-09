@@ -4,61 +4,183 @@
 
 module Dependabot
   module Linguist
-    # PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM maps "package managers" to the "package-ecosystem" yaml from
+    # Returns the set of package managers mapped to in LANGUAGE_TO_PACKAGE_MANAGER
+    def self.list_of_languages_to_list_of_package_managers(list_of_languages)
+      list_of_package_managers = []
+      list_of_languages.each do |language|
+        unless LANGUAGE_TO_PACKAGE_MANAGER[language].nil?
+          if LANGUAGE_TO_PACKAGE_MANAGER[language].kind_of?(Array)
+            list_of_package_managers |= LANGUAGE_TO_PACKAGE_MANAGER[language]
+          else
+            list_of_package_managers |= [LANGUAGE_TO_PACKAGE_MANAGER[language]]
+          end
+        end
+      end
+      list_of_package_managers
+    end
+
+    # Returns the set of pacakge ecosystems mapped to in PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM
+    def self.list_of_package_managers_to_list_of_package_ecosystems(list_of_package_managers)
+      list_of_package_ecosystems = []
+      list_of_package_managers.each do |package_manager|
+        unless PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM[package_manager].nil?
+          list_of_package_ecosystems |= PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM[package_manager]
+        end
+      end
+      list_of_package_ecosystems
+    end
+
+    # Returns the set of file fetcher registry keys mapped to in PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY
+    def self.list_of_package_ecosystems_to_list_of_file_fetcher_registry_keys(list_of_package_ecosystems)
+      list_of_file_fetcher_registry_keys = []
+      list_of_package_ecosystems.each do |package_ecosystem|
+        unless PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY[package_ecosystem].nil?
+          list_of_file_fetcher_registry_keys |= PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY[package_ecosystem]
+        end
+      end
+      list_of_file_fetcher_registry_keys
+    end
+
+    # PackageManagers is all "Package Manager" names listed on
     # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem
-    PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM = {
+    module PackageManagers
       # Bundler; the ruby package manager.
-      "Bundler" => "bundler",
+      Bundler = "Bundler"
       # Cargo; the rust package manager.
-      "Cargo" => "cargo",
+      Cargo = "Cargo"
       # Composer; the PHP package manager.
-      "Composer" => "composer",
+      Composer = "Composer"
       # Docker; the Docker package manager.
-      "Docker" => "docker",
+      Docker = "Docker"
       # Hex; the Erlang (and Elixir) package manager
-      "Hex" => "mix",
+      Hex = "Hex"
       # elm-package; the elm package manager.
-      "elm-package" => "elm",
+      ElmPackage = "elm-package"
       # git submodule versioning is GitHub internal
-      "git submodule" => "gitsubmodule",
+      GitSubmodule = "git submodule"
       # GitHub Action versioning is GitHub internal.
-      "GitHub Actions" => "github-actions",
+      GitHubActions = "GitHub Actions"
       # Go Modules; versioning is handled via go.mod
-      "Go modules" => "gomod",
+      GoModules = "Go modules"
       # Gradle; typically a replacement for maven and any java ecosystem, and
       # supports Java (as well as Kotlin, Groovy, Scala), C/C++, and JavaScript,
       # although it provides plugin capacity to extend it to other languages.
       # Notably the other common Java derivative, clojure, isn't 1st party.
-      "Gradle" => "gradle",
+      Gradle = "Gradle"
       # Maven; typically for the java ecosystem, although has arbitrary
       # extensability via the plugin exec-maven-plugin
-      "Maven" => "maven",
+      Maven = "Maven"
       # npm; the Node package manager. Relevant to any language that could
       # be part of a Node package. Primarily JavaScript and TypeScript.
-      "npm" => "npm",
+      Npm = "npm"
       # NuGet; the ".NET" (core, and framework) package manager. Also hosts
       # Xamarain packages and some C++ packages. .NET languages include F#,
       # C# (or, "MicroSoft Java") and Visual Basic. Also supports "ASP.NET".
-      "NuGet" => "nuget",
+      NuGet = "NuGet"
       # pip; the python package manager.
-      "pip" => "pip",
+      Pip = "pip"
       # pipenv; a python package toolset.
-      "pipenv" => "pip",
+      Pipenv = "pipenv"
       # pip-compile; a python package toolset.
-      "pip-compile" => "pip",
+      PipCompile = "pip-compile"
       # poetry; another python package manager.
-      "poetry" => "pip",
+      Poetry = "poetry"
       # pub; the package manager for dart and flutter
-      "pub" => "pub",
+      Pub = "pub"
       # terraform version management is terraform internal
-      "Terraform" => "terraform",
+      Terraform = "Terraform"
       # Yarn; Facebook's alternative to npm, and
       # is similarly relevant to what Node supports.
-      "yarn" => "npm"
+      Yarn = "yarn"
+    end
+
+    # PackageEcosystems is all "YAML Value" listed on the below, that are the keys to `package-ecosystem` in dependabot yaml.
+    # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem
+    module PackageEcosystems
+      Bundler = "bundler"
+      Cargo = "cargo"
+      Composer = "composer"
+      Docker = "docker"
+      Elm = "elm"
+      GitHubActions = "github-actions"
+      GitSubmodule = "gitsubmodule"
+      GoMod = "gomod"
+      Gradle = "gradle"
+      Maven = "maven"
+      Mix = "mix"
+      Npm = "npm"
+      NuGet = "nuget"
+      Pip = "pip"
+      Pub = "pub"
+      Terraform = "terraform"
+    end
+
+    # PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY maps PackageEcosystems to our end goal
+    # of the keys used to collect the respective file fetcher classes that are registered via;
+    # https://github.com/dependabot/dependabot-core/blob/v0.212.0/common/lib/dependabot/file_fetchers.rb#L14-L16
+    # so each mapping |K,V| element should have a comment linking to the place that its value was registered!
+    PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY = {
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/bundler/lib/dependabot/bundler/file_fetcher.rb#L216
+      PackageEcosystems::Bundler => "bundler",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/cargo/lib/dependabot/cargo/file_fetcher.rb#L295
+      PackageEcosystems::Cargo => "cargo",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/composer/lib/dependabot/composer/file_fetcher.rb#L183
+      PackageEcosystems::Composer => "composer",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/docker/lib/dependabot/docker/file_fetcher.rb#L103
+      PackageEcosystems::Docker => "docker",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/elm/lib/dependabot/elm/file_fetcher.rb#L46
+      PackageEcosystems::Elm => "elm",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/github_actions/lib/dependabot/github_actions/file_fetcher.rb#L72-L73
+      PackageEcosystems::GitHubActions => "github_actions",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/git_submodules/lib/dependabot/git_submodules/file_fetcher.rb#L84-L85
+      PackageEcosystems::GitSubmodule => "submodules",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/go_modules/lib/dependabot/go_modules/file_fetcher.rb#L54-L55
+      PackageEcosystems::GoMod => "go_modules",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/gradle/lib/dependabot/gradle/file_fetcher.rb#L131
+      PackageEcosystems::Gradle => "gradle",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/maven/lib/dependabot/maven/file_fetcher.rb#L142
+      PackageEcosystems::Maven => "maven",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/hex/lib/dependabot/hex/file_fetcher.rb#L98
+      PackageEcosystems::Mix => "hex",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/npm_and_yarn/lib/dependabot/npm_and_yarn/file_fetcher.rb#L419-L420
+      PackageEcosystems::Npm => "npm_and_yarn",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/nuget/lib/dependabot/nuget/file_fetcher.rb#L271
+      PackageEcosystems::NuGet => "nuget",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/python/lib/dependabot/python/file_fetcher.rb#L409
+      PackageEcosystems::Pip => "pip",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/pub/lib/dependabot/pub/file_fetcher.rb#L46
+      PackageEcosystems::Pub => "pub",
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/terraform/lib/dependabot/terraform/file_fetcher.rb#L90-L91
+      PackageEcosystems::Terraform => "terraform"
+    }.freeze
+
+    # PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM maps PackageManagers to the PackageEcosystems, according to
+    # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem
+    PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM = {
+      PackageManagers::Bundler => PackageEcosystems::Bundler,
+      PackageManagers::Cargo => PackageEcosystems::Cargo,
+      PackageManagers::Composer => PackageEcosystems::Composer,
+      PackageManagers::Docker => PackageEcosystems::Docker,
+      PackageManagers::Hex => PackageEcosystems::Mix,
+      PackageManagers::ElmPackage => PackageEcosystems::Elm,
+      PackageManagers::GitSubmodule => PackageEcosystems::GitSubmodule,
+      PackageManagers::GitHubActions => PackageEcosystems::GitHubActions,
+      PackageManagers::GoModules => PackageEcosystems::GoMod,
+      PackageManagers::Gradle => PackageEcosystems::Gradle,
+      PackageManagers::Maven => PackageEcosystems::Maven,
+      PackageManagers::Npm => PackageEcosystems::Npm,
+      PackageManagers::NuGet => PackageEcosystems::NuGet,
+      PackageManagers::Pip => PackageEcosystems::Pip,
+      PackageManagers::Pipenv => PackageEcosystems::Pip,
+      PackageManagers::PipCompile => PackageEcosystems::Pip,
+      PackageManagers::Poetry => PackageEcosystems::Pip,
+      PackageManagers::Pub => PackageEcosystems::Pub,
+      PackageManagers::Terraform => PackageEcosystems::Terraform,
+      PackageManagers::Yarn => PackageEcosystems::Npm
     }.freeze
 
     # LANGUAGE_TO_PACKAGE_MANAGER -- should map any language linguist
-    # can discover to a corresponding GitHub dependabot ecosystem
+    # can discover to a corresponding GitHub dependabot package manager
     # List of languages; https://github.com/github/linguist/blob/v7.23.0/lib/linguist/languages.yml
     # Any language listed below could be surfaced by being added to the file
     # lib/dependabot/linguist/languages_to_patch.txt, so they should exist in this map.
@@ -281,7 +403,7 @@ module Dependabot
       "Golo" => nil,
       "Gosu" => nil,
       "Grace" => nil,
-      "Gradle" => [PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM["Gradle"]],
+      "Gradle" => [PackageManagers::Gradle],
       "Grammatical Framework" => nil,
       "Graph Modeling Language" => nil,
       "GraphQL" => nil,
@@ -289,7 +411,7 @@ module Dependabot
       "Groovy" => nil,
       "Groovy Server Pages" => nil,
       "HAProxy" => nil,
-      "HCL" => nil,
+      "HCL" => [PackageManagers::Terraform],
       "HLSL" => nil,
       "HOCON" => nil,
       "HTML" => nil,
@@ -527,7 +649,7 @@ module Dependabot
       "Pure Data" => nil,
       "PureBasic" => nil,
       "PureScript" => nil,
-      "Python" => [PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM["pip"]],
+      "Python" => PackageManagers::Pip,
       "Python console" => nil,
       "Python traceback" => nil,
       "Q#" => nil,
