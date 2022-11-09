@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ModuleLength
+
 module Dependabot
   module Linguist
     # PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM maps "package managers" to the "package-ecosystem" yaml from
@@ -53,7 +55,7 @@ module Dependabot
       # Yarn; Facebook's alternative to npm, and
       # is similarly relevant to what Node supports.
       "yarn" => "npm"
-  }.freeze
+    }.freeze
 
     # LANGUAGE_TO_PACKAGE_MANAGER -- should map any language linguist
     # can discover to a corresponding GitHub dependabot ecosystem
@@ -742,3 +744,5 @@ module Dependabot
     }.freeze
   end
 end
+
+# rubocop:enable Metrics/ModuleLength

@@ -7,6 +7,8 @@ require "dependabot/file_fetchers"
 
 module Dependabot
   module FileFetchers
+    # Patches the class Dependabot::FileFetchers::Base that all file fetching classes sub class.
+    # https://github.com/dependabot/dependabot-core/blob/v0.212.0/common/lib/dependabot/file_fetchers/base.rb
     class Base
       def cloned_commit
         return if repo_contents_path.nil? || !File.directory?(File.join(repo_contents_path, ".git"))
