@@ -1,3 +1,4 @@
+Gemfile.lock
 Gradle
 Maven POM
 TOML

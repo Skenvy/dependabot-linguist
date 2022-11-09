@@ -2,6 +2,15 @@
 
 # rubocop:disable Metrics/ModuleLength
 
+# All the entries in this file are for facilitating the journey of starting with a list of languages detected by
+# linguist; https://github.com/github/linguist/blob/v7.23.0/lib/linguist/languages.yml -- to travel via
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem
+# the list of "package managers" -> "package ecosystems", to then use those "package ecosystems" to yield the set of
+# keys -- https://github.com/dependabot/dependabot-core/blob/v0.212.0/common/lib/dependabot/file_fetchers.rb#L14-L16 --
+# given to the file_fetchers register function.
+#
+# That is to say; going from the linguist languages to the list of file_fetcher classes that should be checked against!
+
 module Dependabot
   module Linguist # rubocop:disable Style/Documentation
     # Returns the set of package managers mapped to in LANGUAGE_TO_PACKAGE_MANAGER
@@ -39,6 +48,25 @@ module Dependabot
         end
       end
       list_of_file_fetcher_registry_keys
+    end
+
+    def self.list_of_languages_to_list_of_file_fetcher_registry_keys(list_of_languages, verbose: false)
+      if verbose?
+        puts "List of languages: #{list_of_languages}"
+        list_of_package_managers = list_of_languages_to_list_of_package_managers(list_of_languages)
+        puts "List of package managers: #{list_of_package_managers}"
+        list_of_package_ecosystems = list_of_package_managers_to_list_of_package_ecosystems(list_of_package_managers)
+        puts "List of package ecosystems: #{list_of_package_managers}"
+
+      else
+        list_of_package_ecosystems_to_list_of_file_fetcher_registry_keys(
+          list_of_package_managers_to_list_of_package_ecosystems(
+            list_of_languages_to_list_of_package_managers(
+              list_of_languages
+            )
+          )
+        )
+      end
     end
 
     # PackageManagers is all "Package Manager" names listed on
@@ -104,7 +132,7 @@ module Dependabot
       DOCKER = "docker"
       ELM = "elm"
       GITHUB_ACTIONS = "github-actions"
-      GIT_SUBMODULES = "gitsubmodule"
+      GIT_SUBMODULE = "gitsubmodule"
       GOMOD = "gomod"
       GRADLE = "gradle"
       MAVEN = "maven"
@@ -134,7 +162,7 @@ module Dependabot
       # https://github.com/dependabot/dependabot-core/blob/v0.212.0/github_actions/lib/dependabot/github_actions/file_fetcher.rb#L72-L73
       PackageEcosystems::GITHUB_ACTIONS => "github_actions",
       # https://github.com/dependabot/dependabot-core/blob/v0.212.0/git_submodules/lib/dependabot/git_submodules/file_fetcher.rb#L84-L85
-      PackageEcosystems::GIT_SUBMODULES => "submodules",
+      PackageEcosystems::GIT_SUBMODULE => "submodules",
       # https://github.com/dependabot/dependabot-core/blob/v0.212.0/go_modules/lib/dependabot/go_modules/file_fetcher.rb#L54-L55
       PackageEcosystems::GOMOD => "go_modules",
       # https://github.com/dependabot/dependabot-core/blob/v0.212.0/gradle/lib/dependabot/gradle/file_fetcher.rb#L131
@@ -164,7 +192,7 @@ module Dependabot
       PackageManagers::DOCKER => PackageEcosystems::DOCKER,
       PackageManagers::HEX => PackageEcosystems::MIX,
       PackageManagers::ELM_PACKAGE => PackageEcosystems::ELM,
-      PackageManagers::GIT_SUBMODULE => PackageEcosystems::GIT_SUBMODULES,
+      PackageManagers::GIT_SUBMODULE => PackageEcosystems::GIT_SUBMODULE,
       PackageManagers::GITHUB_ACTIONS => PackageEcosystems::GITHUB_ACTIONS,
       PackageManagers::GO_MODULES => PackageEcosystems::GOMOD,
       PackageManagers::GRADLE => PackageEcosystems::GRADLE,
@@ -380,7 +408,7 @@ module Dependabot
       "GN" => nil,
       "GSC" => nil,
       "Game Maker Language" => nil,
-      "Gemfile.lock" => nil,
+      "Gemfile.lock" => PackageManagers::BUNDLER,
       "Gemini" => nil,
       "Genero" => nil,
       "Genero Forms" => nil,
@@ -404,7 +432,7 @@ module Dependabot
       "Golo" => nil,
       "Gosu" => nil,
       "Grace" => nil,
-      "Gradle" => [PackageManagers::GRADLE],
+      "Gradle" => PackageManagers::GRADLE,
       "Grammatical Framework" => nil,
       "Graph Modeling Language" => nil,
       "GraphQL" => nil,
@@ -412,7 +440,7 @@ module Dependabot
       "Groovy" => nil,
       "Groovy Server Pages" => nil,
       "HAProxy" => nil,
-      "HCL" => [PackageManagers::TERRAFORM],
+      "HCL" => PackageManagers::TERRAFORM,
       "HLSL" => nil,
       "HOCON" => nil,
       "HTML" => nil,
@@ -524,7 +552,7 @@ module Dependabot
       "Marko" => nil,
       "Mask" => nil,
       "Mathematica" => nil,
-      "Maven POM" => nil,
+      "Maven POM" => PackageManagers::MAVEN,
       "Max" => nil,
       "Mercury" => nil,
       "Mermaid" => nil,
@@ -693,7 +721,7 @@ module Dependabot
       "Roff Manpage" => nil,
       "Rouge" => nil,
       "RouterOS Script" => nil,
-      "Ruby" => nil,
+      "Ruby" => PackageManagers::BUNDLER,
       "Rust" => nil,
       "SAS" => nil,
       "SCSS" => nil,
