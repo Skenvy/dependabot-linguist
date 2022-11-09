@@ -33,7 +33,7 @@ module Dependabot
       list_of_package_ecosystems = []
       list_of_package_managers.each do |package_manager|
         unless PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM[package_manager].nil?
-          list_of_package_ecosystems |= PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM[package_manager]
+          list_of_package_ecosystems |= [PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM[package_manager]]
         end
       end
       list_of_package_ecosystems
@@ -44,29 +44,10 @@ module Dependabot
       list_of_file_fetcher_registry_keys = []
       list_of_package_ecosystems.each do |package_ecosystem|
         unless PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY[package_ecosystem].nil?
-          list_of_file_fetcher_registry_keys |= PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY[package_ecosystem]
+          list_of_file_fetcher_registry_keys |= [PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY[package_ecosystem]]
         end
       end
       list_of_file_fetcher_registry_keys
-    end
-
-    def self.list_of_languages_to_list_of_file_fetcher_registry_keys(list_of_languages, verbose: false)
-      if verbose?
-        puts "List of languages: #{list_of_languages}"
-        list_of_package_managers = list_of_languages_to_list_of_package_managers(list_of_languages)
-        puts "List of package managers: #{list_of_package_managers}"
-        list_of_package_ecosystems = list_of_package_managers_to_list_of_package_ecosystems(list_of_package_managers)
-        puts "List of package ecosystems: #{list_of_package_managers}"
-
-      else
-        list_of_package_ecosystems_to_list_of_file_fetcher_registry_keys(
-          list_of_package_managers_to_list_of_package_ecosystems(
-            list_of_languages_to_list_of_package_managers(
-              list_of_languages
-            )
-          )
-        )
-      end
     end
 
     # PackageManagers is all "Package Manager" names listed on
@@ -87,6 +68,8 @@ module Dependabot
       # git submodule versioning is GitHub internal
       GIT_SUBMODULE = "git submodule"
       # GitHub Action versioning is GitHub internal.
+      # GitHub Actions expects a directory input of "/",
+      # and can't be found by linguist outside of "yaml".
       GITHUB_ACTIONS = "GitHub Actions"
       # Go Modules; versioning is handled via go.mod
       GO_MODULES = "Go modules"
@@ -229,7 +212,7 @@ module Dependabot
       "APL" => nil,
       "ASL" => nil,
       "ASN.1" => nil,
-      "ASP.NET" => nil,
+      "ASP.NET" => PackageManagers::NUGET,
       "ATS" => nil,
       "ActionScript" => nil,
       "Ada" => nil,
@@ -278,9 +261,9 @@ module Dependabot
       "BrighterScript" => nil,
       "Brightscript" => nil,
       "Browserslist" => nil,
-      "C" => nil,
-      "C#" => nil,
-      "C++" => nil,
+      "C" => PackageManagers::GRADLE,
+      "C#" => PackageManagers::NUGET,
+      "C++" => [PackageManagers::GRADLE, PackageManagers::NUGET],
       "C-ObjDump" => nil,
       "C2hs Haskell" => nil,
       "CAP CDS" => nil,
@@ -312,12 +295,12 @@ module Dependabot
       "Classic ASP" => nil,
       "Clean" => nil,
       "Click" => nil,
-      "Clojure" => nil,
+      "Clojure" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
       "Closure Templates" => nil,
       "Cloud Firestore Security Rules" => nil,
       "CoNLL-U" => nil,
       "CodeQL" => nil,
-      "CoffeeScript" => nil,
+      "CoffeeScript" => [PackageManagers::NPM, PackageManagers::YARN],
       "ColdFusion" => nil,
       "ColdFusion CFC" => nil,
       "Common Lisp" => nil,
@@ -345,14 +328,14 @@ module Dependabot
       "DTrace" => nil,
       "Dafny" => nil,
       "Darcs Patch" => nil,
-      "Dart" => nil,
+      "Dart" => PackageManagers::PUB,
       "DataWeave" => nil,
       "Debian Package Control File" => nil,
       "DenizenScript" => nil,
       "Dhall" => nil,
       "Diff" => nil,
       "DirectX 3D File" => nil,
-      "Dockerfile" => nil,
+      "Dockerfile" => PackageManagers::DOCKER,
       "Dogescript" => nil,
       "Dylan" => nil,
       "E" => nil,
@@ -369,14 +352,14 @@ module Dependabot
       "EditorConfig" => nil,
       "Edje Data Collection" => nil,
       "Eiffel" => nil,
-      "Elixir" => nil,
-      "Elm" => nil,
+      "Elixir" => PackageManagers::HEX,
+      "Elm" => PackageManagers::ELM_PACKAGE,
       "Elvish" => nil,
       "Emacs Lisp" => nil,
       "EmberScript" => nil,
-      "Erlang" => nil,
+      "Erlang" => PackageManagers::HEX,
       "Euphoria" => nil,
-      "F#" => nil,
+      "F#" => PackageManagers::NUGET,
       "F*" => nil,
       "FIGlet Font" => nil,
       "FLUX" => nil,
@@ -420,15 +403,15 @@ module Dependabot
       "Gettext Catalog" => nil,
       "Gherkin" => nil,
       "Git Attributes" => nil,
-      "Git Config" => nil,
+      "Git Config" => PackageManagers::GIT_SUBMODULE,
       "Git Revision List" => nil,
       "Gleam" => nil,
       "Glyph" => nil,
       "Glyph Bitmap Distribution Format" => nil,
       "Gnuplot" => nil,
-      "Go" => nil,
-      "Go Checksums" => nil,
-      "Go Module" => nil,
+      "Go" => PackageManagers::GO_MODULES,
+      "Go Checksums" => PackageManagers::GO_MODULES,
+      "Go Module" => PackageManagers::GO_MODULES,
       "Golo" => nil,
       "Gosu" => nil,
       "Grace" => nil,
@@ -437,8 +420,8 @@ module Dependabot
       "Graph Modeling Language" => nil,
       "GraphQL" => nil,
       "Graphviz (DOT)" => nil,
-      "Groovy" => nil,
-      "Groovy Server Pages" => nil,
+      "Groovy" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
+      "Groovy Server Pages" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
       "HAProxy" => nil,
       "HCL" => PackageManagers::TERRAFORM,
       "HLSL" => nil,
@@ -478,17 +461,17 @@ module Dependabot
       "J" => nil,
       "JAR Manifest" => nil,
       "JFlex" => nil,
-      "JSON" => nil,
+      "JSON" => [PackageManagers::COMPOSER, PackageManagers::PIPENV, PackageManagers::TERRAFORM],
       "JSON with Comments" => nil,
       "JSON5" => nil,
       "JSONLD" => nil,
       "JSONiq" => nil,
       "Janet" => nil,
       "Jasmin" => nil,
-      "Java" => nil,
-      "Java Properties" => nil,
-      "Java Server Pages" => nil,
-      "JavaScript" => nil,
+      "Java" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
+      "Java Properties" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
+      "Java Server Pages" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
+      "JavaScript" => [PackageManagers::GRADLE, PackageManagers::NPM, PackageManagers::YARN],
       "JavaScript+ERB" => nil,
       "Jest Snapshot" => nil,
       "JetBrains MPS" => nil,
@@ -506,7 +489,7 @@ module Dependabot
       "KiCad Legacy Layout" => nil,
       "KiCad Schematic" => nil,
       "Kit" => nil,
-      "Kotlin" => nil,
+      "Kotlin" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
       "Kusto" => nil,
       "LFE" => nil,
       "LLVM" => nil,
@@ -527,7 +510,7 @@ module Dependabot
       "Linux Kernel Module" => nil,
       "Liquid" => nil,
       "Literate Agda" => nil,
-      "Literate CoffeeScript" => nil,
+      "Literate CoffeeScript" => [PackageManagers::NPM, PackageManagers::YARN],
       "Literate Haskell" => nil,
       "LiveScript" => nil,
       "Logos" => nil,
@@ -610,7 +593,7 @@ module Dependabot
       "Object Data Instance Notation" => nil,
       "ObjectScript" => nil,
       "Objective-C" => nil,
-      "Objective-C++" => nil,
+      "Objective-C++" => PackageManagers::NUGET,
       "Objective-J" => nil,
       "Odin" => nil,
       "Omgrofl" => nil,
@@ -634,7 +617,7 @@ module Dependabot
       "P4" => nil,
       "PDDL" => nil,
       "PEG.js" => nil,
-      "PHP" => nil,
+      "PHP" => PackageManagers::COMPOSER,
       "PLSQL" => nil,
       "PLpgSQL" => nil,
       "POV-Ray SDL" => nil,
@@ -678,9 +661,9 @@ module Dependabot
       "Pure Data" => nil,
       "PureBasic" => nil,
       "PureScript" => nil,
-      "Python" => PackageManagers::PIP,
-      "Python console" => nil,
-      "Python traceback" => nil,
+      "Python" => [PackageManagers::PIP, PackageManagers::PIPENV, PackageManagers::PIP_COMPILE, PackageManagers::POETRY],
+      "Python console" => [PackageManagers::PIP, PackageManagers::PIPENV, PackageManagers::PIP_COMPILE, PackageManagers::POETRY],
+      "Python traceback" => [PackageManagers::PIP, PackageManagers::PIPENV, PackageManagers::PIP_COMPILE, PackageManagers::POETRY],
       "Q#" => nil,
       "QML" => nil,
       "QMake" => nil,
@@ -722,7 +705,7 @@ module Dependabot
       "Rouge" => nil,
       "RouterOS Script" => nil,
       "Ruby" => PackageManagers::BUNDLER,
-      "Rust" => nil,
+      "Rust" => PackageManagers::CARGO,
       "SAS" => nil,
       "SCSS" => nil,
       "SELinux Policy" => nil,
@@ -741,7 +724,7 @@ module Dependabot
       "Sage" => nil,
       "SaltStack" => nil,
       "Sass" => nil,
-      "Scala" => nil,
+      "Scala" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
       "Scaml" => nil,
       "Scenic" => nil,
       "Scheme" => nil,
@@ -781,7 +764,7 @@ module Dependabot
       "SystemVerilog" => nil,
       "TI Program" => nil,
       "TLA" => nil,
-      "TOML" => nil,
+      "TOML" => [PackageEcosystems::CARGO, PackageManagers::GO_MODULES, PackageManagers::PIPENV, PackageManagers::POETRY],
       "TSQL" => nil,
       "TSV" => nil,
       "TSX" => nil,
@@ -801,7 +784,7 @@ module Dependabot
       "Turtle" => nil,
       "Twig" => nil,
       "Type Language" => nil,
-      "TypeScript" => nil,
+      "TypeScript" => [PackageManagers::NPM, PackageManagers::YARN],
       "Unified Parallel C" => nil,
       "Unity3D Asset" => nil,
       "Unix Assembly" => nil,
@@ -820,7 +803,7 @@ module Dependabot
       "Vim Help File" => nil,
       "Vim Script" => nil,
       "Vim Snippet" => nil,
-      "Visual Basic .NET" => nil,
+      "Visual Basic .NET" => PackageManagers::NUGET,
       "Visual Basic 6.0" => nil,
       "Volt" => nil,
       "Vue" => nil,
