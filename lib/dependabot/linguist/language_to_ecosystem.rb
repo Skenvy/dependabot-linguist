@@ -3,7 +3,7 @@
 # rubocop:disable Metrics/ModuleLength
 
 module Dependabot
-  module Linguist
+  module Linguist # rubocop:disable Style/Documentation
     # Returns the set of package managers mapped to in LANGUAGE_TO_PACKAGE_MANAGER
     def self.list_of_languages_to_list_of_package_managers(list_of_languages)
       list_of_package_managers = []
