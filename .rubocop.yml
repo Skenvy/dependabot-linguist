@@ -25,7 +25,7 @@ Security/IoMethods:
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
 Layout/LineLength:
-  Max: 120
+  Max: 180
 Layout/LineContinuationLeadingSpace:
   Enabled: true
 Layout/LineContinuationSpacing:
@@ -149,6 +149,8 @@ Style/HashExcept:
   Enabled: true
 Style/IfWithBooleanLiteralBranches:
   Enabled: true
+Style/IfUnlessModifier:
+  Enabled: false
 Style/InPatternThen:
   Enabled: true
 Style/Lambda:

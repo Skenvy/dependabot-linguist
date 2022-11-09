@@ -41,11 +41,11 @@ module Dependabot
 
       def possible_dependabot_ecosystems
         puts "List of languages: #{linguist_languages.keys}"
-        @possible_package_managers ||= Dependabot::Linguist::list_of_languages_to_list_of_package_managers(linguist_languages.keys)
+        @possible_package_managers ||= Dependabot::Linguist.list_of_languages_to_list_of_package_managers(linguist_languages.keys)
         puts "List of possible package managers: #{@possible_package_managers}"
-        @possible_package_ecosystems ||= Dependabot::Linguist::list_of_package_managers_to_list_of_package_ecosystems(@possible_package_managers)
+        @possible_package_ecosystems ||= Dependabot::Linguist.list_of_package_managers_to_list_of_package_ecosystems(@possible_package_managers)
         puts "List of possible package ecosystems: #{@possible_package_ecosystems}"
-        @possible_file_fetcher_registry_keys ||= Dependabot::Linguist::list_of_package_ecosystems_to_list_of_file_fetcher_registry_keys(@possible_package_ecosystems)
+        @possible_file_fetcher_registry_keys ||= Dependabot::Linguist.list_of_package_ecosystems_to_list_of_file_fetcher_registry_keys(@possible_package_ecosystems)
         puts "List of possible file fetcher registry keys: #{@possible_file_fetcher_registry_keys}"
         @possible_package_ecosystems
       end
@@ -56,7 +56,7 @@ module Dependabot
           @package_ecosystem_to_dependabot_file_fetcher_classes = {}
           possible_dependabot_ecosystems.each do |possible_ecosystem|
             @package_ecosystem_to_dependabot_file_fetcher_classes[possible_ecosystem] =
-              Dependabot::FileFetchers::for_package_manager(
+              Dependabot::FileFetchers.for_package_manager(
                 Dependabot::Linguist::PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY[possible_ecosystem]
               )
           end
