@@ -5,7 +5,7 @@ require "linguist/repository"
 require "dependabot"
 require "dependabot/source"
 require "dependabot/file_fetchers"
-# require "dependabot/file_fetchers"
+# Require all ecosystem gems
 require "dependabot/bundler"
 require "dependabot/cargo"
 require "dependabot/composer"
@@ -22,16 +22,16 @@ require "dependabot/nuget"
 require "dependabot/pub"
 require "dependabot/python"
 require "dependabot/terraform"
+# Require changes
 require_relative "language"
 require_relative "language_to_ecosystem"
-# require "dependabot/source"
 
 module Dependabot
   module Linguist
     # LocalRepo substitutes for Linguist::Repository and Dependabot::Source
     class LocalRepo
       def initialize(repo_path, repo_name)
-        @repo_path = repo_path.delete_suffix('/').chomp
+        @repo_path = repo_path.delete_suffix("/").chomp
         @repo_name = repo_name
         @repo = Rugged::Repository.new(@repo_path)
         @linguist = ::Linguist::Repository.new(@repo, @repo.head.target_id)
@@ -68,11 +68,11 @@ module Dependabot
 
       def subfolders
         # /**/*/ rather than /**/ would remove the base path, but delete_prefix will also remove it, so it needs to be specially added.
-        @subfolders ||= (['/'] | Dir.glob("#{@repo_path}/**/*/").map { |subpath| subpath.delete_prefix(@repo_path).delete_suffix('/') })
+        @subfolders ||= (["/"] | Dir.glob("#{@repo_path}/**/*/").map { |subpath| subpath.delete_prefix(@repo_path).delete_suffix("/") })
       end
 
       def sources
-        @sources ||= subfolders.collect { |subfolder| Dependabot::Source.new(provider: 'github', repo: @repo_name, directory: subfolder) }
+        @sources ||= subfolders.collect { |subfolder| Dependabot::Source.new(provider: "github", repo: @repo_name, directory: subfolder) }
       end
 
       def ecosystems_that_file_fetcher_fetches_files_for
