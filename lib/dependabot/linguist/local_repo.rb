@@ -2,7 +2,6 @@
 
 require "rugged"
 require "linguist/repository"
-require "dependabot"
 require "dependabot/source"
 require "dependabot/file_fetchers"
 # Require all ecosystem gems
@@ -25,6 +24,7 @@ require "dependabot/terraform"
 # Require changes
 require_relative "language"
 require_relative "language_to_ecosystem"
+require_relative "file_fetchers/base"
 
 module Dependabot
   module Linguist
@@ -80,16 +80,18 @@ module Dependabot
         if @ecosystems_that_file_fetcher_fetches_files_for.nil?
           @ecosystems_that_file_fetcher_fetches_files_for = {}
           package_ecosystem_to_dependabot_file_fetcher_classes.each do |pacakge_ecosystem, file_fetcher_class|
-            paths_that_were_found_to_have_fetchable_files = []
+            ecosystems_that_file_fetcher_fetches_files_for[pacakge_ecosystem] = []
             sources.each do |source|
-              puts "spawning class instance for #{pacakge_ecosystem} at #{source.directory}, in repo #{@repo_path}, for class #{file_fetcher_class}"
+              puts "Spawning class instance for #{pacakge_ecosystem} at #{source.directory}, in repo #{@repo_path}, class #{file_fetcher_class}"
               fetcher = file_fetcher_class.new(source: source, credentials: [], repo_contents_path: @repo_path)
-              unless fetcher.files.map(&:name).empty?
-                paths_that_were_found_to_have_fetchable_files |= source.directory
+              begin
+                unless fetcher.files.map(&:name).empty?
+                  ecosystems_that_file_fetcher_fetches_files_for[pacakge_ecosystem] |= [source.directory]
+                end
+                puts "Dependency files FOUND for pacakge-ecosystem #{pacakge_ecosystem} at #{source.directory}"
+              rescue Dependabot::DependencyFileNotFound
+                # If no dependency file is found that's fine.
               end
-            end
-            unless paths_that_were_found_to_have_fetchable_files.empty?
-              ecosystems_that_file_fetcher_fetches_files_for[pacakge_ecosystem] = paths_that_were_found_to_have_fetchable_files
             end
           end
         end
