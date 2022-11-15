@@ -68,7 +68,7 @@ module Dependabot
         if @map_dependabot_package_managers_to_source_subfolders.nil?
           @map_dependabot_package_managers_to_source_subfolders = {}
           map_linguist_languages_to_source_subfolders.each do |linguist_language, source_subfolders|
-            Dependabot::Linguist.list_of_languages_to_list_of_package_managers([linguist_language]).each do |dependabot_package_manager|
+            Dependabot::Linguist.linguist_languages_to_package_managers([linguist_language]).each do |dependabot_package_manager|
               if @map_dependabot_package_managers_to_source_subfolders[dependabot_package_manager].nil?
                 @map_dependabot_package_managers_to_source_subfolders[dependabot_package_manager] = []
               end
@@ -85,7 +85,7 @@ module Dependabot
         if @map_dependabot_package_ecosystem_to_source_subfolders.nil?
           @map_dependabot_package_ecosystem_to_source_subfolders = {}
           map_dependabot_package_managers_to_source_subfolders.each do |dependabot_package_manager, source_subfolders|
-            Dependabot::Linguist.list_of_package_managers_to_list_of_package_ecosystems([dependabot_package_manager]).each do |dependabot_package_ecosystem|
+            Dependabot::Linguist.package_managers_to_package_ecosystems([dependabot_package_manager]).each do |dependabot_package_ecosystem|
               if @map_dependabot_package_ecosystem_to_source_subfolders[dependabot_package_ecosystem].nil?
                 @map_dependabot_package_ecosystem_to_source_subfolders[dependabot_package_ecosystem] = []
               end
@@ -98,11 +98,11 @@ module Dependabot
 
       def possible_dependabot_ecosystems
         puts "List of languages: #{linguist_languages.keys}"
-        @possible_package_managers ||= Dependabot::Linguist.list_of_languages_to_list_of_package_managers(linguist_languages.keys)
+        @possible_package_managers ||= Dependabot::Linguist.linguist_languages_to_package_managers(linguist_languages.keys)
         puts "List of possible package managers: #{@possible_package_managers}"
-        @possible_package_ecosystems ||= Dependabot::Linguist.list_of_package_managers_to_list_of_package_ecosystems(@possible_package_managers)
+        @possible_package_ecosystems ||= Dependabot::Linguist.package_managers_to_package_ecosystems(@possible_package_managers)
         puts "List of possible package ecosystems: #{@possible_package_ecosystems}"
-        # @possible_file_fetcher_registry_keys ||= Dependabot::Linguist.list_of_package_ecosystems_to_list_of_file_fetcher_registry_keys(@possible_package_ecosystems)
+        # @possible_file_fetcher_registry_keys ||= Dependabot::Linguist.package_ecosystems_to_file_fetcher_registry_keys(@possible_package_ecosystems)
         # puts "List of possible file fetcher registry keys: #{@possible_file_fetcher_registry_keys}"
         @possible_package_ecosystems
       end

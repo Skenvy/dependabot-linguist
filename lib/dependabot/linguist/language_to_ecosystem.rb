@@ -2,56 +2,61 @@
 
 # rubocop:disable Metrics/ModuleLength
 
-# All the entries in this file are for facilitating the journey of starting with a list of languages detected by
-# linguist; https://github.com/github/linguist/blob/v7.23.0/lib/linguist/languages.yml -- to travel via
-# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem
-# the list of "package managers" -> "package ecosystems", to then use those "package ecosystems" to yield the set of
-# keys -- https://github.com/dependabot/dependabot-core/blob/v0.212.0/common/lib/dependabot/file_fetchers.rb#L14-L16 --
-# given to the file_fetchers register function.
+# "languages detected by linguist": https://github.com/github/linguist/blob/v7.23.0/lib/linguist/languages.yml
+# "file_fetchers register function": https://github.com/dependabot/dependabot-core/blob/v0.212.0/common/lib/dependabot/file_fetchers.rb#L14-L16
+# "#package-ecosystem": https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem
+
+# All the entries in this file are for facilitating the journey of starting with
+# a list of languages detected by linguist; to travel via the list of "package
+# managers" -> "package ecosystems", to then use those "package ecosystems" to
+# yield the set of keys given to the file_fetchers register function.
 #
-# That is to say; going from the linguist languages to the list of file_fetcher classes that should be checked against!
+# That is to say; going from the linguist languages to the
+# list of file_fetcher classes that should be checked against!
 
 module Dependabot
   module Linguist # rubocop:disable Style/Documentation
-    # Returns the set of package managers mapped to in LANGUAGE_TO_PACKAGE_MANAGER
-    def self.list_of_languages_to_list_of_package_managers(list_of_languages)
-      list_of_package_managers = []
-      list_of_languages.each do |language|
+    # Returns the set of package managers
+    # mapped to in LANGUAGE_TO_PACKAGE_MANAGER
+    def self.linguist_languages_to_package_managers(languages)
+      package_managers = []
+      languages.each do |language|
         unless LANGUAGE_TO_PACKAGE_MANAGER[language].nil?
           if LANGUAGE_TO_PACKAGE_MANAGER[language].is_a?(Array)
-            list_of_package_managers |= LANGUAGE_TO_PACKAGE_MANAGER[language]
+            package_managers |= LANGUAGE_TO_PACKAGE_MANAGER[language]
           else
-            list_of_package_managers |= [LANGUAGE_TO_PACKAGE_MANAGER[language]]
+            package_managers |= [LANGUAGE_TO_PACKAGE_MANAGER[language]]
           end
         end
       end
-      list_of_package_managers
+      package_managers
     end
 
-    # Returns the set of package ecosystems mapped to in PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM
-    def self.list_of_package_managers_to_list_of_package_ecosystems(list_of_package_managers)
-      list_of_package_ecosystems = []
-      list_of_package_managers.each do |package_manager|
+    # Returns the set of package ecosystems mapped
+    # to in PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM
+    def self.package_managers_to_package_ecosystems(package_managers)
+      package_ecosystems = []
+      package_managers.each do |package_manager|
         unless PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM[package_manager].nil?
-          list_of_package_ecosystems |= [PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM[package_manager]]
+          package_ecosystems |= [PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM[package_manager]]
         end
       end
-      list_of_package_ecosystems
+      package_ecosystems
     end
 
-    # Returns the set of file fetcher registry keys mapped to in PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY
-    def self.list_of_package_ecosystems_to_list_of_file_fetcher_registry_keys(list_of_package_ecosystems)
-      list_of_file_fetcher_registry_keys = []
-      list_of_package_ecosystems.each do |package_ecosystem|
+    # Returns the set of file fetcher registry keys mapped
+    # to in PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY
+    def self.package_ecosystems_to_file_fetcher_registry_keys(package_ecosystems)
+      file_fetcher_registry_keys = []
+      package_ecosystems.each do |package_ecosystem|
         unless PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY[package_ecosystem].nil?
-          list_of_file_fetcher_registry_keys |= [PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY[package_ecosystem]]
+          file_fetcher_registry_keys |= [PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY[package_ecosystem]]
         end
       end
-      list_of_file_fetcher_registry_keys
+      file_fetcher_registry_keys
     end
 
-    # PackageManagers is all "Package Manager" names listed on
-    # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem
+    # PackageManagers is the "Package Manager" list on "#package-ecosystem"
     module PackageManagers
       # Bundler; the ruby package manager.
       BUNDLER = "Bundler"
@@ -105,9 +110,8 @@ module Dependabot
       YARN = "yarn"
     end
 
-    # PackageEcosystems is all "YAML Value" listed on the below,
+    # PackageEcosystems is all "YAML Value" listed on "#package-ecosystem",
     # that are the keys to `package-ecosystem` in dependabot yaml.
-    # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem
     module PackageEcosystems
       BUNDLER = "bundler"
       CARGO = "cargo"
@@ -127,10 +131,11 @@ module Dependabot
       TERRAFORM = "terraform"
     end
 
-    # PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY maps PackageEcosystems to our end goal
-    # of the keys used to collect the respective file fetcher classes that are registered via;
-    # https://github.com/dependabot/dependabot-core/blob/v0.212.0/common/lib/dependabot/file_fetchers.rb#L14-L16
-    # so each mapping |K,V| element should have a comment linking to the place that its value was registered!
+    # PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY maps PackageEcosystems
+    # to our end goal of the keys used to collect the respective file fetcher
+    # classes that are registered via the "file_fetchers register function"
+    # so each mapping |K,V| element should have a comment linking to the place
+    # that its value was registered!
     PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY = {
       # https://github.com/dependabot/dependabot-core/blob/v0.212.0/bundler/lib/dependabot/bundler/file_fetcher.rb#L216
       PackageEcosystems::BUNDLER => "bundler",
@@ -166,8 +171,8 @@ module Dependabot
       PackageEcosystems::TERRAFORM => "terraform"
     }.freeze
 
-    # PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM maps PackageManagers to the PackageEcosystems, according to
-    # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem
+    # PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM maps PackageManagers
+    # to the PackageEcosystems, according to "#package-ecosystem"
     PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM = {
       PackageManagers::BUNDLER => PackageEcosystems::BUNDLER,
       PackageManagers::CARGO => PackageEcosystems::CARGO,
@@ -191,11 +196,13 @@ module Dependabot
       PackageManagers::YARN => PackageEcosystems::NPM
     }.freeze
 
-    # LANGUAGE_TO_PACKAGE_MANAGER -- should map any language linguist
-    # can discover to a corresponding GitHub dependabot package manager
-    # List of languages; https://github.com/github/linguist/blob/v7.23.0/lib/linguist/languages.yml
-    # Any language listed below could be surfaced by being added to the file
-    # lib/dependabot/linguist/languages_to_patch.txt, so they should exist in this map.
+    # LANGUAGE_TO_PACKAGE_MANAGER should map any language linguist can discover,
+    # according to the "languages detected by linguist" link at the top, to a
+    # corresponding GitHub dependabot package manager.
+    #
+    # Any language listed below could be surfaced by being added
+    # to the file lib/dependabot/linguist/languages_to_patch.txt,
+    # so they should exist in this map.
     LANGUAGE_TO_PACKAGE_MANAGER = {
       "1C Enterprise" => nil,
       "2-Dimensional Array" => nil,
