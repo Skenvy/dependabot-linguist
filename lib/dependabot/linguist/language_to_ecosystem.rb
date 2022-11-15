@@ -1016,7 +1016,7 @@ module Dependabot
 
     CONTEXT_RULES[PackageManagers::MAVEN][ContextRule::FETCH_FILES] = [
       # https://github.com/dependabot/dependabot-core/blob/v0.212.0/maven/lib/dependabot/maven/file_fetcher.rb#L17-L19
-      "Maven POM", # for `pom.xml` files
+      "Maven POM" # for `pom.xml` files
     ]
     CONTEXT_RULES[PackageManagers::MAVEN][ContextRule::PRIMARY_LANGUAGES] = []
     CONTEXT_RULES[PackageManagers::MAVEN][ContextRule::RELEVANT_LANGUAGES] = [
@@ -1070,7 +1070,7 @@ module Dependabot
     CONTEXT_RULES[PackageManagers::POETRY][ContextRule::FETCH_FILES] = [
       # https://github.com/dependabot/dependabot-core/blob/v0.212.0/python/lib/dependabot/python/file_fetcher.rb#L35-L38
       # pyproject.lock has none and setup.py is vague.
-      "TOML" # poetry.lock and pyproject.toml by extension 
+      "TOML" # poetry.lock and pyproject.toml by extension
     ]
     CONTEXT_RULES[PackageManagers::POETRY][ContextRule::PRIMARY_LANGUAGES] = ["Python"]
     CONTEXT_RULES[PackageManagers::POETRY][ContextRule::RELEVANT_LANGUAGES] = []
@@ -1101,7 +1101,7 @@ module Dependabot
 
     # Now apply the context rules
     CONTEXT_RULES.each do |package_manager, context_map|
-      context_map.each do |context_rule, linguist_languages|
+      context_map.each do |_context_rule, linguist_languages|
         linguist_languages.each do |linguist_language|
           if LANGUAGE_TO_PACKAGE_MANAGER[linguist_language].nil?
             LANGUAGE_TO_PACKAGE_MANAGER[linguist_language] = [package_manager]

@@ -139,7 +139,7 @@ module Dependabot
       def directories_per_ecosystem_validated_by_dependabot
         @directories_per_ecosystem_validated_by_dependabot ||= nil
         if @directories_per_ecosystem_validated_by_dependabot.nil?
-          enable_options = {kubernetes_updates: true}
+          enable_options = { kubernetes_updates: true }
           @directories_per_ecosystem_validated_by_dependabot = {}
           file_fetcher_class_per_package_ecosystem.each do |package_ecosystem, file_fetcher_class|
             directories_per_ecosystem_validated_by_dependabot[package_ecosystem] = []
