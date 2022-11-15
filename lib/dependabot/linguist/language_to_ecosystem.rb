@@ -28,7 +28,7 @@ module Dependabot
       list_of_package_managers
     end
 
-    # Returns the set of pacakge ecosystems mapped to in PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM
+    # Returns the set of package ecosystems mapped to in PACKAGE_MANAGER_TO_PACKAGE_ECOSYSTEM
     def self.list_of_package_managers_to_list_of_package_ecosystems(list_of_package_managers)
       list_of_package_ecosystems = []
       list_of_package_managers.each do |package_manager|
