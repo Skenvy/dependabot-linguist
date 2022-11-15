@@ -887,51 +887,226 @@ module Dependabot
       "xBase" => nil
     }
 
-    # rubocop:enable Style/MutableConstant
+    # ContextRule are the impetus for a certain language
+    # pointing to a given package manager.
+    module ContextRule
+      # FETCH_FILES implies the suggestion that a language should be relevant
+      # is derived from inspecting the rules the file fetcher class actually
+      # uses itself to determine if it can "fetch files" for a directory.
+      # Possibly also based on the `def self.required_files_message` message.
+      FETCH_FILES = "def fetch_files"
+      # PRIMARY_LANGUAGES implies that the language should be the main or only
+      # languages that that package manager could be used for, and the presence
+      # of that language should likely necessitate the presence of versioning.
+      PRIMARY_LANGUAGES = "primary languages"
+      # RELEVANT_LANGUAGES are satellites to the PRIMARY_LANGUAGES. They are
+      # other languages that are commonly built with this package manager.
+      RELEVANT_LANGUAGES = "relevant languages"
+    end
 
     # Now apply the list of context rules to add `PackageManagers::`'s to
     # the LANGUAGE_TO_PACKAGE_MANAGER map.
-    LANGUAGE_TO_PACKAGE_MANAGER["ASP.NET"] = PackageManagers::NUGET
-    LANGUAGE_TO_PACKAGE_MANAGER["C"] = PackageManagers::GRADLE
-    LANGUAGE_TO_PACKAGE_MANAGER["C#"] = PackageManagers::NUGET
-    LANGUAGE_TO_PACKAGE_MANAGER["C++"] = [PackageManagers::GRADLE, PackageManagers::NUGET]
-    LANGUAGE_TO_PACKAGE_MANAGER["Clojure"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
-    LANGUAGE_TO_PACKAGE_MANAGER["CoffeeScript"] = [PackageManagers::NPM, PackageManagers::YARN]
-    LANGUAGE_TO_PACKAGE_MANAGER["Dart"] = PackageManagers::PUB
-    LANGUAGE_TO_PACKAGE_MANAGER["Dockerfile"] = PackageManagers::DOCKER
-    LANGUAGE_TO_PACKAGE_MANAGER["Elixir"] = PackageManagers::HEX
-    LANGUAGE_TO_PACKAGE_MANAGER["Elm"] = PackageManagers::ELM_PACKAGE
-    LANGUAGE_TO_PACKAGE_MANAGER["Erlang"] = PackageManagers::HEX
-    LANGUAGE_TO_PACKAGE_MANAGER["F#"] = PackageManagers::NUGET
-    LANGUAGE_TO_PACKAGE_MANAGER["Gemfile.lock"] = PackageManagers::BUNDLER
-    LANGUAGE_TO_PACKAGE_MANAGER["Git Config"] = PackageManagers::GIT_SUBMODULE
-    LANGUAGE_TO_PACKAGE_MANAGER["Go"] = PackageManagers::GO_MODULES
-    LANGUAGE_TO_PACKAGE_MANAGER["Go Checksums"] = PackageManagers::GO_MODULES
-    LANGUAGE_TO_PACKAGE_MANAGER["Go Module"] = PackageManagers::GO_MODULES
-    LANGUAGE_TO_PACKAGE_MANAGER["Gradle"] = PackageManagers::GRADLE
-    LANGUAGE_TO_PACKAGE_MANAGER["Groovy"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
-    LANGUAGE_TO_PACKAGE_MANAGER["Groovy Server Pages"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
-    LANGUAGE_TO_PACKAGE_MANAGER["HCL"] = PackageManagers::TERRAFORM
-    LANGUAGE_TO_PACKAGE_MANAGER["JSON"] = [PackageManagers::COMPOSER, PackageManagers::ELM_PACKAGE, PackageManagers::NPM, PackageManagers::PIPENV, PackageManagers::TERRAFORM]
-    LANGUAGE_TO_PACKAGE_MANAGER["Java"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
-    LANGUAGE_TO_PACKAGE_MANAGER["Java Properties"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
-    LANGUAGE_TO_PACKAGE_MANAGER["Java Server Pages"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
-    LANGUAGE_TO_PACKAGE_MANAGER["JavaScript"] = [PackageManagers::GRADLE, PackageManagers::NPM, PackageManagers::YARN]
-    LANGUAGE_TO_PACKAGE_MANAGER["Kotlin"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
-    LANGUAGE_TO_PACKAGE_MANAGER["Literate CoffeeScript"] = [PackageManagers::NPM, PackageManagers::YARN]
-    LANGUAGE_TO_PACKAGE_MANAGER["Maven POM"] = PackageManagers::MAVEN
-    LANGUAGE_TO_PACKAGE_MANAGER["Objective-C++"] = PackageManagers::NUGET
-    LANGUAGE_TO_PACKAGE_MANAGER["PHP"] = PackageManagers::COMPOSER
-    LANGUAGE_TO_PACKAGE_MANAGER["Python"] = [PackageManagers::PIP, PackageManagers::PIPENV, PackageManagers::PIP_COMPILE, PackageManagers::POETRY]
-    LANGUAGE_TO_PACKAGE_MANAGER["Python console"] = [PackageManagers::PIP, PackageManagers::PIPENV, PackageManagers::PIP_COMPILE, PackageManagers::POETRY]
-    LANGUAGE_TO_PACKAGE_MANAGER["Python traceback"] = [PackageManagers::PIP, PackageManagers::PIPENV, PackageManagers::PIP_COMPILE, PackageManagers::POETRY]
-    LANGUAGE_TO_PACKAGE_MANAGER["Ruby"] = PackageManagers::BUNDLER
-    LANGUAGE_TO_PACKAGE_MANAGER["Rust"] = PackageManagers::CARGO
-    LANGUAGE_TO_PACKAGE_MANAGER["Scala"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
-    LANGUAGE_TO_PACKAGE_MANAGER["TOML"] = [PackageManagers::CARGO, PackageManagers::GO_MODULES, PackageManagers::PIPENV, PackageManagers::POETRY]
-    LANGUAGE_TO_PACKAGE_MANAGER["TypeScript"] = [PackageManagers::NPM, PackageManagers::YARN]
-    LANGUAGE_TO_PACKAGE_MANAGER["Visual Basic .NET"] = PackageManagers::NUGET
-    LANGUAGE_TO_PACKAGE_MANAGER["XML"] = PackageManagers::NUGET
+    CONTEXT_RULES = {
+      PackageManagers::BUNDLER => {},
+      PackageManagers::CARGO => {},
+      PackageManagers::COMPOSER => {},
+      PackageManagers::DOCKER => {},
+      PackageManagers::HEX => {},
+      PackageManagers::ELM_PACKAGE => {},
+      PackageManagers::GIT_SUBMODULE => {},
+      PackageManagers::GITHUB_ACTIONS => {},
+      PackageManagers::GO_MODULES => {},
+      PackageManagers::GRADLE => {},
+      PackageManagers::MAVEN => {},
+      PackageManagers::NPM => {},
+      PackageManagers::NUGET => {},
+      PackageManagers::PIP => {},
+      PackageManagers::PIPENV => {},
+      PackageManagers::PIP_COMPILE => {},
+      PackageManagers::POETRY => {},
+      PackageManagers::PUB => {},
+      PackageManagers::TERRAFORM => {},
+      PackageManagers::YARN => {}
+    }
+
+    ##
+    CONTEXT_RULES[PackageManagers::BUNDLER][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/bundler/lib/dependabot/bundler/file_fetcher.rb#L22-L24
+      "Gemfile.lock", # Gemfile.lock
+      "Ruby" # Gemfile or .gemspec
+    ]
+    CONTEXT_RULES[PackageManagers::BUNDLER][ContextRule::PRIMARY_LANGUAGES] = ["Ruby"]
+    CONTEXT_RULES[PackageManagers::BUNDLER][ContextRule::RELEVANT_LANGUAGES] = []
+
+    ##
+    CONTEXT_RULES[PackageManagers::CARGO][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/cargo/lib/dependabot/cargo/file_fetcher.rb#L19-L21
+      "TOML" # Cargo.toml and Cargo.lock
+    ]
+    CONTEXT_RULES[PackageManagers::CARGO][ContextRule::PRIMARY_LANGUAGES] = ["Rust"]
+    CONTEXT_RULES[PackageManagers::CARGO][ContextRule::RELEVANT_LANGUAGES] = []
+
+    ##
+    CONTEXT_RULES[PackageManagers::COMPOSER][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/composer/lib/dependabot/composer/file_fetcher.rb#L16-L18
+      "JSON" # composer.json and composer.lock
+    ]
+    CONTEXT_RULES[PackageManagers::COMPOSER][ContextRule::PRIMARY_LANGUAGES] = ["PHP"]
+    CONTEXT_RULES[PackageManagers::COMPOSER][ContextRule::RELEVANT_LANGUAGES] = []
+
+    ##
+    CONTEXT_RULES[PackageManagers::DOCKER][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/docker/lib/dependabot/docker/file_fetcher.rb#L17-L19
+      "Dockerfile", # Dockerfile
+      "YAML" # .yaml, if kubernetes option is set
+    ]
+    CONTEXT_RULES[PackageManagers::DOCKER][ContextRule::PRIMARY_LANGUAGES] = []
+    CONTEXT_RULES[PackageManagers::DOCKER][ContextRule::RELEVANT_LANGUAGES] = []
+
+    ##
+    CONTEXT_RULES[PackageManagers::HEX][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/hex/lib/dependabot/hex/file_fetcher.rb#L20-L22
+      "Elixir" # mix.lock and mix.exs by extension
+    ]
+    CONTEXT_RULES[PackageManagers::HEX][ContextRule::PRIMARY_LANGUAGES] = ["Elixir"]
+    CONTEXT_RULES[PackageManagers::HEX][ContextRule::RELEVANT_LANGUAGES] = ["Erlang"]
+
+    ##
+    CONTEXT_RULES[PackageManagers::ELM_PACKAGE][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/elm/lib/dependabot/elm/file_fetcher.rb#L13-L15
+      "JSON" # elm-package.json or an elm.json, only seeks via .json extension though.
+    ]
+    CONTEXT_RULES[PackageManagers::ELM_PACKAGE][ContextRule::PRIMARY_LANGUAGES] = ["Elm"]
+    CONTEXT_RULES[PackageManagers::ELM_PACKAGE][ContextRule::RELEVANT_LANGUAGES] = []
+
+    ##
+    CONTEXT_RULES[PackageManagers::GIT_SUBMODULE][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/???
+      "Git Config"
+    ]
+    CONTEXT_RULES[PackageManagers::GIT_SUBMODULE][ContextRule::PRIMARY_LANGUAGES] = []
+    CONTEXT_RULES[PackageManagers::GIT_SUBMODULE][ContextRule::RELEVANT_LANGUAGES] = []
+
+    ##
+    CONTEXT_RULES[PackageManagers::GITHUB_ACTIONS][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/???
+    ]
+    CONTEXT_RULES[PackageManagers::GITHUB_ACTIONS][ContextRule::PRIMARY_LANGUAGES] = []
+    CONTEXT_RULES[PackageManagers::GITHUB_ACTIONS][ContextRule::RELEVANT_LANGUAGES] = []
+
+    ##
+    CONTEXT_RULES[PackageManagers::GO_MODULES][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/go_modules/lib/dependabot/go_modules/file_fetcher.rb#L13-L15
+      "Go Checksums", # go.sum
+      "Go Module" # go.mod
+    ]
+    CONTEXT_RULES[PackageManagers::GO_MODULES][ContextRule::PRIMARY_LANGUAGES] = ["Go"]
+    CONTEXT_RULES[PackageManagers::GO_MODULES][ContextRule::RELEVANT_LANGUAGES] = []
+
+    CONTEXT_RULES[PackageManagers::GRADLE][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/gradle/lib/dependabot/gradle/file_fetcher.rb#L23-L25
+      "Gradle", # for any `.gradle` file
+      "Kotlin" # for any `.kts` file"
+    ]
+    CONTEXT_RULES[PackageManagers::GRADLE][ContextRule::PRIMARY_LANGUAGES] = []
+    CONTEXT_RULES[PackageManagers::GRADLE][ContextRule::RELEVANT_LANGUAGES] = [
+      "Clojure", "Groovy", "Java", "Kotlin", "Scala"
+    ]
+
+    CONTEXT_RULES[PackageManagers::MAVEN][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/maven/lib/dependabot/maven/file_fetcher.rb#L17-L19
+      "Maven POM", # for `pom.xml` files
+    ]
+    CONTEXT_RULES[PackageManagers::MAVEN][ContextRule::PRIMARY_LANGUAGES] = []
+    CONTEXT_RULES[PackageManagers::MAVEN][ContextRule::RELEVANT_LANGUAGES] = [
+      "Clojure", "Groovy", "Java", "Kotlin", "Scala"
+    ]
+
+    ##
+    CONTEXT_RULES[PackageManagers::NPM][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/???
+      "JSON"
+    ]
+    CONTEXT_RULES[PackageManagers::NPM][ContextRule::PRIMARY_LANGUAGES] = ["JavaScript", "TypeScript"]
+    CONTEXT_RULES[PackageManagers::NPM][ContextRule::RELEVANT_LANGUAGES] = ["CoffeeScript", "Literate CoffeeScript"]
+
+    ##
+    CONTEXT_RULES[PackageManagers::NUGET][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/nuget/lib/dependabot/nuget/file_fetcher.rb#L20-L22
+      "XML" # .csproj, .vbproj and .fsproj
+      # Nothing looks for a packages.config
+    ]
+    CONTEXT_RULES[PackageManagers::NUGET][ContextRule::PRIMARY_LANGUAGES] = ["C#"]
+    CONTEXT_RULES[PackageManagers::NUGET][ContextRule::RELEVANT_LANGUAGES] = ["ASP.NET", "C++", "F#", "Objective-C++", "Visual Basic .NET"]
+
+    ##
+    CONTEXT_RULES[PackageManagers::PIP][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/???
+    ]
+    CONTEXT_RULES[PackageManagers::PIP][ContextRule::PRIMARY_LANGUAGES] = ["Python"]
+    CONTEXT_RULES[PackageManagers::PIP][ContextRule::RELEVANT_LANGUAGES] = []
+
+    ##
+    CONTEXT_RULES[PackageManagers::PIPENV][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/???
+      "JSON",
+      "TOML"
+    ]
+    CONTEXT_RULES[PackageManagers::PIPENV][ContextRule::PRIMARY_LANGUAGES] = ["Python"]
+    CONTEXT_RULES[PackageManagers::PIPENV][ContextRule::RELEVANT_LANGUAGES] = []
+
+    ##
+    CONTEXT_RULES[PackageManagers::PIP_COMPILE][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/???
+    ]
+    CONTEXT_RULES[PackageManagers::PIP_COMPILE][ContextRule::PRIMARY_LANGUAGES] = ["Python"]
+    CONTEXT_RULES[PackageManagers::PIP_COMPILE][ContextRule::RELEVANT_LANGUAGES] = []
+
+    ##
+    CONTEXT_RULES[PackageManagers::POETRY][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/???
+      "TOML"
+    ]
+    CONTEXT_RULES[PackageManagers::POETRY][ContextRule::PRIMARY_LANGUAGES] = ["Python"]
+    CONTEXT_RULES[PackageManagers::POETRY][ContextRule::RELEVANT_LANGUAGES] = []
+
+    ##
+    CONTEXT_RULES[PackageManagers::PUB][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/pub/lib/dependabot/pub/file_fetcher.rb#L15-L17
+      "YAML" # pubspec.yaml, but only by extension.
+    ]
+    CONTEXT_RULES[PackageManagers::PUB][ContextRule::PRIMARY_LANGUAGES] = ["Dart"]
+    CONTEXT_RULES[PackageManagers::PUB][ContextRule::RELEVANT_LANGUAGES] = []
+
+    ##
+    CONTEXT_RULES[PackageManagers::TERRAFORM][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/terraform/lib/dependabot/terraform/file_fetcher.rb#L19-L21
+      "HCL" # .tf and .hcl
+    ]
+    CONTEXT_RULES[PackageManagers::TERRAFORM][ContextRule::PRIMARY_LANGUAGES] = []
+    CONTEXT_RULES[PackageManagers::TERRAFORM][ContextRule::RELEVANT_LANGUAGES] = []
+
+    ##
+    CONTEXT_RULES[PackageManagers::YARN][ContextRule::FETCH_FILES] = [
+      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/???
+    ]
+    CONTEXT_RULES[PackageManagers::YARN][ContextRule::PRIMARY_LANGUAGES] = ["JavaScript", "TypeScript"]
+    CONTEXT_RULES[PackageManagers::YARN][ContextRule::RELEVANT_LANGUAGES] = ["CoffeeScript", "Literate CoffeeScript"]
+
+    # Now apply the context rules
+    CONTEXT_RULES.each do |package_manager, context_map|
+      context_map.each do |context_rule, linguist_languages|
+        linguist_languages.each do |linguist_language|
+          if LANGUAGE_TO_PACKAGE_MANAGER[linguist_language].nil?
+            LANGUAGE_TO_PACKAGE_MANAGER[linguist_language] = [package_manager]
+          else
+            LANGUAGE_TO_PACKAGE_MANAGER[linguist_language] |= [package_manager]
+          end
+        end
+      end
+    end
+
+    # rubocop:enable Style/MutableConstant
   end
 end
 

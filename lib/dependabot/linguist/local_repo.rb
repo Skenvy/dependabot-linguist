@@ -139,13 +139,14 @@ module Dependabot
       def directories_per_ecosystem_validated_by_dependabot
         @directories_per_ecosystem_validated_by_dependabot ||= nil
         if @directories_per_ecosystem_validated_by_dependabot.nil?
+          enable_options = {kubernetes_updates: true}
           @directories_per_ecosystem_validated_by_dependabot = {}
           file_fetcher_class_per_package_ecosystem.each do |package_ecosystem, file_fetcher_class|
             directories_per_ecosystem_validated_by_dependabot[package_ecosystem] = []
             puts "Spawning class instances for #{package_ecosystem}, in repo #{@repo_path}, class #{file_fetcher_class}"
             sources = directories_per_package_ecosystem[package_ecosystem].collect { |directories| linguist_sources[directories] } # all_sources
             sources.each do |source|
-              fetcher = file_fetcher_class.new(source: source, credentials: [], repo_contents_path: @repo_path)
+              fetcher = file_fetcher_class.new(source: source, credentials: [], repo_contents_path: @repo_path, options: enable_options)
               begin
                 unless fetcher.files.map(&:name).empty?
                   directories_per_ecosystem_validated_by_dependabot[package_ecosystem] |= [source.directory]
