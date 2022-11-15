@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "rugged"
-require "linguist/repository"
 require "dependabot/source"
 require "dependabot/file_fetchers"
+require "dependabot/errors"
 # Require all ecosystem gems
 require "dependabot/bundler"
 require "dependabot/cargo"
@@ -41,6 +41,26 @@ module Dependabot
         @linguist_languages ||= @linguist.languages
       end
 
+      def linguist_cache
+        @linguist_cache ||= @linguist.cache
+      end
+
+      # Cache is a map of "path" => ["Lang", loc]
+      # We need to invert it to "Lang" => ["paths",...]
+      def map_linguist_languages_to_source_subfolders
+        @map_linguist_languages_to_source_subfolders ||= nil
+        if @map_linguist_languages_to_source_subfolders.nil?
+          @map_linguist_languages_to_source_subfolders = {}
+          linguist_cache.each do |source_file_path, lang_and_loc|
+            if @map_linguist_languages_to_source_subfolders[lang_and_loc[0]].nil?
+              @map_linguist_languages_to_source_subfolders[lang_and_loc[0]] = []
+            end
+            @map_linguist_languages_to_source_subfolders[lang_and_loc[0]] |= ["/" + source_file_path.slice(0, source_file_path.rindex("/"))]
+          end
+        end
+        @map_linguist_languages_to_source_subfolders
+      end
+
       def possible_dependabot_ecosystems
         puts "List of languages: #{linguist_languages.keys}"
         @possible_package_managers ||= Dependabot::Linguist.list_of_languages_to_list_of_package_managers(linguist_languages.keys)
@@ -66,13 +86,13 @@ module Dependabot
         @package_ecosystem_to_dependabot_file_fetcher_classes
       end
 
-      def subfolders
+      def all_subfolders
         # /**/*/ rather than /**/ would remove the base path, but delete_prefix will also remove it, so it needs to be specially added.
-        @subfolders ||= (["/"] | Dir.glob("#{@repo_path}/**/*/").map { |subpath| subpath.delete_prefix(@repo_path).delete_suffix("/") })
+        @all_subfolders ||= (["/"] | Dir.glob("#{@repo_path}/**/*/").map { |subpath| subpath.delete_prefix(@repo_path).delete_suffix("/") })
       end
 
-      def sources
-        @sources ||= subfolders.collect { |subfolder| Dependabot::Source.new(provider: "github", repo: @repo_name, directory: subfolder) }
+      def all_sources
+        @all_sources ||= all_subfolders.collect { |subfolder| Dependabot::Source.new(provider: "github", repo: @repo_name, directory: subfolder) }
       end
 
       def ecosystems_that_file_fetcher_fetches_files_for
@@ -81,16 +101,17 @@ module Dependabot
           @ecosystems_that_file_fetcher_fetches_files_for = {}
           package_ecosystem_to_dependabot_file_fetcher_classes.each do |pacakge_ecosystem, file_fetcher_class|
             ecosystems_that_file_fetcher_fetches_files_for[pacakge_ecosystem] = []
-            sources.each do |source|
-              puts "Spawning class instance for #{pacakge_ecosystem} at #{source.directory}, in repo #{@repo_path}, class #{file_fetcher_class}"
+            puts "Spawning class instances for #{pacakge_ecosystem}, in repo #{@repo_path}, class #{file_fetcher_class}"
+            all_sources.each do |source|
               fetcher = file_fetcher_class.new(source: source, credentials: [], repo_contents_path: @repo_path)
               begin
                 unless fetcher.files.map(&:name).empty?
                   ecosystems_that_file_fetcher_fetches_files_for[pacakge_ecosystem] |= [source.directory]
+                  puts "-- Dependency files FOUND for pacakge-ecosystem #{pacakge_ecosystem} at #{source.directory}; #{fetcher.files.map(&:name)}"
                 end
-                puts "Dependency files FOUND for pacakge-ecosystem #{pacakge_ecosystem} at #{source.directory}"
-              rescue Dependabot::DependencyFileNotFound
-                # If no dependency file is found that's fine.
+              rescue Dependabot::DependabotError => err
+                # Most of these will be Dependabot::DependencyFileNotFound or Dependabot::PathDependenciesNotReachable
+                puts "-- Caught a DependabotError, #{err.class}, for pacakge-ecosystem #{pacakge_ecosystem} at #{source.directory}: #{err.message}"
               end
             end
           end
