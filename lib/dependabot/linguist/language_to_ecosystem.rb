@@ -1030,7 +1030,7 @@ module Dependabot
       "NPM Config" # ".npmrc"
     ]
     CONTEXT_RULES[PackageManagers::NPM][ContextRule::PRIMARY_LANGUAGES] = ["JavaScript", "TypeScript"]
-    CONTEXT_RULES[PackageManagers::NPM][ContextRule::RELEVANT_LANGUAGES] = ["CoffeeScript", "Literate CoffeeScript"]
+    CONTEXT_RULES[PackageManagers::NPM][ContextRule::RELEVANT_LANGUAGES] = ["CoffeeScript"]
 
     ##
     CONTEXT_RULES[PackageManagers::NUGET][ContextRule::FETCH_FILES] = [
@@ -1045,6 +1045,7 @@ module Dependabot
     CONTEXT_RULES[PackageManagers::PIP][ContextRule::FETCH_FILES] = [
       # https://github.com/dependabot/dependabot-core/blob/v0.212.0/python/lib/dependabot/python/file_fetcher.rb#L35-L38
       # Besides the other pip related package managers, there is no language for `requirements` files. RIP.
+      "Text" # for `.txt`
     ]
     CONTEXT_RULES[PackageManagers::PIP][ContextRule::PRIMARY_LANGUAGES] = ["Python"]
     CONTEXT_RULES[PackageManagers::PIP][ContextRule::RELEVANT_LANGUAGES] = []
@@ -1097,7 +1098,7 @@ module Dependabot
       "YAML" # yarn.lock
     ]
     CONTEXT_RULES[PackageManagers::YARN][ContextRule::PRIMARY_LANGUAGES] = ["JavaScript", "TypeScript"]
-    CONTEXT_RULES[PackageManagers::YARN][ContextRule::RELEVANT_LANGUAGES] = ["CoffeeScript", "Literate CoffeeScript"]
+    CONTEXT_RULES[PackageManagers::YARN][ContextRule::RELEVANT_LANGUAGES] = ["CoffeeScript"]
 
     # Now apply the context rules
     CONTEXT_RULES.each do |package_manager, context_map|

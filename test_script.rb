@@ -4,6 +4,8 @@ require "dependabot/linguist"
 smoke_tests = Dependabot::Linguist::LocalRepo.new("../smoke-tests", "Skenvy/smoke-tests")
 # puts smoke_tests.all_sources
 puts ""
+puts smoke_tests.linguist_cache
+puts ""
 puts smoke_tests.directories_per_linguist_language
 puts ""
 puts smoke_tests.directories_per_package_manager

@@ -6,6 +6,7 @@ require "dependabot/source"
 require "dependabot/errors"
 require "dependabot/omnibus"
 require_relative "file_fetchers/base"
+require_relative "file_fetchers/go_modules"
 require_relative "language_to_ecosystem"
 
 module Dependabot

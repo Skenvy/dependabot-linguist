@@ -5,6 +5,33 @@ Go Module
 Gradle
 JSON
 Maven POM
+NPM Config
+Text
 TOML
 XML
 YAML
+ASP.NET
+C#
+C++
+Clojure
+CoffeeScript
+Dart
+Dockerfile
+Elixir
+Elm
+Erlang
+F#
+Go
+Groovy
+HCL
+Java
+JavaScript
+Kotlin
+Objective-C++
+PHP
+Python
+Ruby
+Rust
+Scala
+TypeScript
+Visual Basic .NET
