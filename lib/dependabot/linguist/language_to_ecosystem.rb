@@ -196,6 +196,9 @@ module Dependabot
       PackageManagers::YARN => PackageEcosystems::NPM
     }.freeze
 
+    # rubocop:disable Style/MutableConstant
+    # LANGUAGE_TO_PACKAGE_MANAGER is modified by context
+
     # LANGUAGE_TO_PACKAGE_MANAGER should map any language linguist can discover,
     # according to the "languages detected by linguist" link at the top, to a
     # corresponding GitHub dependabot package manager.
@@ -219,7 +222,7 @@ module Dependabot
       "APL" => nil,
       "ASL" => nil,
       "ASN.1" => nil,
-      "ASP.NET" => PackageManagers::NUGET,
+      "ASP.NET" => nil,
       "ATS" => nil,
       "ActionScript" => nil,
       "Ada" => nil,
@@ -268,9 +271,9 @@ module Dependabot
       "BrighterScript" => nil,
       "Brightscript" => nil,
       "Browserslist" => nil,
-      "C" => PackageManagers::GRADLE,
-      "C#" => PackageManagers::NUGET,
-      "C++" => [PackageManagers::GRADLE, PackageManagers::NUGET],
+      "C" => nil,
+      "C#" => nil,
+      "C++" => nil,
       "C-ObjDump" => nil,
       "C2hs Haskell" => nil,
       "CAP CDS" => nil,
@@ -302,12 +305,12 @@ module Dependabot
       "Classic ASP" => nil,
       "Clean" => nil,
       "Click" => nil,
-      "Clojure" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
+      "Clojure" => nil,
       "Closure Templates" => nil,
       "Cloud Firestore Security Rules" => nil,
       "CoNLL-U" => nil,
       "CodeQL" => nil,
-      "CoffeeScript" => [PackageManagers::NPM, PackageManagers::YARN],
+      "CoffeeScript" => nil,
       "ColdFusion" => nil,
       "ColdFusion CFC" => nil,
       "Common Lisp" => nil,
@@ -335,14 +338,14 @@ module Dependabot
       "DTrace" => nil,
       "Dafny" => nil,
       "Darcs Patch" => nil,
-      "Dart" => PackageManagers::PUB,
+      "Dart" => nil,
       "DataWeave" => nil,
       "Debian Package Control File" => nil,
       "DenizenScript" => nil,
       "Dhall" => nil,
       "Diff" => nil,
       "DirectX 3D File" => nil,
-      "Dockerfile" => PackageManagers::DOCKER,
+      "Dockerfile" => nil,
       "Dogescript" => nil,
       "Dylan" => nil,
       "E" => nil,
@@ -359,14 +362,14 @@ module Dependabot
       "EditorConfig" => nil,
       "Edje Data Collection" => nil,
       "Eiffel" => nil,
-      "Elixir" => PackageManagers::HEX,
-      "Elm" => PackageManagers::ELM_PACKAGE,
+      "Elixir" => nil,
+      "Elm" => nil,
       "Elvish" => nil,
       "Emacs Lisp" => nil,
       "EmberScript" => nil,
-      "Erlang" => PackageManagers::HEX,
+      "Erlang" => nil,
       "Euphoria" => nil,
-      "F#" => PackageManagers::NUGET,
+      "F#" => nil,
       "F*" => nil,
       "FIGlet Font" => nil,
       "FLUX" => nil,
@@ -398,7 +401,7 @@ module Dependabot
       "GN" => nil,
       "GSC" => nil,
       "Game Maker Language" => nil,
-      "Gemfile.lock" => PackageManagers::BUNDLER,
+      "Gemfile.lock" => nil,
       "Gemini" => nil,
       "Genero" => nil,
       "Genero Forms" => nil,
@@ -410,27 +413,27 @@ module Dependabot
       "Gettext Catalog" => nil,
       "Gherkin" => nil,
       "Git Attributes" => nil,
-      "Git Config" => PackageManagers::GIT_SUBMODULE,
+      "Git Config" => nil,
       "Git Revision List" => nil,
       "Gleam" => nil,
       "Glyph" => nil,
       "Glyph Bitmap Distribution Format" => nil,
       "Gnuplot" => nil,
-      "Go" => PackageManagers::GO_MODULES,
-      "Go Checksums" => PackageManagers::GO_MODULES,
-      "Go Module" => PackageManagers::GO_MODULES,
+      "Go" => nil,
+      "Go Checksums" => nil,
+      "Go Module" => nil,
       "Golo" => nil,
       "Gosu" => nil,
       "Grace" => nil,
-      "Gradle" => PackageManagers::GRADLE,
+      "Gradle" => nil,
       "Grammatical Framework" => nil,
       "Graph Modeling Language" => nil,
       "GraphQL" => nil,
       "Graphviz (DOT)" => nil,
-      "Groovy" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
-      "Groovy Server Pages" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
+      "Groovy" => nil,
+      "Groovy Server Pages" => nil,
       "HAProxy" => nil,
-      "HCL" => PackageManagers::TERRAFORM,
+      "HCL" => nil,
       "HLSL" => nil,
       "HOCON" => nil,
       "HTML" => nil,
@@ -468,17 +471,17 @@ module Dependabot
       "J" => nil,
       "JAR Manifest" => nil,
       "JFlex" => nil,
-      "JSON" => [PackageManagers::COMPOSER, PackageManagers::ELM_PACKAGE, PackageManagers::PIPENV, PackageManagers::TERRAFORM],
+      "JSON" => nil,
       "JSON with Comments" => nil,
       "JSON5" => nil,
       "JSONLD" => nil,
       "JSONiq" => nil,
       "Janet" => nil,
       "Jasmin" => nil,
-      "Java" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
-      "Java Properties" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
-      "Java Server Pages" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
-      "JavaScript" => [PackageManagers::GRADLE, PackageManagers::NPM, PackageManagers::YARN],
+      "Java" => nil,
+      "Java Properties" => nil,
+      "Java Server Pages" => nil,
+      "JavaScript" => nil,
       "JavaScript+ERB" => nil,
       "Jest Snapshot" => nil,
       "JetBrains MPS" => nil,
@@ -496,7 +499,7 @@ module Dependabot
       "KiCad Legacy Layout" => nil,
       "KiCad Schematic" => nil,
       "Kit" => nil,
-      "Kotlin" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
+      "Kotlin" => nil,
       "Kusto" => nil,
       "LFE" => nil,
       "LLVM" => nil,
@@ -517,7 +520,7 @@ module Dependabot
       "Linux Kernel Module" => nil,
       "Liquid" => nil,
       "Literate Agda" => nil,
-      "Literate CoffeeScript" => [PackageManagers::NPM, PackageManagers::YARN],
+      "Literate CoffeeScript" => nil,
       "Literate Haskell" => nil,
       "LiveScript" => nil,
       "Logos" => nil,
@@ -542,7 +545,7 @@ module Dependabot
       "Marko" => nil,
       "Mask" => nil,
       "Mathematica" => nil,
-      "Maven POM" => PackageManagers::MAVEN,
+      "Maven POM" => nil,
       "Max" => nil,
       "Mercury" => nil,
       "Mermaid" => nil,
@@ -600,7 +603,7 @@ module Dependabot
       "Object Data Instance Notation" => nil,
       "ObjectScript" => nil,
       "Objective-C" => nil,
-      "Objective-C++" => PackageManagers::NUGET,
+      "Objective-C++" => nil,
       "Objective-J" => nil,
       "Odin" => nil,
       "Omgrofl" => nil,
@@ -624,7 +627,7 @@ module Dependabot
       "P4" => nil,
       "PDDL" => nil,
       "PEG.js" => nil,
-      "PHP" => PackageManagers::COMPOSER,
+      "PHP" => nil,
       "PLSQL" => nil,
       "PLpgSQL" => nil,
       "POV-Ray SDL" => nil,
@@ -668,9 +671,9 @@ module Dependabot
       "Pure Data" => nil,
       "PureBasic" => nil,
       "PureScript" => nil,
-      "Python" => [PackageManagers::PIP, PackageManagers::PIPENV, PackageManagers::PIP_COMPILE, PackageManagers::POETRY],
-      "Python console" => [PackageManagers::PIP, PackageManagers::PIPENV, PackageManagers::PIP_COMPILE, PackageManagers::POETRY],
-      "Python traceback" => [PackageManagers::PIP, PackageManagers::PIPENV, PackageManagers::PIP_COMPILE, PackageManagers::POETRY],
+      "Python" => nil,
+      "Python console" => nil,
+      "Python traceback" => nil,
       "Q#" => nil,
       "QML" => nil,
       "QMake" => nil,
@@ -711,8 +714,8 @@ module Dependabot
       "Roff Manpage" => nil,
       "Rouge" => nil,
       "RouterOS Script" => nil,
-      "Ruby" => PackageManagers::BUNDLER,
-      "Rust" => PackageManagers::CARGO,
+      "Ruby" => nil,
+      "Rust" => nil,
       "SAS" => nil,
       "SCSS" => nil,
       "SELinux Policy" => nil,
@@ -731,7 +734,7 @@ module Dependabot
       "Sage" => nil,
       "SaltStack" => nil,
       "Sass" => nil,
-      "Scala" => [PackageManagers::MAVEN, PackageManagers::GRADLE],
+      "Scala" => nil,
       "Scaml" => nil,
       "Scenic" => nil,
       "Scheme" => nil,
@@ -771,7 +774,7 @@ module Dependabot
       "SystemVerilog" => nil,
       "TI Program" => nil,
       "TLA" => nil,
-      "TOML" => [PackageManagers::CARGO, PackageManagers::GO_MODULES, PackageManagers::PIPENV, PackageManagers::POETRY],
+      "TOML" => nil,
       "TSQL" => nil,
       "TSV" => nil,
       "TSX" => nil,
@@ -791,7 +794,7 @@ module Dependabot
       "Turtle" => nil,
       "Twig" => nil,
       "Type Language" => nil,
-      "TypeScript" => [PackageManagers::NPM, PackageManagers::YARN],
+      "TypeScript" => nil,
       "Unified Parallel C" => nil,
       "Unity3D Asset" => nil,
       "Unix Assembly" => nil,
@@ -810,7 +813,7 @@ module Dependabot
       "Vim Help File" => nil,
       "Vim Script" => nil,
       "Vim Snippet" => nil,
-      "Visual Basic .NET" => PackageManagers::NUGET,
+      "Visual Basic .NET" => nil,
       "Visual Basic 6.0" => nil,
       "Volt" => nil,
       "Vue" => nil,
@@ -836,7 +839,7 @@ module Dependabot
       "X10" => nil,
       "XC" => nil,
       "XCompose" => nil,
-      "XML" => PackageManagers::NUGET,
+      "XML" => nil,
       "XML Property List" => nil,
       "XPages" => nil,
       "XProc" => nil,
@@ -882,7 +885,53 @@ module Dependabot
       "wdl" => nil,
       "wisp" => nil,
       "xBase" => nil
-    }.freeze
+    }
+
+    # rubocop:enable Style/MutableConstant
+
+    # Now apply the list of context rules to add `PackageManagers::`'s to
+    # the LANGUAGE_TO_PACKAGE_MANAGER map.
+    LANGUAGE_TO_PACKAGE_MANAGER["ASP.NET"] = PackageManagers::NUGET
+    LANGUAGE_TO_PACKAGE_MANAGER["C"] = PackageManagers::GRADLE
+    LANGUAGE_TO_PACKAGE_MANAGER["C#"] = PackageManagers::NUGET
+    LANGUAGE_TO_PACKAGE_MANAGER["C++"] = [PackageManagers::GRADLE, PackageManagers::NUGET]
+    LANGUAGE_TO_PACKAGE_MANAGER["Clojure"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
+    LANGUAGE_TO_PACKAGE_MANAGER["CoffeeScript"] = [PackageManagers::NPM, PackageManagers::YARN]
+    LANGUAGE_TO_PACKAGE_MANAGER["Dart"] = PackageManagers::PUB
+    LANGUAGE_TO_PACKAGE_MANAGER["Dockerfile"] = PackageManagers::DOCKER
+    LANGUAGE_TO_PACKAGE_MANAGER["Elixir"] = PackageManagers::HEX
+    LANGUAGE_TO_PACKAGE_MANAGER["Elm"] = PackageManagers::ELM_PACKAGE
+    LANGUAGE_TO_PACKAGE_MANAGER["Erlang"] = PackageManagers::HEX
+    LANGUAGE_TO_PACKAGE_MANAGER["F#"] = PackageManagers::NUGET
+    LANGUAGE_TO_PACKAGE_MANAGER["Gemfile.lock"] = PackageManagers::BUNDLER
+    LANGUAGE_TO_PACKAGE_MANAGER["Git Config"] = PackageManagers::GIT_SUBMODULE
+    LANGUAGE_TO_PACKAGE_MANAGER["Go"] = PackageManagers::GO_MODULES
+    LANGUAGE_TO_PACKAGE_MANAGER["Go Checksums"] = PackageManagers::GO_MODULES
+    LANGUAGE_TO_PACKAGE_MANAGER["Go Module"] = PackageManagers::GO_MODULES
+    LANGUAGE_TO_PACKAGE_MANAGER["Gradle"] = PackageManagers::GRADLE
+    LANGUAGE_TO_PACKAGE_MANAGER["Groovy"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
+    LANGUAGE_TO_PACKAGE_MANAGER["Groovy Server Pages"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
+    LANGUAGE_TO_PACKAGE_MANAGER["HCL"] = PackageManagers::TERRAFORM
+    LANGUAGE_TO_PACKAGE_MANAGER["JSON"] = [PackageManagers::COMPOSER, PackageManagers::ELM_PACKAGE, PackageManagers::NPM, PackageManagers::PIPENV, PackageManagers::TERRAFORM]
+    LANGUAGE_TO_PACKAGE_MANAGER["Java"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
+    LANGUAGE_TO_PACKAGE_MANAGER["Java Properties"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
+    LANGUAGE_TO_PACKAGE_MANAGER["Java Server Pages"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
+    LANGUAGE_TO_PACKAGE_MANAGER["JavaScript"] = [PackageManagers::GRADLE, PackageManagers::NPM, PackageManagers::YARN]
+    LANGUAGE_TO_PACKAGE_MANAGER["Kotlin"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
+    LANGUAGE_TO_PACKAGE_MANAGER["Literate CoffeeScript"] = [PackageManagers::NPM, PackageManagers::YARN]
+    LANGUAGE_TO_PACKAGE_MANAGER["Maven POM"] = PackageManagers::MAVEN
+    LANGUAGE_TO_PACKAGE_MANAGER["Objective-C++"] = PackageManagers::NUGET
+    LANGUAGE_TO_PACKAGE_MANAGER["PHP"] = PackageManagers::COMPOSER
+    LANGUAGE_TO_PACKAGE_MANAGER["Python"] = [PackageManagers::PIP, PackageManagers::PIPENV, PackageManagers::PIP_COMPILE, PackageManagers::POETRY]
+    LANGUAGE_TO_PACKAGE_MANAGER["Python console"] = [PackageManagers::PIP, PackageManagers::PIPENV, PackageManagers::PIP_COMPILE, PackageManagers::POETRY]
+    LANGUAGE_TO_PACKAGE_MANAGER["Python traceback"] = [PackageManagers::PIP, PackageManagers::PIPENV, PackageManagers::PIP_COMPILE, PackageManagers::POETRY]
+    LANGUAGE_TO_PACKAGE_MANAGER["Ruby"] = PackageManagers::BUNDLER
+    LANGUAGE_TO_PACKAGE_MANAGER["Rust"] = PackageManagers::CARGO
+    LANGUAGE_TO_PACKAGE_MANAGER["Scala"] = [PackageManagers::MAVEN, PackageManagers::GRADLE]
+    LANGUAGE_TO_PACKAGE_MANAGER["TOML"] = [PackageManagers::CARGO, PackageManagers::GO_MODULES, PackageManagers::PIPENV, PackageManagers::POETRY]
+    LANGUAGE_TO_PACKAGE_MANAGER["TypeScript"] = [PackageManagers::NPM, PackageManagers::YARN]
+    LANGUAGE_TO_PACKAGE_MANAGER["Visual Basic .NET"] = PackageManagers::NUGET
+    LANGUAGE_TO_PACKAGE_MANAGER["XML"] = PackageManagers::NUGET
   end
 end
 

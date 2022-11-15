@@ -7,3 +7,4 @@ JSON
 Maven POM
 TOML
 XML
+YAML
