@@ -1,34 +1,16 @@
 # frozen_string_literal: true
 
 require "rugged"
-require "dependabot/source"
-require "dependabot/file_fetchers"
-require "dependabot/errors"
-# Require all ecosystem gems
-require "dependabot/bundler"
-require "dependabot/cargo"
-require "dependabot/composer"
-require "dependabot/docker"
-require "dependabot/elm"
-require "dependabot/github_actions"
-require "dependabot/git_submodules"
-require "dependabot/go_modules"
-require "dependabot/gradle"
-require "dependabot/hex"
-require "dependabot/maven"
-require "dependabot/npm_and_yarn"
-require "dependabot/nuget"
-require "dependabot/pub"
-require "dependabot/python"
-require "dependabot/terraform"
-# Require changes
 require_relative "language"
-require_relative "language_to_ecosystem"
+require "dependabot/source"
+require "dependabot/errors"
+require "dependabot/omnibus"
 require_relative "file_fetchers/base"
+require_relative "language_to_ecosystem"
 
 module Dependabot
   module Linguist
-    # LocalRepo substitutes for Linguist::Repository and Dependabot::Source
+    # LocalRepo allows utility of Linguist::Repository and Dependabot
     class LocalRepo
       def initialize(repo_path, repo_name)
         @repo_path = repo_path.delete_suffix("/").chomp
@@ -41,126 +23,143 @@ module Dependabot
         @linguist_languages ||= @linguist.languages
       end
 
+      # linguist_cache, linguist.cache, is a map of
+      # "<file_path>" => ["<Language>", <loc>] for
+      # any files found for any language looked for.
       def linguist_cache
         @linguist_cache ||= @linguist.cache
       end
 
-      # Cache is a map of "path" => ["Lang", loc]
-      # We need to invert it to "Lang" => ["paths",...]
-      def map_linguist_languages_to_source_subfolders
-        @map_linguist_languages_to_source_subfolders ||= nil
-        if @map_linguist_languages_to_source_subfolders.nil?
-          @map_linguist_languages_to_source_subfolders = {}
+      # directories_per_linguist_language inverts the linguist_cache map to
+      # "<Language>" => ["<file_path>", ...], a list of file paths per language!
+      def directories_per_linguist_language
+        @directories_per_linguist_language ||= nil
+        if @directories_per_linguist_language.nil?
+          @directories_per_linguist_language = {}
           linguist_cache.each do |source_file_path, lang_and_loc|
-            if @map_linguist_languages_to_source_subfolders[lang_and_loc[0]].nil?
-              @map_linguist_languages_to_source_subfolders[lang_and_loc[0]] = []
+            if @directories_per_linguist_language[lang_and_loc[0]].nil?
+              @directories_per_linguist_language[lang_and_loc[0]] = []
             end
-            @map_linguist_languages_to_source_subfolders[lang_and_loc[0]] |= ["/#{source_file_path.slice(0, source_file_path.rindex("/"))}"]
+            @directories_per_linguist_language[lang_and_loc[0]] |= ["/#{source_file_path.slice(0, source_file_path.rindex("/"))}"]
           end
         end
-        @map_linguist_languages_to_source_subfolders
+        @directories_per_linguist_language
       end
 
-      # Splits each language into the package managers it might implicate
-      # And add all sources for that language to the package manager.
-      def map_dependabot_package_managers_to_source_subfolders
-        @map_dependabot_package_managers_to_source_subfolders ||= nil
-        if @map_dependabot_package_managers_to_source_subfolders.nil?
-          @map_dependabot_package_managers_to_source_subfolders = {}
-          map_linguist_languages_to_source_subfolders.each do |linguist_language, source_subfolders|
+      # directories_per_package_manager splits and merges the results of
+      # directories_per_linguist_language; split across each package manager that
+      # is relevant to the language, and then merges the list of file paths for
+      # that language into the list of file paths for each package manager!
+      def directories_per_package_manager
+        @directories_per_package_manager ||= nil
+        if @directories_per_package_manager.nil?
+          @directories_per_package_manager = {}
+          directories_per_linguist_language.each do |linguist_language, source_directories|
             Dependabot::Linguist.linguist_languages_to_package_managers([linguist_language]).each do |dependabot_package_manager|
-              if @map_dependabot_package_managers_to_source_subfolders[dependabot_package_manager].nil?
-                @map_dependabot_package_managers_to_source_subfolders[dependabot_package_manager] = []
+              if @directories_per_package_manager[dependabot_package_manager].nil?
+                @directories_per_package_manager[dependabot_package_manager] = []
               end
-              @map_dependabot_package_managers_to_source_subfolders[dependabot_package_manager] |= source_subfolders
+              @directories_per_package_manager[dependabot_package_manager] |= source_directories
             end
           end
         end
-        @map_dependabot_package_managers_to_source_subfolders
+        @directories_per_package_manager
       end
 
-      # Some package managers share the same ecosystem, so squash to the ecosystems.
-      def map_dependabot_package_ecosystem_to_source_subfolders
-        @map_dependabot_package_ecosystem_to_source_subfolders ||= nil
-        if @map_dependabot_package_ecosystem_to_source_subfolders.nil?
-          @map_dependabot_package_ecosystem_to_source_subfolders = {}
-          map_dependabot_package_managers_to_source_subfolders.each do |dependabot_package_manager, source_subfolders|
+      # directories_per_package_ecosystem squashes the map of
+      # directories_per_package_manager according to the map of managers
+      # to ecosystems, as some managers share a common ecosystem name.
+      def directories_per_package_ecosystem
+        @directories_per_package_ecosystem ||= nil
+        if @directories_per_package_ecosystem.nil?
+          @directories_per_package_ecosystem = {}
+          directories_per_package_manager.each do |dependabot_package_manager, source_directories|
             Dependabot::Linguist.package_managers_to_package_ecosystems([dependabot_package_manager]).each do |dependabot_package_ecosystem|
-              if @map_dependabot_package_ecosystem_to_source_subfolders[dependabot_package_ecosystem].nil?
-                @map_dependabot_package_ecosystem_to_source_subfolders[dependabot_package_ecosystem] = []
+              if @directories_per_package_ecosystem[dependabot_package_ecosystem].nil?
+                @directories_per_package_ecosystem[dependabot_package_ecosystem] = []
               end
-              @map_dependabot_package_ecosystem_to_source_subfolders[dependabot_package_ecosystem] |= source_subfolders
+              @directories_per_package_ecosystem[dependabot_package_ecosystem] |= source_directories
             end
           end
         end
-        @map_dependabot_package_ecosystem_to_source_subfolders
+        @directories_per_package_ecosystem
       end
 
-      def possible_dependabot_ecosystems
-        puts "List of languages: #{linguist_languages.keys}"
-        @possible_package_managers ||= Dependabot::Linguist.linguist_languages_to_package_managers(linguist_languages.keys)
-        puts "List of possible package managers: #{@possible_package_managers}"
-        @possible_package_ecosystems ||= Dependabot::Linguist.package_managers_to_package_ecosystems(@possible_package_managers)
-        puts "List of possible package ecosystems: #{@possible_package_ecosystems}"
-        # @possible_file_fetcher_registry_keys ||= Dependabot::Linguist.package_ecosystems_to_file_fetcher_registry_keys(@possible_package_ecosystems)
-        # puts "List of possible file fetcher registry keys: #{@possible_file_fetcher_registry_keys}"
-        @possible_package_ecosystems
-      end
-
-      def package_ecosystem_to_dependabot_file_fetcher_classes
-        @package_ecosystem_to_dependabot_file_fetcher_classes ||= nil
-        if @package_ecosystem_to_dependabot_file_fetcher_classes.nil?
-          @package_ecosystem_to_dependabot_file_fetcher_classes = {}
-          possible_dependabot_ecosystems.each do |possible_ecosystem|
-            @package_ecosystem_to_dependabot_file_fetcher_classes[possible_ecosystem] =
+      # file_fetcher_class_per_package_ecosystem maps ecosystem names to the
+      # class objects for each dependabot file fetcher class that's relevant
+      # based on the list of ecosystems found by linguist languages.
+      def file_fetcher_class_per_package_ecosystem
+        @file_fetcher_class_per_package_ecosystem ||= nil
+        if @file_fetcher_class_per_package_ecosystem.nil?
+          @file_fetcher_class_per_package_ecosystem = {}
+          directories_per_package_ecosystem.each_key do |possible_ecosystem|
+            @file_fetcher_class_per_package_ecosystem[possible_ecosystem] =
               Dependabot::FileFetchers.for_package_manager(
                 Dependabot::Linguist::PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY[possible_ecosystem]
               )
           end
         end
-        @package_ecosystem_to_dependabot_file_fetcher_classes
+        @file_fetcher_class_per_package_ecosystem
       end
 
-      def all_subfolders
-        # /**/*/ rather than /**/ would remove the base path, but delete_prefix will also remove it, so it needs to be specially added.
-        @all_subfolders ||= (["/"] | Dir.glob("#{@repo_path}/**/*/").map { |subpath| subpath.delete_prefix(@repo_path).delete_suffix("/") })
+      # Print out the lists of languages, managers, and ecosystems found here.
+      def put_discovery_info
+        puts "List of languages: #{directories_per_linguist_language.keys}"
+        puts "List of package managers: #{directories_per_package_manager.keys}"
+        puts "List of package ecosystems: #{directories_per_package_ecosystem.keys}"
       end
 
+      # Get ALL directories for the repo path.
+      def all_directories
+        # /**/*/ rather than /**/ would remove the base path, but delete_prefix
+        # will also remove it, so it needs to be specially added.
+        @all_directories ||= (["/"] | Dir.glob("#{@repo_path}/**/*/").map { |subpath| subpath.delete_prefix(@repo_path).delete_suffix("/") })
+      end
+
+      # Get ALL sources from ALL directories for the repo path.
       def all_sources
-        @all_sources ||= all_subfolders.collect { |subfolder| Dependabot::Source.new(provider: "github", repo: @repo_name, directory: subfolder) }
+        @all_sources ||= all_directories.collect { |directory| Dependabot::Source.new(provider: "github", repo: @repo_name, directory: directory) }
       end
 
-      def linguist_subfolders
-        @linguist_subfolders ||= map_dependabot_package_ecosystem_to_source_subfolders.values.flatten.uniq
+      # Get the list of all directories identified by linguist, that
+      # had their language mapped to a relevant dependabot ecosystem.
+      def linguist_directories
+        @linguist_directories ||= directories_per_package_ecosystem.values.flatten.uniq
       end
 
+      # Get the list of all sources from all directories identified by linguist,
+      # that had their language mapped to a relevant dependabot ecosystem.
       def linguist_sources
-        @linguist_sources ||= linguist_subfolders.to_h { |subfolder| [subfolder, Dependabot::Source.new(provider: "github", repo: @repo_name, directory: subfolder)] }
+        @linguist_sources ||= linguist_directories.to_h { |directory| [directory, Dependabot::Source.new(provider: "github", repo: @repo_name, directory: directory)] }
       end
 
-      def ecosystems_that_file_fetcher_fetches_files_for
-        @ecosystems_that_file_fetcher_fetches_files_for ||= nil
-        if @ecosystems_that_file_fetcher_fetches_files_for.nil?
-          @ecosystems_that_file_fetcher_fetches_files_for = {}
-          package_ecosystem_to_dependabot_file_fetcher_classes.each do |package_ecosystem, file_fetcher_class|
-            ecosystems_that_file_fetcher_fetches_files_for[package_ecosystem] = []
+      # directories_per_ecosystem_validated_by_dependabot maps each identified
+      # present ecosystem to a list of the directories that linguist found files
+      # for, that were then validated by running the file_fetcher files on them.
+      def directories_per_ecosystem_validated_by_dependabot
+        @directories_per_ecosystem_validated_by_dependabot ||= nil
+        if @directories_per_ecosystem_validated_by_dependabot.nil?
+          @directories_per_ecosystem_validated_by_dependabot = {}
+          file_fetcher_class_per_package_ecosystem.each do |package_ecosystem, file_fetcher_class|
+            directories_per_ecosystem_validated_by_dependabot[package_ecosystem] = []
             puts "Spawning class instances for #{package_ecosystem}, in repo #{@repo_path}, class #{file_fetcher_class}"
-            sources = map_dependabot_package_ecosystem_to_source_subfolders[package_ecosystem].collect { |subfolders| linguist_sources[subfolders] } # all_sources
+            sources = directories_per_package_ecosystem[package_ecosystem].collect { |directories| linguist_sources[directories] } # all_sources
             sources.each do |source|
               fetcher = file_fetcher_class.new(source: source, credentials: [], repo_contents_path: @repo_path)
               begin
                 unless fetcher.files.map(&:name).empty?
-                  ecosystems_that_file_fetcher_fetches_files_for[package_ecosystem] |= [source.directory]
+                  directories_per_ecosystem_validated_by_dependabot[package_ecosystem] |= [source.directory]
                   puts "-- Dependency files FOUND for package-ecosystem #{package_ecosystem} at #{source.directory}; #{fetcher.files.map(&:name)}"
                 end
               rescue Dependabot::DependabotError => e
-                # Most of these will be Dependabot::DependencyFileNotFound or Dependabot::PathDependenciesNotReachable
+                # Most of these will be Dependabot::DependencyFileNotFound
+                # or Dependabot::PathDependenciesNotReachable
                 puts "-- Caught a DependabotError, #{e.class}, for package-ecosystem #{package_ecosystem} at #{source.directory}: #{e.message}"
               end
             end
           end
         end
-        @ecosystems_that_file_fetcher_fetches_files_for
+        @directories_per_ecosystem_validated_by_dependabot
       end
     end
   end

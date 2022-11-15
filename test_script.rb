@@ -3,11 +3,11 @@
 require "dependabot/linguist"
 smoke_tests = Dependabot::Linguist::LocalRepo.new("../smoke-tests", "Skenvy/smoke-tests")
 # puts smoke_tests.all_sources
-puts smoke_tests.map_linguist_languages_to_source_subfolders
-puts smoke_tests.map_dependabot_package_managers_to_source_subfolders
-puts smoke_tests.map_dependabot_package_ecosystem_to_source_subfolders
-# puts smoke_tests.package_ecosystem_to_dependabot_file_fetcher_classes
-puts smoke_tests.ecosystems_that_file_fetcher_fetches_files_for
+puts smoke_tests.directories_per_linguist_language
+puts smoke_tests.directories_per_package_manager
+puts smoke_tests.directories_per_package_ecosystem
+# puts smoke_tests.file_fetcher_class_per_package_ecosystem
+puts smoke_tests.directories_per_ecosystem_validated_by_dependabot
 
 # require "rugged"
 # require "linguist"
