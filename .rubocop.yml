@@ -45,6 +45,8 @@ Metrics/BlockLength:
   AllowedMethods: ['describe', 'context']
 Metrics/BlockNesting:
   Enabled: false
+Metrics/ClassLength:
+  Enabled: false
 Metrics/CyclomaticComplexity:
   Enabled: false
 Metrics/MethodLength:

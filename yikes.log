@@ -1,0 +1,47 @@
+{
+ "docker"=>["/docker"],
+ "bundler"=>["/bundler"],
+ "gomod"=>[],
+ "pip"=>["/", "/pip", "/pip-compile", "/pipenv", "/poetry"],
+ "composer"=>["/composer", "/composer/vendor/phpmailer/phpmailer"],
+ "terraform"=>["/terraform"],
+ "gradle"=>["/gradle"],
+ "maven"=>["/maven"],
+ "mix"=>["/mix"]
+}
+
+{
+ "docker"=>["/.devcontainer", "/docker"],
+ "bundler"=>[],
+ "cargo"=>["/cargo"],
+ "gomod"=>[],
+ "pip"=>["/pipenv", "/poetry"],
+ "composer"=>["/composer"],
+ "elm"=>["/elm"],
+ "terraform"=>["/terraform"],
+ "gradle"=>["/gradle"],
+ "maven"=>["/maven"],
+ "mix"=>["/mix"],
+ "nuget"=>["/nuget"]
+}
+
+
+✅ "bundler" 🔵
+✅ "composer"
+✅ "docker"
+✅ "gradle"
+✅ "hex"
+✅ "maven"
+✅ "pip" 🔵
+✅ "terraform"
+
+🟨 "cargo"
+🟨 "go"
+
+❌ "actions" 🔵
+❌ "submodules" 🔵
+
+❌ "elm" (only relevant in JSON)
+❌ "npm" (only relevant in JSON)
+❌ "nuget" (only relevant in XML)
+❌ "pub" (only relevant in YAML)

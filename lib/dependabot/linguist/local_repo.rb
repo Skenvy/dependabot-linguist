@@ -55,7 +55,7 @@ module Dependabot
             if @map_linguist_languages_to_source_subfolders[lang_and_loc[0]].nil?
               @map_linguist_languages_to_source_subfolders[lang_and_loc[0]] = []
             end
-            @map_linguist_languages_to_source_subfolders[lang_and_loc[0]] |= ["/" + source_file_path.slice(0, source_file_path.rindex("/"))]
+            @map_linguist_languages_to_source_subfolders[lang_and_loc[0]] |= ["/#{source_file_path.slice(0, source_file_path.rindex("/"))}"]
           end
         end
         @map_linguist_languages_to_source_subfolders
@@ -68,7 +68,7 @@ module Dependabot
         if @map_dependabot_package_managers_to_source_subfolders.nil?
           @map_dependabot_package_managers_to_source_subfolders = {}
           map_linguist_languages_to_source_subfolders.each do |linguist_language, source_subfolders|
-            Dependabot::Linguist::list_of_languages_to_list_of_package_managers([linguist_language]).each do |dependabot_package_manager|
+            Dependabot::Linguist.list_of_languages_to_list_of_package_managers([linguist_language]).each do |dependabot_package_manager|
               if @map_dependabot_package_managers_to_source_subfolders[dependabot_package_manager].nil?
                 @map_dependabot_package_managers_to_source_subfolders[dependabot_package_manager] = []
               end
@@ -85,7 +85,7 @@ module Dependabot
         if @map_dependabot_package_ecosystem_to_source_subfolders.nil?
           @map_dependabot_package_ecosystem_to_source_subfolders = {}
           map_dependabot_package_managers_to_source_subfolders.each do |dependabot_package_manager, source_subfolders|
-            Dependabot::Linguist::list_of_package_managers_to_list_of_package_ecosystems([dependabot_package_manager]).each do |dependabot_package_ecosystem|
+            Dependabot::Linguist.list_of_package_managers_to_list_of_package_ecosystems([dependabot_package_manager]).each do |dependabot_package_ecosystem|
               if @map_dependabot_package_ecosystem_to_source_subfolders[dependabot_package_ecosystem].nil?
                 @map_dependabot_package_ecosystem_to_source_subfolders[dependabot_package_ecosystem] = []
               end
@@ -135,7 +135,7 @@ module Dependabot
       end
 
       def linguist_sources
-        @linguist_subfolders ||= linguist_subfolders.map { |subfolder| [subfolder, Dependabot::Source.new(provider: "github", repo: @repo_name, directory: subfolder)] }.to_h
+        @linguist_sources ||= linguist_subfolders.to_h { |subfolder| [subfolder, Dependabot::Source.new(provider: "github", repo: @repo_name, directory: subfolder)] }
       end
 
       def ecosystems_that_file_fetcher_fetches_files_for
@@ -153,9 +153,9 @@ module Dependabot
                   ecosystems_that_file_fetcher_fetches_files_for[package_ecosystem] |= [source.directory]
                   puts "-- Dependency files FOUND for package-ecosystem #{package_ecosystem} at #{source.directory}; #{fetcher.files.map(&:name)}"
                 end
-              rescue Dependabot::DependabotError => err
+              rescue Dependabot::DependabotError => e
                 # Most of these will be Dependabot::DependencyFileNotFound or Dependabot::PathDependenciesNotReachable
-                puts "-- Caught a DependabotError, #{err.class}, for package-ecosystem #{package_ecosystem} at #{source.directory}: #{err.message}"
+                puts "-- Caught a DependabotError, #{e.class}, for package-ecosystem #{package_ecosystem} at #{source.directory}: #{e.message}"
               end
             end
           end
