@@ -51,19 +51,14 @@ module Dependabot
       # is relevant to the language, and then merges the list of file paths for
       # that language into the list of file paths for each package manager!
       def directories_per_package_manager
-        @directories_per_package_manager ||= nil
-        if @directories_per_package_manager.nil?
-          @directories_per_package_manager = {}
+        @directories_per_package_manager ||= {}.then { |this|
           directories_per_linguist_language.each do |linguist_language, source_directories|
             Dependabot::Linguist.linguist_languages_to_package_managers([linguist_language]).each do |dependabot_package_manager|
-              if @directories_per_package_manager[dependabot_package_manager].nil?
-                @directories_per_package_manager[dependabot_package_manager] = []
-              end
-              @directories_per_package_manager[dependabot_package_manager] |= source_directories
+              this[dependabot_package_manager] = (this[dependabot_package_manager] || []) | source_directories
             end
           end
-        end
-        @directories_per_package_manager
+          this # An `X.each` block would return `X`; return "this" explicitly
+        }
       end
 
       # directories_per_package_ecosystem squashes the map of
