@@ -30,13 +30,17 @@ module Dependabot
         @linguist_cache ||= @linguist.cache
       end
 
+      # rubocop:disable Style/HashTransformValues, Style/BlockDelimiters, Style/MultilineBlockChain
+      # Disable these checks to demonstrate this style -- and the first `.to_h {...}` shouldn't be
+      # a `.transform_values {...}`` as the Style/HashTransformValues cop requests it to be.
+
       # directories_per_linguist_language inverts the linguist_cache map to
       # "<Language>" => ["<folder_path>", ...], a list of folders per language!
       def directories_per_linguist_language
         @directories_per_linguist_language ||= linguist_cache.keys.to_h { |source_file_path|
           # create the map "<file_path>" => "<folder_path>"
           [source_file_path, "/#{source_file_path.slice(0, source_file_path.rindex("/"))}"]
-        }.group_by { |source_file_path, source_folder_path|
+        }.group_by { |source_file_path, _source_folder_path|
           # create the map "<Language>" => [["<file_path>", "<folder_path>"], ...]
           linguist_cache[source_file_path][0]
         }.to_h { |linguist_language, file_then_folder_arr|
@@ -45,6 +49,8 @@ module Dependabot
           [linguist_language, file_then_folder_arr.map(&:last).uniq]
         }
       end
+
+      # rubocop:enable Style/HashTransformValues, Style/BlockDelimiters, Style/MultilineBlockChain
 
       # directories_per_package_manager splits and merges the results of
       # directories_per_linguist_language; split across each package manager that
