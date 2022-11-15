@@ -31,19 +31,19 @@ module Dependabot
       end
 
       # directories_per_linguist_language inverts the linguist_cache map to
-      # "<Language>" => ["<file_path>", ...], a list of file paths per language!
+      # "<Language>" => ["<folder_path>", ...], a list of folders per language!
       def directories_per_linguist_language
-        @directories_per_linguist_language ||= nil
-        if @directories_per_linguist_language.nil?
-          @directories_per_linguist_language = {}
-          linguist_cache.each do |source_file_path, lang_and_loc|
-            if @directories_per_linguist_language[lang_and_loc[0]].nil?
-              @directories_per_linguist_language[lang_and_loc[0]] = []
-            end
-            @directories_per_linguist_language[lang_and_loc[0]] |= ["/#{source_file_path.slice(0, source_file_path.rindex("/"))}"]
-          end
-        end
-        @directories_per_linguist_language
+        @directories_per_linguist_language ||= linguist_cache.keys.to_h { |source_file_path|
+          # create the map "<file_path>" => "<folder_path>"
+          [source_file_path, "/#{source_file_path.slice(0, source_file_path.rindex("/"))}"]
+        }.group_by { |source_file_path, source_folder_path|
+          # create the map "<Language>" => [["<file_path>", "<folder_path>"], ...]
+          linguist_cache[source_file_path][0]
+        }.to_h { |linguist_language, file_then_folder_arr|
+          # create the map "<Language>" => ["<folder_path>", ...] by taking the
+          # (&:last) out of each ["<file_path>", "<folder_path>"] pair, uniquely
+          [linguist_language, file_then_folder_arr.map(&:last).uniq]
+        }
       end
 
       # directories_per_package_manager splits and merges the results of
