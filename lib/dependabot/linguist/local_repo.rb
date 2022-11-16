@@ -40,7 +40,8 @@ module Dependabot
       def directories_per_linguist_language
         @directories_per_linguist_language ||= linguist_cache.keys.to_h { |source_file_path|
           # create the map "<file_path>" => "<folder_path>"
-          [source_file_path, "/#{source_file_path.slice(0, source_file_path.rindex("/"))}"]
+          p source_file_path
+          [source_file_path, "/#{source_file_path.slice(0, source_file_path.rindex("/") || 0)}"]
         }.group_by { |source_file_path, _source_folder_path|
           # create the map "<Language>" => [["<file_path>", "<folder_path>"], ...]
           linguist_cache[source_file_path][0]
