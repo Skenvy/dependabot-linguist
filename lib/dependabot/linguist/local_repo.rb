@@ -48,7 +48,6 @@ module Dependabot
       def directories_per_linguist_language
         @directories_per_linguist_language ||= linguist_cache.keys.to_h { |source_file_path|
           # create the map "<file_path>" => "<folder_path>"
-          p source_file_path
           [source_file_path, "/#{source_file_path.slice(0, source_file_path.rindex("/") || 0)}"]
         }.group_by { |source_file_path, _source_folder_path|
           # create the map "<Language>" => [["<file_path>", "<folder_path>"], ...]
@@ -72,6 +71,10 @@ module Dependabot
             Dependabot::Linguist.linguist_languages_to_package_managers([linguist_language]).each do |dependabot_package_manager|
               this[dependabot_package_manager] = (this[dependabot_package_manager] || []) | source_directories
             end
+          end
+          # GitHub Actions must be added seperately, if any yaml exist in the workflows folder.
+          if (directories_per_linguist_language["YAML"] || []).any? "/.github/workflows"
+            this[PackageManagers::GITHUB_ACTIONS] = ["/"]
           end
         end
       end

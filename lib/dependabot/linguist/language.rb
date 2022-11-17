@@ -39,11 +39,8 @@ module Linguist
     # from https://github.com/github/linguist/blob/v7.23.0/lib/linguist/vendor.yml
     # See https://ruby-doc.org/core-2.7.0/Regexp.html
     VendoredRegexp = Regexp.new(VendoredRegexp.source.gsub("(^|/)\\.gitmodules$|", ""))
+    # We also need to remove the "(^|/)\.github/" string (plus one of the adjacent "|"),
+    # to capture yaml files under .github/workflows/*.yaml
+    VendoredRegexp = Regexp.new(VendoredRegexp.source.gsub("|(^|/)\\.github/", ""))
   end
 end
-
-# To debug the files being processed, the below patches which add logging
-# comments to the Linguist.detect and Linguist::Repository::compute_stats to
-# surface the decisions it's making about why to process or not process.
-# They are all under https://github.com/github/linguist/blob/v7.23.0/LICENSE
-# Copyright (c) 2017 GitHub, Inc.
