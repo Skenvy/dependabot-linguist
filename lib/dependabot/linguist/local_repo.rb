@@ -176,14 +176,14 @@ module Dependabot
             ecosystem_classes = file_fetcher_class_per_package_ecosystem
           end
           ecosystem_classes.each do |package_ecosystem, file_fetcher_class|
-            directories_per_ecosystem_validated_by_dependabot[package_ecosystem] = []
+            @directories_per_ecosystem_validated_by_dependabot[package_ecosystem] = []
             puts "Spawning class instances for #{package_ecosystem}, in repo #{@repo_path}, class #{file_fetcher_class}"
             sources = directories_per_package_ecosystem[package_ecosystem].collect { |directories| linguist_sources[directories] } unless [1, 2].any? @ignore_linguist
             sources.each do |source|
               fetcher = file_fetcher_class.new(source: source, credentials: [], repo_contents_path: @repo_path, options: enable_options)
               begin
                 unless fetcher.files.map(&:name).empty?
-                  directories_per_ecosystem_validated_by_dependabot[package_ecosystem] |= [source.directory]
+                  @directories_per_ecosystem_validated_by_dependabot[package_ecosystem] |= [source.directory]
                   puts "-- Dependency files FOUND for package-ecosystem #{package_ecosystem} at #{source.directory}; #{fetcher.files.map(&:name)}"
                 end
               rescue Dependabot::DependabotError => e
@@ -193,6 +193,7 @@ module Dependabot
               end
             end
           end
+          @directories_per_ecosystem_validated_by_dependabot = @directories_per_ecosystem_validated_by_dependabot.sort.to_h
         end
         @directories_per_ecosystem_validated_by_dependabot
       end

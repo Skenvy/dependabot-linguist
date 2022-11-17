@@ -23,3 +23,39 @@ puts smoke_tests.directories_per_ecosystem_validated_by_dependabot
 # repo = Rugged::Repository.new(repo_path)
 # linguist = ::Linguist::Repository.new(repo, repo.head.target_id)
 # puts linguist.cache
+
+# ✅ "bundler"
+# ✅ "cargo"
+# ✅ "composer"
+# ✅ "docker"
+# ✅ "elm"
+# ❌ "github-actions" 🔵 (need to fix it to ALSO check for ANY `action.y[a]ml` file)
+# ✅ "gitsubmodule"
+# ✅ "gomod"
+# ✅ "gradle"
+# ✅ "maven"
+# ✅ "mix"
+# ✅ "npm"
+# ✅ "nuget"
+# ✅ "pip"
+# ✅ "pub"
+# ✅ "terraform"
+
+# {
+#   "bundler"=>["/", "/smoke-test/bundler"],
+#   "cargo"=>["/smoke-test/cargo"],
+#   "composer"=>["/smoke-test/composer"],
+#   "docker"=>["/smoke-test/docker"],
+#   "elm"=>["/smoke-test/elm"],
+#   "github-actions"=>["/"],
+#   "gitsubmodule"=>["/"],
+#   "gomod"=>["/smoke-test/go"],
+#   "gradle"=>["/smoke-test/gradle"],
+#   "maven"=>["/smoke-test/maven"],
+#   "mix"=>["/smoke-test/mix"],
+#   "npm"=>["/smoke-test/npm", "/smoke-test/npm/removed"],
+#   "nuget"=>["/smoke-test/nuget"],
+#   "pip"=>["/smoke-test/pip-compile", "/smoke-test/pip", "/smoke-test/pipenv", "/smoke-test/poetry"],
+#   "pub"=>["/smoke-test/pub"],
+#   "terraform"=>["/smoke-test/terraform"]
+# }
