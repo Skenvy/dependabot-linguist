@@ -148,7 +148,7 @@ module Dependabot
       end
 
       def all_ecosystem_classes
-        @all_ecosystem_classes ||= PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY.to_h { |k,v| [k, Dependabot::FileFetchers.for_package_manager(v)] }
+        @all_ecosystem_classes ||= PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY.transform_values { |k, v| [k, Dependabot::FileFetchers.for_package_manager(v)] }
       end
 
       # directories_per_ecosystem_validated_by_dependabot maps each identified
@@ -160,11 +160,6 @@ module Dependabot
           enable_options = { kubernetes_updates: true }
           @directories_per_ecosystem_validated_by_dependabot = {}
           case @ignore_linguist
-          when 0
-            # If ignore linguist is 0, we don't ignore it and rely
-            # on it to find sources and pick dependabot classes
-            sources = nil
-            ecosystem_classes = file_fetcher_class_per_package_ecosystem
           when 1
             # If ignore linguist is 1, we rely on it to block "vendored"
             # files from the sources, but we run all dependabot classes
@@ -174,14 +169,16 @@ module Dependabot
             # If ignore linguist is 2, we just don't use it at all.
             sources = all_sources
             ecosystem_classes = all_ecosystem_classes
-          else
+          else # when 0 is part of this.
+            # If ignore linguist is 0, we don't ignore it and rely
+            # on it to find sources and pick dependabot classes
             sources = nil
             ecosystem_classes = file_fetcher_class_per_package_ecosystem
           end
           ecosystem_classes.each do |package_ecosystem, file_fetcher_class|
             directories_per_ecosystem_validated_by_dependabot[package_ecosystem] = []
             puts "Spawning class instances for #{package_ecosystem}, in repo #{@repo_path}, class #{file_fetcher_class}"
-            sources = directories_per_package_ecosystem[package_ecosystem].collect { |directories| linguist_sources[directories] } if ![1, 2].any? @ignore_linguist
+            sources = directories_per_package_ecosystem[package_ecosystem].collect { |directories| linguist_sources[directories] } unless [1, 2].any? @ignore_linguist
             sources.each do |source|
               fetcher = file_fetcher_class.new(source: source, credentials: [], repo_contents_path: @repo_path, options: enable_options)
               begin

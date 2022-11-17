@@ -25,12 +25,8 @@ module Dependabot
         # Fetch the (optional) go.sum
         # fetched_files << go_sum if go_sum
         # fetched_files
-        fetched_files = []
-        if go_mod.nil?
-          raise(Dependabot::DependencyFileNotFound, Pathname.new(File.join(directory, "go.mod")).cleanpath.to_path)
-        else
-          fetched_files << go_mod
-        end
+        raise(Dependabot::DependencyFileNotFound, Pathname.new(File.join(directory, "go.mod")).cleanpath.to_path) if go_mod.nil?
+        fetched_files = [go_mod]
         fetched_files << go_sum unless go_sum.nil?
         fetched_files
         # end
