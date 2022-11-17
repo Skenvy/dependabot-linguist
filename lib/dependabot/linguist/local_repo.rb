@@ -14,7 +14,7 @@ module Dependabot
   module Linguist
     # LocalRepo allows utility of Linguist::Repository and Dependabot
     class LocalRepo
-      def initialize(repo_path, repo_name, ignore_linguist: 1)
+      def initialize(repo_path, repo_name, ignore_linguist: 0)
         @repo_path = repo_path.delete_suffix("/").chomp
         @repo_name = repo_name
         begin

@@ -36,7 +36,11 @@ module Dependabot
       # So we need to be more cautious with this and check it first.
       def fetch_files
         fetched_files = []
-        fetched_files << gitmodules_file unless gitmodules_file.nil?
+        if gitmodules_file.nil?
+          raise(Dependabot::DependencyFileNotFound, Pathname.new(File.join(directory, ".gitmodules")).cleanpath.to_path)
+        else
+          fetched_files << gitmodules_file
+        end
         # fetched_files += submodule_refs
         fetched_files
       end
