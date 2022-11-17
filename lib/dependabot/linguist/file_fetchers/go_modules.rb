@@ -3,9 +3,9 @@
 require "dependabot/go_modules"
 
 module Dependabot
-  # Patch to remove the online requirement for fetching go modules
   module GoModules
-    class FileFetcher 
+    # Patch to remove the online requirement for fetching go modules
+    class FileFetcher
       def fetch_files
         # # Ensure we always check out the full repo contents for go_module
         # # updates.

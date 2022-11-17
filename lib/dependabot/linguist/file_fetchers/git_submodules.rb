@@ -13,8 +13,8 @@ require "dependabot/git_submodules"
 # https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/managing-security-and-analysis-settings-for-your-organization#allowing-dependabot-to-access-private-dependencies
 
 module Dependabot
-  # Patch to remove the online requirement for fetching git submodules
   module GitSubmodules
+    # Patch to remove the online requirement for fetching git submodules
     class FileFetcher
       # required_files_in? only asserts the presence of a `.gitmodules` file
       # if the submodule referenced is private, then the network calls in
@@ -33,4 +33,3 @@ module Dependabot
     end
   end
 end
-
