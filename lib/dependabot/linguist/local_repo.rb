@@ -17,7 +17,14 @@ module Dependabot
       def initialize(repo_path, repo_name)
         @repo_path = repo_path.delete_suffix("/").chomp
         @repo_name = repo_name
-        @repo = Rugged::Repository.new(@repo_path)
+        begin
+          @repo = Rugged::Repository.new(@repo_path)
+        rescue Rugged::RepositoryError, Rugged::OSError
+          # Either the folder doesn't exist, or it does and doesn't have a `.git/`
+          # Try to clone into it, if it's public
+          puts "Repository #{@repo_name} not found at #{@repo_path}; falling back to cloning public url"
+          @repo = Rugged::Repository.clone_at("https://github.com/#{@repo_name}.git", @repo_path)
+        end
         @linguist = ::Linguist::Repository.new(@repo, @repo.head.target_id)
       end
 
