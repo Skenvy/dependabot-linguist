@@ -35,8 +35,10 @@ module Linguist
     # can't rely on the gitmodules to be unvendored in a `.gitattributes` and patching
     # https://github.com/github/linguist/blob/v7.23.0/lib/linguist/lazy_blob.rb#L35-L38 or
     # https://github.com/github/linguist/blob/v7.23.0/lib/linguist/lazy_blob.rb#L56-L62
-    # would be too cumbersome.
-    VendoredRegexp 
+    # would be too cumbersome. It also seems easier than duplicating the vendor patterns
+    # from https://github.com/github/linguist/blob/v7.23.0/lib/linguist/vendor.yml
+    # See https://ruby-doc.org/core-2.7.0/Regexp.html
+    VendoredRegexp = Regexp.new(VendoredRegexp.source.gsub("(^|/)\\.gitmodules$|", ""))
   end
 end
 
