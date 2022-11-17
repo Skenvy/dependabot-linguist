@@ -12,6 +12,11 @@ require "dependabot/git_submodules"
 # "Allowing Dependabot to access private dependencies" at the below link
 # https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/managing-security-and-analysis-settings-for-your-organization#allowing-dependabot-to-access-private-dependencies
 
+# Dependabot::FileFetchers::Base.load_cloned_file_if_present
+# https://github.com/dependabot/dependabot-core/blob/v0.212.0/common/lib/dependabot/file_fetchers/base.rb#L117-L137
+# Dependabot::FileFetchers::Base.fetch_file_if_present
+# https://github.com/dependabot/dependabot-core/blob/v0.212.0/common/lib/dependabot/file_fetchers/base.rb#L93-L115
+
 module Dependabot
   module GitSubmodules
     # Patch to remove the online requirement for fetching git submodules
@@ -19,9 +24,19 @@ module Dependabot
       # required_files_in? only asserts the presence of a `.gitmodules` file
       # if the submodule referenced is private, then the network calls in
       # `submodule_refs` might break the runner.
+      # If Dependabot::FileFetchers::Base.load_cloned_file_if_present can't
+      # see the file, it'll `raise Dependabot::DependencyFileNotFound` --
+      # which will make Dependabot::FileFetchers::Base.fetch_file_if_present
+      # `return` which will add nil to the list of fetched_files --
+      # i.e.
+      # def woah
+      #   return
+      # end
+      # [] << woah # is [nil]
+      # So we need to be more cautious with this and check it first.
       def fetch_files
         fetched_files = []
-        fetched_files << gitmodules_file
+        fetched_files << gitmodules_file unless gitmodules_file.nil?
         # fetched_files += submodule_refs
         fetched_files
       end

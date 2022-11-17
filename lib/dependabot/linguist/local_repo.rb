@@ -14,7 +14,7 @@ module Dependabot
   module Linguist
     # LocalRepo allows utility of Linguist::Repository and Dependabot
     class LocalRepo
-      def initialize(repo_path, repo_name)
+      def initialize(repo_path, repo_name, ignore_linguist: 1)
         @repo_path = repo_path.delete_suffix("/").chomp
         @repo_name = repo_name
         begin
@@ -25,7 +25,8 @@ module Dependabot
           puts "Repository #{@repo_name} not found at #{@repo_path}; falling back to cloning public url"
           @repo = Rugged::Repository.clone_at("https://github.com/#{@repo_name}.git", @repo_path)
         end
-        @linguist = ::Linguist::Repository.new(@repo, @repo.head.target_id)
+        @ignore_linguist = [[0, ignore_linguist].max, 2].min
+        @linguist = ::Linguist::Repository.new(@repo, @repo.head.target_id) # unless ignore_linguist.equal? 2
       end
 
       def linguist_languages
@@ -146,6 +147,10 @@ module Dependabot
         @linguist_sources ||= linguist_directories.to_h { |directory| [directory, Dependabot::Source.new(provider: "github", repo: @repo_name, directory: directory)] }
       end
 
+      def all_ecosystem_classes
+        @all_ecosystem_classes ||= PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY.to_h { |k,v| [k, Dependabot::FileFetchers.for_package_manager(v)] }
+      end
+
       # directories_per_ecosystem_validated_by_dependabot maps each identified
       # present ecosystem to a list of the directories that linguist found files
       # for, that were then validated by running the file_fetcher files on them.
@@ -154,10 +159,29 @@ module Dependabot
         if @directories_per_ecosystem_validated_by_dependabot.nil?
           enable_options = { kubernetes_updates: true }
           @directories_per_ecosystem_validated_by_dependabot = {}
-          file_fetcher_class_per_package_ecosystem.each do |package_ecosystem, file_fetcher_class|
+          case @ignore_linguist
+          when 0
+            # If ignore linguist is 0, we don't ignore it and rely
+            # on it to find sources and pick dependabot classes
+            sources = nil
+            ecosystem_classes = file_fetcher_class_per_package_ecosystem
+          when 1
+            # If ignore linguist is 1, we rely on it to block "vendored"
+            # files from the sources, but we run all dependabot classes
+            sources = linguist_sources.values
+            ecosystem_classes = all_ecosystem_classes
+          when 2
+            # If ignore linguist is 2, we just don't use it at all.
+            sources = all_sources
+            ecosystem_classes = all_ecosystem_classes
+          else
+            sources = nil
+            ecosystem_classes = file_fetcher_class_per_package_ecosystem
+          end
+          ecosystem_classes.each do |package_ecosystem, file_fetcher_class|
             directories_per_ecosystem_validated_by_dependabot[package_ecosystem] = []
             puts "Spawning class instances for #{package_ecosystem}, in repo #{@repo_path}, class #{file_fetcher_class}"
-            sources = directories_per_package_ecosystem[package_ecosystem].collect { |directories| linguist_sources[directories] } # all_sources
+            sources = directories_per_package_ecosystem[package_ecosystem].collect { |directories| linguist_sources[directories] } if ![1, 2].any? @ignore_linguist
             sources.each do |source|
               fetcher = file_fetcher_class.new(source: source, credentials: [], repo_contents_path: @repo_path, options: enable_options)
               begin
