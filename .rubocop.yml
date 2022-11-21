@@ -5,6 +5,7 @@ AllCops:
   # NewCops: enable # would silence the recommendation
   # # to enable new, but would hide which ones were run
   Exclude:
+  - 'vendor/**/*'
   - 'smoke-test/bundler/*'
 
 Gemspec/DeprecatedAttributeAssignment:
