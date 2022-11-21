@@ -7,6 +7,7 @@ AllCops:
   Exclude:
   - 'vendor/**/*'
   - 'smoke-test/bundler/*'
+  - 'spec/dependabot/*_spec.rb'
 
 Gemspec/DeprecatedAttributeAssignment:
   Enabled: true
