@@ -23,7 +23,7 @@ jobs:
   quick-test:
     name: 🔻 Quick Test 🦂
     if: ${{ github.event_name == 'push' && !(github.event.ref == 'refs/heads/main') }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - name: 🏁 Checkout
       uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
@@ -46,7 +46,7 @@ jobs:
       fail-fast: false
       matrix:
         version: ['2.7.0', '3.0', '3.1']
-        os: [ubuntu-20.04, macOS-latest, windows-latest]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
     steps:
     - name: 🏁 Checkout
       uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
@@ -61,7 +61,7 @@ jobs:
       run: make test
   codeql:
     name: 🔻 CodeQL 🛡👨‍💻🛡
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     if: >- 
       ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'push' && github.event.ref == 'refs/heads/main') }}
@@ -85,7 +85,7 @@ jobs:
         category: "/language:ruby"
   docs:
     name: 🔻 Docs 📄 Quick Test 🦂
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - name: 🏁 Checkout
       uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
