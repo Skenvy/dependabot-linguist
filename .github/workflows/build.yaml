@@ -22,7 +22,7 @@ jobs:
     uses: ./.github/workflows/test.yaml
   workflow-conditions:
     name: 🛑🛑🛑 Stop builds that didn't change the release version 🛑🛑🛑
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     outputs:
       version-file-changed: ${{ steps.version-file-check.outputs.version-file-changed }}
       version-tag-exists: ${{ steps.version-tag-exists.outputs.version-tag-exists }}
@@ -56,7 +56,7 @@ jobs:
     if: >-
       ${{ ((fromJSON(needs.workflow-conditions.outputs.version-file-changed) == true && github.event_name == 'push') ||
       github.event_name == 'workflow_dispatch') && fromJSON(needs.workflow-conditions.outputs.version-tag-exists) == false }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: 🏁 Checkout
       uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
@@ -80,7 +80,7 @@ jobs:
     needs: [build]
     permissions:
       contents: write
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: 🏁 Checkout
       uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
@@ -100,7 +100,7 @@ jobs:
     needs: [release]
     permissions:
       packages: write
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     # Although the dists are built uses checkout to satisfy refs/tags existence
     # which were created by the release, prior to uploading to pypi.
@@ -139,7 +139,7 @@ jobs:
     needs: [release, publish]
     permissions:
       contents: write
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: 🏁 Checkout
       uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
