@@ -93,7 +93,8 @@ module Dependabot
           (files_per_linguist_language["YAML"] || []).each do |source_file_path|
             # File paths aren't cleaned from linguist, so prepend the '/' here.
             # This lets it match the \/ before action.ya?ml if it's in the root dir.
-            action_match = "/#{source_file_path}".match /(?<dir>\S*)\/(?<file>action\.ya?ml)$/
+            # /(?<dir>\S*)\/(?<file>action\.ya?ml)$/
+            action_match = "/#{source_file_path}".match %r{(?<dir>\S*)/(?<file>action\.ya?ml)$}
             if action_match
               # But that also means we then need to check if dir is empty, if it's the root dir
               if action_match[:dir].empty?
