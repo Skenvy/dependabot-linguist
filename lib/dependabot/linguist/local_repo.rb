@@ -220,7 +220,7 @@ module Dependabot
               end
             end
           end
-          @directories_per_ecosystem_validated_by_dependabot = @directories_per_ecosystem_validated_by_dependabot.sort.to_h
+          @directories_per_ecosystem_validated_by_dependabot = @directories_per_ecosystem_validated_by_dependabot.delete_if { |_, v| v.empty? }.sort.to_h
         end
         @directories_per_ecosystem_validated_by_dependabot
       end

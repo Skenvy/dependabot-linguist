@@ -2,7 +2,7 @@
 
 require "dependabot/linguist"
 # smoke_tests = Dependabot::Linguist::LocalRepo.new("../smoke-tests", "Skenvy/smoke-tests")
-smoke_tests = Dependabot::Linguist::LocalRepo.new(".", "Skenvy/smoke-tests")
+smoke_tests = Dependabot::Linguist::LocalRepo.new("./smoke-test/actions", "Skenvy/smoke-tests")
 # puts smoke_tests.all_sources
 puts ""
 puts smoke_tests.linguist_cache
