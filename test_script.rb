@@ -21,6 +21,10 @@ puts smoke_tests.directories_per_ecosystem_validated_by_dependabot
 puts ""
 validator = Dependabot::Linguist::DependabotFileValidator.new(repo_path)
 puts validator.existing_config
+puts ""
+puts validator.load_ecosystem_directories(incoming: smoke_tests.directories_per_ecosystem_validated_by_dependabot)
+puts ""
+puts validator.config_drift
 
 # require "rugged"
 # require "linguist"
