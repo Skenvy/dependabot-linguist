@@ -44,6 +44,17 @@ module Dependabot
       # Disable these checks to demonstrate this style -- and the first `.to_h {...}` shouldn't be
       # a `.transform_values {...}`` as the Style/HashTransformValues cop requests it to be.
 
+      # files_per_linguist_language inverts the linguist_cache map to
+      # "<Language>" => ["<file_path>", ...], a list of files per language!
+      # Note that they are not cleaned in the same way the folder paths in
+      # each of the "directories per *" are prepended with a '/'.
+      def files_per_linguist_language
+        @files_per_linguist_language ||= linguist_cache.keys.group_by { |source_file_path|
+          # create the map "<Language>" => ["<file_path>", ...]
+          linguist_cache[source_file_path][0]
+        }
+      end
+
       # directories_per_linguist_language inverts the linguist_cache map to
       # "<Language>" => ["<folder_path>", ...], a list of folders per language!
       def directories_per_linguist_language
@@ -73,9 +84,24 @@ module Dependabot
               this[dependabot_package_manager] = (this[dependabot_package_manager] || []) | source_directories
             end
           end
-          # GitHub Actions must be added seperately, if any yaml exist in the workflows folder.
+          # GitHub Actions must be added seperately..
+          # if any yaml exist in the workflows folder, it needs to be added at "/"
           if (directories_per_linguist_language["YAML"] || []).any? "/.github/workflows"
             this[PackageManagers::GITHUB_ACTIONS] = ["/"]
+          end
+          # Because actions are handled like this we also need to regexp for /\/action\.ya?ml$/
+          (files_per_linguist_language["YAML"] || []).each do |source_file_path|
+            # File paths aren't cleaned from linguist, so prepend the '/' here.
+            # This lets it match the \/ before action.ya?ml if it's in the root dir.
+            action_match = "/#{source_file_path}".match /(?<dir>\S*)\/(?<file>action\.ya?ml)$/
+            if action_match
+              # But that also means we then need to check if dir is empty, if it's the root dir
+              if action_match[:dir].empty?
+                this[PackageManagers::GITHUB_ACTIONS] = (this[PackageManagers::GITHUB_ACTIONS] || []) | ["/"]
+              else
+                this[PackageManagers::GITHUB_ACTIONS] = (this[PackageManagers::GITHUB_ACTIONS] || []) | [action_match[:dir]]
+              end
+            end
           end
         end
       end
