@@ -28,7 +28,7 @@ module Dependabot
         else # rubocop:disable Layout/ElseAlignment
           @existing_config = {}
           YML_FILE_PATH
-        end
+        end # rubocop:disable Layout/EndAlignment
       end
 
       def existing_config
@@ -60,7 +60,7 @@ module Dependabot
       end
 
       def config_drift
-        @config_drift ||= {}.tap do |this|
+        @config_drift ||= {}.tap do |this| # rubocop:disable Metrics/BlockLength, Lint/UnusedBlockArgument
           ecodir_list = self.class.flatten_ecodirs_to_ecodir(load_ecosystem_directories)
           ecodir_list.each do |checking_ecodir|
             if !existing_config.empty? && !existing_config["updates"].nil?
