@@ -2,11 +2,11 @@
 
 require "rugged"
 require_relative "linguist_patch"
+require_relative "languages_to_ecosystems/main"
 require "dependabot/source"
 require "dependabot/errors"
 require "dependabot/omnibus"
 require_relative "dependabot_patch"
-require_relative "language_to_ecosystem"
 
 module Dependabot
   module Linguist
