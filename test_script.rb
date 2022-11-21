@@ -2,7 +2,8 @@
 
 require "dependabot/linguist"
 # smoke_tests = Dependabot::Linguist::LocalRepo.new("../smoke-tests", "Skenvy/smoke-tests")
-smoke_tests = Dependabot::Linguist::LocalRepo.new(".", "Skenvy/smoke-tests") # /smoke-test/actions
+repo_path = "." # /smoke-test/actions
+smoke_tests = Dependabot::Linguist::Repository.new(repo_path, "Skenvy/smoke-tests")
 # puts smoke_tests.all_sources
 puts ""
 puts smoke_tests.linguist_cache
@@ -17,6 +18,9 @@ puts smoke_tests.directories_per_package_ecosystem
 puts ""
 # puts smoke_tests.file_fetcher_class_per_package_ecosystem
 puts smoke_tests.directories_per_ecosystem_validated_by_dependabot
+puts ""
+validator = Dependabot::Linguist::DependabotFileValidator.new(repo_path)
+puts validator.existing_config
 
 # require "rugged"
 # require "linguist"

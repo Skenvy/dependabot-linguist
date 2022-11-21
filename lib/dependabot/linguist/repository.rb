@@ -10,10 +10,13 @@ require_relative "dependabot_patch"
 
 module Dependabot
   module Linguist
-    # LocalRepo allows utility of Linguist::Repository and Dependabot
-    class LocalRepo
+    # Repository wraps a Linguist::Repository, to discover "linguist languages"
+    # present in a repository, then maps them to Dependabot Ecosystems, finally
+    # verifying that those ecosystems are valid for the places linguist found
+    # the languages it thought was relevant to each dependabot ecosystem.
+    class Repository
       def initialize(repo_path, repo_name, ignore_linguist: 0)
-        @repo_path = repo_path.delete_suffix("/").chomp
+        @repo_path = repo_path.chomp.delete_suffix("/")
         @repo_name = repo_name
         begin
           @repo = Rugged::Repository.new(@repo_path)
@@ -24,9 +27,10 @@ module Dependabot
           @repo = Rugged::Repository.clone_at("https://github.com/#{@repo_name}.git", @repo_path)
         end
         @ignore_linguist = [[0, ignore_linguist].max, 2].min
-        @linguist = ::Linguist::Repository.new(@repo, @repo.head.target_id) # unless ignore_linguist.equal? 2
+        @linguist = ::Linguist::Repository.new(@repo, @repo.head.target_id)
       end
 
+      # Wraps Linguist::Repository.new(~).languages
       def linguist_languages
         @linguist_languages ||= @linguist.languages
       end

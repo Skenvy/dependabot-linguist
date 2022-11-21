@@ -1,8 +1,7 @@
 ##################################################################################################################
 # This file is a snapshot of https://github.com/github/linguist/blob/v7.23.0/lib/linguist/languages.yml
 # and as such is under linguist's MIT license https://github.com/github/linguist/blob/v7.23.0/LICENSE
-# Only this top comment has been modified; the data is unchanged. This file is not read in and used
-# outside of it's inclusion via `require 'linguist'`; it is a few seconds quicker to access this way.
+# Only this top comment has been modified; the data is unchanged.
 # -- MIT License; with: Copyright (c) 2017 GitHub, Inc.
 ##################################################################################################################
 
