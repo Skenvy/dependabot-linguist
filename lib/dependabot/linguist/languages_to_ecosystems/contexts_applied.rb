@@ -8,7 +8,7 @@ require_relative "contexts"
 
 module Dependabot
   module Linguist # rubocop:disable Style/Documentation
-    languages_yaml = File.expand_path("./languages.yaml",  __dir__)
+    languages_yaml = File.expand_path("./languages.yaml", __dir__)
     languages = YAML.load_file(languages_yaml)
 
     # LANGUAGE_TO_PACKAGE_MANAGER should map any language linguist can discover,

@@ -10,7 +10,7 @@
 # https://github.com/dependabot/dependabot-core/blob/v0.212.0/common/lib/dependabot/file_fetchers.rb#L14-L16
 
 module Dependabot
-  module Linguist # rubocop:disable Style/Documentation
+  module Linguist
     # PackageManagers is the "Package Manager" list on "#package-ecosystem"
     module PackageManagers
       # Bundler; the ruby package manager.

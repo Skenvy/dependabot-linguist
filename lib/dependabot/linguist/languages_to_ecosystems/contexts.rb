@@ -12,6 +12,8 @@
 
 require_relative "manager_ecosystem_maps"
 
+# rubocop:disable Metrics/ModuleLength
+
 module Dependabot
   module Linguist # rubocop:disable Style/Documentation
     # ContextRule are the impetus for a certain language
@@ -54,7 +56,7 @@ module Dependabot
       PackageManagers::PUB => {},
       PackageManagers::TERRAFORM => {},
       PackageManagers::YARN => {}
-    }
+  }.freeze # rubocop:disable Layout/FirstHashElementIndentation
 
     ##
     CONTEXT_RULES[PackageManagers::BUNDLER][ContextRule::FETCH_FILES] = [
@@ -228,3 +230,5 @@ module Dependabot
     CONTEXT_RULES[PackageManagers::YARN][ContextRule::RELEVANT_LANGUAGES] = ["CoffeeScript"]
   end
 end
+
+# rubocop:enable Metrics/ModuleLength
