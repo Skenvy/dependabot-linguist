@@ -1,0 +1,83 @@
+bundler:
+- dir: "."
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+cargo:
+- dir: "."
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+composer:
+- dir: "."
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+docker:
+- dir: "."
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+elm:
+- dir: "."
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+github-actions:
+- dir: "invalid"
+  directories_per_ecosystem_validated_by_dependabot: nil
+- dir: "yaml"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+- dir: "workflow"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+- dir: "both"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+  - "/yaml"
+gitsubmodule:
+- dir: "."
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+gomod:
+- dir: "."
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+gradle:
+- dir: "."
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+maven:
+- dir: "."
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+mix:
+- dir: "."
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+npm:
+- dir: "."
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+  - "/removed"
+nuget:
+- dir: "."
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+pip:
+- dir: "pip-compile"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+- dir: "pip"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+- dir: "pipenv"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+- dir: "poetry"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+pub:
+- dir: "."
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+terraform:
+- dir: "."
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"

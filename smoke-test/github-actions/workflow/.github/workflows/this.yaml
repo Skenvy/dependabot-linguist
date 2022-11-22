@@ -1,0 +1,11 @@
+name: A workflow file
+on: push
+permissions: {}
+defaults:
+  run:
+    shell: bash
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo example

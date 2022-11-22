@@ -14,7 +14,10 @@ RSpec.describe ::Dependabot::Linguist::Repository do
   TEST_CONFIG["composer"].append({dir: ".", directories_per_ecosystem_validated_by_dependabot: ["/"]})
   TEST_CONFIG["docker"].append({dir: ".", directories_per_ecosystem_validated_by_dependabot: ["/"]})
   TEST_CONFIG["elm"].append({dir: ".", directories_per_ecosystem_validated_by_dependabot: ["/"]})
-  TEST_CONFIG["github-actions"].append({dir: ".", directories_per_ecosystem_validated_by_dependabot: ["/"]})
+  TEST_CONFIG["github-actions"].append({dir: "invalid", directories_per_ecosystem_validated_by_dependabot: nil})
+  TEST_CONFIG["github-actions"].append({dir: "yaml", directories_per_ecosystem_validated_by_dependabot: ["/"]})
+  TEST_CONFIG["github-actions"].append({dir: "workflow", directories_per_ecosystem_validated_by_dependabot: ["/"]})
+  TEST_CONFIG["github-actions"].append({dir: "both", directories_per_ecosystem_validated_by_dependabot: ["/", "/yaml"]})
   TEST_CONFIG["gitsubmodule"].append({dir: ".", directories_per_ecosystem_validated_by_dependabot: ["/"]})
   TEST_CONFIG["gomod"].append({dir: ".", directories_per_ecosystem_validated_by_dependabot: ["/"]})
   TEST_CONFIG["gradle"].append({dir: ".", directories_per_ecosystem_validated_by_dependabot: ["/"]})
@@ -48,8 +51,12 @@ RSpec.describe ::Dependabot::Linguist::Repository do
           @UUT = Dependabot::Linguist::Repository.new("./smoke-test/#{file_fetcher}/#{test_config[:dir]}", "Skenvy/dependabot-linguits")
         end
 
-        it "does something useful" do
-          expect(@UUT.directories_per_ecosystem_validated_by_dependabot).to eq({"#{file_fetcher}" => test_config[:directories_per_ecosystem_validated_by_dependabot]})
+        it "validates which directories satisfy the ecosystem's file fetcher" do
+          if test_config[:directories_per_ecosystem_validated_by_dependabot]
+            expect(@UUT.directories_per_ecosystem_validated_by_dependabot).to eq({"#{file_fetcher}" => test_config[:directories_per_ecosystem_validated_by_dependabot]})
+          else
+            expect(@UUT.directories_per_ecosystem_validated_by_dependabot).to eq({})
+          end
         end
 
         after(:context) do
