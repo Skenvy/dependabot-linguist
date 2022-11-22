@@ -1,83 +1,90 @@
+# <ecosystem-name>:
+# # folder under the folder with the name of the <ecosystem-name>
+# # i.e. "abc" traslates to a path of <repo>/smoke-test/<ecosystem-name>/abc/
+# - dir: "."
+#   validated_directories: # output of directories_per_ecosystem_validated_by_dependabot
+#   - "/" # List of dirs that should be mapped to by <ecosystem-name>
+#   # Or none (and no validated_directories: key) if there shouldn't be any valid dirs
+
 bundler:
 - dir: "."
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 cargo:
 - dir: "."
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 composer:
 - dir: "."
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 docker:
 - dir: "."
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 elm:
 - dir: "."
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 github-actions:
 - dir: "invalid"
-  directories_per_ecosystem_validated_by_dependabot: nil
 - dir: "yaml"
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 - dir: "workflow"
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 - dir: "both"
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
   - "/yaml"
 gitsubmodule:
 - dir: "."
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 gomod:
 - dir: "."
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 gradle:
 - dir: "."
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 maven:
 - dir: "."
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 mix:
 - dir: "."
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 npm:
 - dir: "."
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
   - "/removed"
 nuget:
 - dir: "."
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 pip:
 - dir: "pip-compile"
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 - dir: "pip"
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 - dir: "pipenv"
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 - dir: "poetry"
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 pub:
 - dir: "."
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
 terraform:
 - dir: "."
-  directories_per_ecosystem_validated_by_dependabot:
+  validated_directories:
   - "/"
