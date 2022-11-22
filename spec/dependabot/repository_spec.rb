@@ -1,40 +1,33 @@
 # frozen_string_literal: true
 
+require "fileutils"
 require "rugged"
 
 RSpec.describe ::Dependabot::Linguist::Repository do
-  it "has a version number" do
-    expect(Dependabot::Linguist::VERSION).not_to be nil
-  end
-
-  it "does something useful" do
-    expect(false).to eq(false)
-  end
-
+  # Wrap a repeated context block in an each on a set of configs per ecosystem.
   test_config = {}
 
   # This should validate for all ::Dependabot::Linguist::PackageEcosystems
   # it "validates all ecosystems" do
-  test_config["bundler"] = ["/"]
-  test_config["cargo"] = ["/"]
-  test_config["composer"] = ["/"]
-  test_config["docker"] = ["/"]
-  test_config["elm"] = ["/"]
-  test_config["github-actions"] = ["/"]
-  test_config["gitsubmodule"] = ["/"]
-  test_config["gomod"] = ["/"]
-  test_config["gradle"] = ["/"]
-  test_config["maven"] = ["/"]
-  test_config["mix"] = ["/"]
-  test_config["npm"] = ["/", "/removed"]
-  test_config["nuget"] = ["/"]
-  test_config["pip"] = ["/pip-compile", "/pip", "/pipenv", "/poetry"]
-  test_config["pub"] = ["/"]
-  test_config["terraform"] = ["/"]
+  test_config["bundler"] = {directories_per_ecosystem_validated_by_dependabot: ["/"]}
+  test_config["cargo"] = {directories_per_ecosystem_validated_by_dependabot: ["/"]}
+  test_config["composer"] = {directories_per_ecosystem_validated_by_dependabot: ["/"]}
+  test_config["docker"] = {directories_per_ecosystem_validated_by_dependabot: ["/"]}
+  test_config["elm"] = {directories_per_ecosystem_validated_by_dependabot: ["/"]}
+  test_config["github-actions"] = {directories_per_ecosystem_validated_by_dependabot: ["/"]}
+  test_config["gitsubmodule"] = {directories_per_ecosystem_validated_by_dependabot: ["/"]}
+  test_config["gomod"] = {directories_per_ecosystem_validated_by_dependabot: ["/"]}
+  test_config["gradle"] = {directories_per_ecosystem_validated_by_dependabot: ["/"]}
+  test_config["maven"] = {directories_per_ecosystem_validated_by_dependabot: ["/"]}
+  test_config["mix"] = {directories_per_ecosystem_validated_by_dependabot: ["/"]}
+  test_config["npm"] = {directories_per_ecosystem_validated_by_dependabot: ["/", "/removed"] }
+  test_config["nuget"] = {directories_per_ecosystem_validated_by_dependabot: ["/"]}
+  test_config["pip"] = {directories_per_ecosystem_validated_by_dependabot: ["/pip-compile", "/pip", "/pipenv", "/poetry"] }
+  test_config["pub"] = {directories_per_ecosystem_validated_by_dependabot: ["/"]}
+  test_config["terraform"] = {directories_per_ecosystem_validated_by_dependabot: ["/"]}
   # end
 
-  ::Dependabot::Linguist::PackageEcosystems.constants.each do |file_fetcher_c|
-    file_fetcher = ::Dependabot::Linguist::PackageEcosystems.const_get file_fetcher_c
+  test_config.each_key do |file_fetcher|
     context "#{file_fetcher}" do
       before(:context) do
         # Path is relative to rspec running from repo root.
@@ -53,7 +46,11 @@ RSpec.describe ::Dependabot::Linguist::Repository do
       end
 
       it "does something useful" do
-        expect(@UUT.directories_per_ecosystem_validated_by_dependabot).to eq({"#{file_fetcher}" => test_config[file_fetcher]})
+        expect(@UUT.directories_per_ecosystem_validated_by_dependabot).to eq({"#{file_fetcher}" => test_config[file_fetcher][:directories_per_ecosystem_validated_by_dependabot]})
+      end
+
+      after(:context) do
+        FileUtils.rm_rf("./smoke-test/#{file_fetcher}/.git")
       end
     end
   end
