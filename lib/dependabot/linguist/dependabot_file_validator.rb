@@ -9,11 +9,12 @@ module Dependabot
     # to meet the suggested entried to the updates list coming from repository's
     # directories_per_ecosystem_validated_by_dependabot
     class DependabotFileValidator
-      def initialize(repo_path, remove_undiscovered: false, update_existing: true, minimum_interval: "weekly", verbose: false)
+      def initialize(repo_path, remove_undiscovered: false, update_existing: true, minimum_interval: "weekly", max_open_pull_requests_limit: 5, verbose: false)
         @repo = Rugged::Repository.new(repo_path)
         @remove_undiscovered = remove_undiscovered
         @update_existing = update_existing
         @minimum_interval = minimum_interval
+        @max_open_pull_requests_limit = [max_open_pull_requests_limit, 0].max
         @verbose = verbose
         @load_ecosystem_directories ||= nil
       end
@@ -30,7 +31,7 @@ module Dependabot
         elsif @repo.blob_at(@repo.head.target_id, YAML_FILE_PATH) # rubocop:disable Layout/ElseAlignment
           YAML_FILE_PATH
         else # rubocop:disable Layout/ElseAlignment
-          @existing_config = { "version" => 2 }
+          @existing_config = { "version" => 2, "updates" => [] }
           YML_FILE_PATH
         end # rubocop:disable Layout/EndAlignment
       end
@@ -148,15 +149,42 @@ module Dependabot
                 else
                   existing_update["schedule"] = { "interval" => parsed_schedule_interval("monthly") }
                 end
+                # Confirm the open-pull-requests-limit
+                if @max_open_pull_requests_limit != 5
+                  if existing_update["open-pull-requests-limit"]
+                    existing_update["open-pull-requests-limit"] = [existing_update["open-pull-requests-limit"], @max_open_pull_requests_limit].min
+                  else
+                    existing_update["open-pull-requests-limit"] = @max_open_pull_requests_limit
+                  end
+                end
               end
             end
           end
           config_drift[ConfigDriftStatus::TO_BE_ADDED].each do |tba|
             new_update = { "package-ecosystem" => tba[0], "directory" => tba[1] }
             new_update["schedule"] = { "interval" => parsed_schedule_interval("monthly") }
+            new_update["open-pull-requests-limit"] = @max_open_pull_requests_limit if @max_open_pull_requests_limit != 5
             this["updates"].append(new_update)
           end
         end
+      end
+
+      def write_new_config
+        File.open("#{@repo.path.delete_suffix("/.git/")}/#{dependabot_file_path}", "w") { |file| file.write(new_config.to_yaml) }
+      end
+
+      # The expected environment to run this final step in should have 'git' AND
+      # 'gh' available as commands to run, and calls out to a subshell to run
+      # them as set up by the environment that runs this, rather than requiring
+      # credentials being provided to this class.
+      def commit_new_config
+        new_branch = @repo.create_branch("dependabot-linguist_auto-config-update")
+        write_new_config
+        in_repo = "cd #{@repo.path} &&"
+        `#{"#{in_repo} git add #{dependabot_file_path}"}`
+        `#{"#{in_repo} git commit -m \"Auto update #{dependabot_file_path} -- dependabot-linguist\""}`
+        `#{"#{in_repo} git push --set-upstream #{@repo.remotes["origin"].name} #{new_branch.name}"}`
+        `#{"#{in_repo} gh pr create --fill"}`
       end
     end
   end

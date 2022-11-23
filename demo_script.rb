@@ -46,3 +46,5 @@ puts "\nDetermine the drift in configuration -- what already exists, and what sh
 puts validator.config_drift.to_yaml
 puts "\nOutput the recommended 'new' config for the dependabot file.\n"
 puts validator.new_config.to_yaml
+puts "\nWrite the new config to the dependabot file\n"
+puts validator.write_new_config
