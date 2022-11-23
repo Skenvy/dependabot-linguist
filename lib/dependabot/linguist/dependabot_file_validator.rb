@@ -76,7 +76,7 @@ module Dependabot
 
       def config_drift
         confirm_config_version_is_valid
-        @config_drift ||= {}.tap do |this| # rubocop:disable Metrics/BlockLength
+        @config_drift ||= {}.tap do |this|
           ecodir_list = self.class.flatten_ecodirs_to_ecodir(load_ecosystem_directories)
           this[ConfigDriftStatus::ALREADY_IN] = []
           this[ConfigDriftStatus::TO_BE_ADDED] = []

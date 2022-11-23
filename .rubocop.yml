@@ -6,7 +6,7 @@ AllCops:
   # # to enable new, but would hide which ones were run
   Exclude:
   - 'vendor/**/*'
-  - 'smoke-test/bundler/*'
+  - 'smoke-test/**/*'
   - 'spec/dependabot/*_spec.rb'
 
 Gemspec/DeprecatedAttributeAssignment:
@@ -46,7 +46,7 @@ Layout/SpaceBeforeBrackets:
 Metrics/AbcSize:
   Enabled: false
 Metrics/BlockLength:
-  AllowedMethods: ['describe', 'context']
+  AllowedMethods: ['describe', 'context', 'tap']
 Metrics/BlockNesting:
   Enabled: false
 Metrics/ClassLength:
@@ -146,7 +146,7 @@ Style/FetchEnvVar:
 Style/FileRead:
   Enabled: true
 Style/FileWrite:
-  Enabled: true
+  Enabled: false
 Style/For:
   Enabled: false
 Style/HashConversion:
