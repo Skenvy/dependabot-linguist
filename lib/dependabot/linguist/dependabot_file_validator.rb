@@ -30,7 +30,7 @@ module Dependabot
         elsif @repo.blob_at(@repo.head.target_id, YAML_FILE_PATH) # rubocop:disable Layout/ElseAlignment
           YAML_FILE_PATH
         else # rubocop:disable Layout/ElseAlignment
-          @existing_config = {"version": 2}
+          @existing_config = { "version" => 2 }
           YML_FILE_PATH
         end # rubocop:disable Layout/EndAlignment
       end
@@ -41,7 +41,7 @@ module Dependabot
         @existing_config ||= YAML.safe_load(@repo.blob_at(@repo.head.target_id, dependabot_file_path).content)
       end
 
-      def confirm_config_is_version_2
+      def confirm_config_version_is_valid
         raise StandardError("The existing config has a version other than 2") unless existing_config["version"] == 2
       end
 
@@ -74,8 +74,8 @@ module Dependabot
       end
 
       def config_drift
-        confirm_config_is_version_2
-        @config_drift ||= {}.tap do |this| # rubocop:disable Metrics/BlockLength, Lint/UnusedBlockArgument
+        confirm_config_version_is_valid
+        @config_drift ||= {}.tap do |this| # rubocop:disable Metrics/BlockLength
           ecodir_list = self.class.flatten_ecodirs_to_ecodir(load_ecosystem_directories)
           this[ConfigDriftStatus::ALREADY_IN] = []
           this[ConfigDriftStatus::TO_BE_ADDED] = []
@@ -119,20 +119,20 @@ module Dependabot
       def parsed_schedule_interval(interval)
         intervals = ["daily", "weekly", "monthly"].freeze
         if intervals.any? @minimum_interval
-          intervals[[intervals.find_index(@minimum_interval) || intervals.length-1, intervals.find_index(interval) || intervals.length-1].min]
+          intervals[[intervals.find_index(@minimum_interval) || (intervals.length-1), intervals.find_index(interval) || (intervals.length-1)].min]
         else
           interval
         end
       end
 
       def new_config
-        confirm_config_is_version_2
+        confirm_config_version_is_valid
         @new_config ||= existing_config.clone.tap do |this|
           this["updates"] = [] if this["updates"].nil?
           # If "remove_undiscovered" is set, then set this to reject any
           # updates that are in the list of those undiscovered. Removing
           # is not safe from inside each, so reject instead.
-          this["updates"] = this["updates"].reject { |u| config_drift[ConfigDriftStatus::UNDISCOVERED].any? [u["package-ecosystem"], u["directory"]]} if @remove_undiscovered
+          this["updates"] = this["updates"].reject { |u| config_drift[ConfigDriftStatus::UNDISCOVERED].any? [u["package-ecosystem"], u["directory"]] } if @remove_undiscovered
           # Next, go through and update any existing.
           if @update_existing
             this["updates"].each do |existing_update|
@@ -146,14 +146,14 @@ module Dependabot
                     existing_update["schedule"].delete("day")
                   end
                 else
-                  existing_update["schedule"] = {"interval" => parsed_schedule_interval("monthly")}
+                  existing_update["schedule"] = { "interval" => parsed_schedule_interval("monthly") }
                 end
               end
             end
           end
           config_drift[ConfigDriftStatus::TO_BE_ADDED].each do |tba|
             new_update = { "package-ecosystem" => tba[0], "directory" => tba[1] }
-            new_update["schedule"] = {"interval" => parsed_schedule_interval("monthly")}
+            new_update["schedule"] = { "interval" => parsed_schedule_interval("monthly") }
             this["updates"].append(new_update)
           end
         end
