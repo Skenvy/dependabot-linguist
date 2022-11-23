@@ -21,30 +21,30 @@ repo_path = "." # input for both ::Dependabot::Linguist::(Repository, Dependabot
 this_repo = ::Dependabot::Linguist::Repository.new(repo_path, "Skenvy/dependabot-linguist")
 
 puts "*"*80
-puts "\nThe set of files, per linguist language\n"
-puts this_repo.files_per_linguist_language.to_yaml
-puts "\nThe set of directories per linguist language\n"
-puts this_repo.directories_per_linguist_language.to_yaml
-puts "\nThe package managers\n"
-puts this_repo.directories_per_package_manager.to_yaml
-puts "\nThe package ecosystems\n"
-puts this_repo.directories_per_package_ecosystem.to_yaml
+# puts "\nThe set of files, per linguist language\n"
+# puts this_repo.files_per_linguist_language.to_yaml
+# puts "\nThe set of directories per linguist language\n"
+# puts this_repo.directories_per_linguist_language.to_yaml
+# puts "\nThe package managers\n"
+# puts this_repo.directories_per_package_manager.to_yaml
+# puts "\nThe package ecosystems\n"
+# puts this_repo.directories_per_package_ecosystem.to_yaml
 puts "\nPaydirt; which ecosystem's directory guesses were validated by dependabot!\n"
 puts this_repo.directories_per_ecosystem_validated_by_dependabot.to_yaml
 puts "\n"
 
-validator = ::Dependabot::Linguist::DependabotFileValidator.new(repo_path)
+validator = ::Dependabot::Linguist::DependabotFileValidator.new(repo_path, max_open_pull_requests_limit: 3)
 
 puts "*"*80
-puts "\nThe dependabot config file path in this repo\n"
-puts validator.dependabot_file_path
-puts "\nThe existing dependabot configuration state\n"
-puts validator.existing_config.to_yaml
-puts "\nLoad in the results of the ::Dependabot::Linguist::Repository.directories_per_ecosystem_validated_by_dependabot\n"
-puts validator.load_ecosystem_directories(incoming: this_repo.directories_per_ecosystem_validated_by_dependabot).to_yaml
+# puts "\nThe dependabot config file path in this repo\n"
+# puts validator.dependabot_file_path
+# puts "\nThe existing dependabot configuration state\n"
+# puts validator.existing_config.to_yaml
+# puts "\nLoad in the results of the ::Dependabot::Linguist::Repository.directories_per_ecosystem_validated_by_dependabot\n"
+validator.load_ecosystem_directories(incoming: this_repo.directories_per_ecosystem_validated_by_dependabot) # .to_yaml
 puts "\nDetermine the drift in configuration -- what already exists, and what should be added (or removed?)\n"
 puts validator.config_drift.to_yaml
 puts "\nOutput the recommended 'new' config for the dependabot file.\n"
 puts validator.new_config.to_yaml
-puts "\nWrite the new config to the dependabot file\n"
-puts validator.write_new_config
+# puts "\nWrite the new config to the dependabot file\n"
+# puts validator.write_new_config

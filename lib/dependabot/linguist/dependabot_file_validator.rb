@@ -150,13 +150,12 @@ module Dependabot
                   existing_update["schedule"] = { "interval" => parsed_schedule_interval("monthly") }
                 end
                 # Confirm the open-pull-requests-limit
-                if @max_open_pull_requests_limit != 5
-                  if existing_update["open-pull-requests-limit"]
-                    existing_update["open-pull-requests-limit"] = [existing_update["open-pull-requests-limit"], @max_open_pull_requests_limit].min
-                  else
-                    existing_update["open-pull-requests-limit"] = @max_open_pull_requests_limit
-                  end
+                if existing_update["open-pull-requests-limit"]
+                  existing_update["open-pull-requests-limit"] = [existing_update["open-pull-requests-limit"], @max_open_pull_requests_limit].min
+                else
+                  existing_update["open-pull-requests-limit"] = @max_open_pull_requests_limit
                 end
+                existing_update.delete("open-pull-requests-limit") if existing_update["open-pull-requests-limit"] == 5
               end
             end
           end
@@ -170,7 +169,7 @@ module Dependabot
       end
 
       def write_new_config
-        File.open("#{@repo.path.delete_suffix("/.git/")}/#{dependabot_file_path}", "w") { |file| file.write(new_config.to_yaml) }
+        File.open("#{@repo.path.delete_suffix("/.git/")}/#{dependabot_file_path}", "w") { |file| file.write(new_config.to_yaml) } if new_config != existing_config
       end
 
       # The expected environment to run this final step in should have 'git' AND
