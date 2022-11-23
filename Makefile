@@ -1,4 +1,4 @@
-.PHONY: setup setup_github clean docs test build install push_rubygems push_github
+.PHONY: setup setup_github clean docs demo test build install push_rubygems push_github
 SHELL:=/bin/bash
 
 # Assumes `gem install bundler`
@@ -16,6 +16,9 @@ clean:
 
 docs: clean
 	bundle exec rake rdoc
+
+demo:
+	bundle exec ruby demo_script.rb
 
 # default (just `rake`) is spec + rubocop, but be pedantic in case this changes.
 test: clean
