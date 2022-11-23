@@ -15,7 +15,7 @@ module Dependabot
     # verifying that those ecosystems are valid for the places linguist found
     # the languages it thought was relevant to each dependabot ecosystem.
     class Repository
-      def initialize(repo_path, repo_name, ignore_linguist: 0)
+      def initialize(repo_path, repo_name, ignore_linguist: 0, verbose: false)
         @repo_path = repo_path.chomp.delete_suffix("/")
         @repo_name = repo_name
         begin
@@ -27,6 +27,7 @@ module Dependabot
           @repo = Rugged::Repository.clone_at("https://github.com/#{@repo_name}.git", @repo_path)
         end
         @ignore_linguist = [[0, ignore_linguist].max, 2].min
+        @verbose = verbose
         @linguist = ::Linguist::Repository.new(@repo, @repo.head.target_id)
       end
 
@@ -206,19 +207,19 @@ module Dependabot
           end
           ecosystem_classes.each do |package_ecosystem, file_fetcher_class|
             @directories_per_ecosystem_validated_by_dependabot[package_ecosystem] = []
-            puts "Spawning class instances for #{package_ecosystem}, in repo #{@repo_path}, class #{file_fetcher_class}"
+            puts "Spawning class instances for #{package_ecosystem}, in repo #{@repo_path}, class #{file_fetcher_class}" if @verbose
             sources = directories_per_package_ecosystem[package_ecosystem].collect { |directories| linguist_sources[directories] } unless [1, 2].any? @ignore_linguist
             sources.each do |source|
               fetcher = file_fetcher_class.new(source: source, credentials: [], repo_contents_path: @repo_path, options: enable_options)
               begin
                 unless fetcher.files.map(&:name).empty?
                   @directories_per_ecosystem_validated_by_dependabot[package_ecosystem] |= [source.directory]
-                  puts "-- Dependency files FOUND for package-ecosystem #{package_ecosystem} at #{source.directory}; #{fetcher.files.map(&:name)}"
+                  puts "-- Dependency files FOUND for package-ecosystem #{package_ecosystem} at #{source.directory}; #{fetcher.files.map(&:name)}" if @verbose
                 end
               rescue Dependabot::DependabotError => e
                 # Most of these will be Dependabot::DependencyFileNotFound
                 # or Dependabot::PathDependenciesNotReachable
-                puts "-- Caught a DependabotError, #{e.class}, for package-ecosystem #{package_ecosystem} at #{source.directory}: #{e.message}"
+                puts "-- Caught a DependabotError, #{e.class}, for package-ecosystem #{package_ecosystem} at #{source.directory}: #{e.message}" if @verbose
               end
             end
           end

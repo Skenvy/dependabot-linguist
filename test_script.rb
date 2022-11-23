@@ -4,8 +4,6 @@ require "dependabot/linguist"
 repo_path = "." # /smoke-test/actions
 smoke_tests = Dependabot::Linguist::Repository.new(repo_path, "Skenvy/smoke-tests")
 puts ""
-puts smoke_tests.linguist_cache
-puts ""
 puts smoke_tests.files_per_linguist_language
 puts ""
 puts smoke_tests.directories_per_linguist_language
