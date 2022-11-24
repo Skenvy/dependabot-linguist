@@ -29,26 +29,11 @@ Gem::Specification.new do |spec|
   spec.add_dependency "github-linguist", "7.23.0"
   # All ecosystem gems from https://rubygems.org/profiles/dependabot can be
   # required via https://rubygems.org/gems/dependabot-omnibus/versions/0.212.0
+  # which will include all dependencies of omnibus (16 ecosystems and common).
+  # https://github.com/dependabot/dependabot-core/blob/v0.212.0/omnibus/dependabot-omnibus.gemspec#L24-L40
   spec.add_dependency "dependabot-omnibus", "0.212.0"
-  # Which is equivalent to..
-  # spec.add_dependency "dependabot-common", "0.212.0"
-  # spec.add_dependency "dependabot-bundler", "0.212.0"
-  # spec.add_dependency "dependabot-cargo", "0.212.0"
-  # spec.add_dependency "dependabot-composer", "0.212.0"
-  # spec.add_dependency "dependabot-docker", "0.212.0"
-  # spec.add_dependency "dependabot-elm", "0.212.0"
-  # spec.add_dependency "dependabot-github_actions", "0.212.0"
-  # spec.add_dependency "dependabot-git_submodule", "0.212.0"
-  # spec.add_dependency "dependabot-go_modules", "0.212.0"
-  # spec.add_dependency "dependabot-gradle", "0.212.0"
-  # spec.add_dependency "dependabot-hex", "0.212.0"
-  # spec.add_dependency "dependabot-maven", "0.212.0"
-  # spec.add_dependency "dependabot-npm_and_yarn", "0.212.0"
-  # spec.add_dependency "dependabot-nuget", "0.212.0"
-  # spec.add_dependency "dependabot-pub", "0.212.0"
-  # spec.add_dependency "dependabot-python", "0.212.0"
-  # spec.add_dependency "dependabot-terraform", "0.212.0"
 
+  spec.add_development_dependency "aruba", "~> 2.1"
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rdoc", "~> 6.0"
   spec.add_development_dependency "rspec", "~> 3.12"

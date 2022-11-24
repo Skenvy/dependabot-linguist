@@ -174,3 +174,13 @@ module Linguist
 end
 ```
 ## Patching Dependabot
+
+# Other comments to edit into here
+`bin/console`
+```rb
+# https://github.com/github/linguist/issues/1205
+# https://github.com/github/linguist/issues/3229
+# Linguists dev's wont implement an option to include submodules in a scan, so
+# the best option without adding that functionality in a patch is to keep the
+# smoke-test repo parallel to this one, and run the following to test that.
+```
