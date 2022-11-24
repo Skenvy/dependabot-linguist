@@ -1,11 +1,13 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-$LOAD_PATH[0, 0] = File.join(File.dirname(__FILE__), "..", "lib")
+$LOAD_PATH[0, 0] = File.join(__dir__, "..", "lib")
 
+previous_verbose, $VERBOSE = $VERBOSE, nil
 require "dependabot/linguist"
 require "optparse"
 require "yaml"
+$VERBOSE = previous_verbose
 
 VERSION = ::Dependabot::Linguist::VERSION
 BANNER = <<~BANNER
@@ -115,7 +117,7 @@ def dependabot_linguist(args)
     ignore_linguist: ignore_linguist,
     verbose: verbose
   )
-
+  
   puts this_repo.directories_per_ecosystem_validated_by_dependabot.to_yaml if ecosystem_directories
 
   validator = ::Dependabot::Linguist::DependabotFileValidator.new(

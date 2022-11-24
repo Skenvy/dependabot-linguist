@@ -10,7 +10,6 @@ RSpec.describe ::Dependabot::Linguist::DependabotFileValidator do
   # but put it out here in case we want to make them different later
   common_load_ecosystem_directories = { "bundler" => ["/bundler"], "cargo" => ["/cargo"], "composer" => ["/composer"] }
 
-
   test_sets = {
     "no-config" => {remove_undiscovered: false, update_existing: true,
       minimum_interval: "weekly", max_open_pull_requests_limit: 5,
