@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # It would be nice to have a test for the CLI, and Aruba "should" be the best
 # way of testing that, but it cannot stop crashing half way through the
 # ecosystem directories discovery, stopping on the error;
@@ -21,8 +23,6 @@
 # attempting to read a stdout/stderr stream?
 
 # Fixing this is a TODO. The code prior to the cli is tested thoroughly at least
-
-# # frozen_string_literal: true
 
 # require "aruba/rspec"
 

@@ -4,7 +4,8 @@
 # For this to run without the context of the gem being on the path.
 $LOAD_PATH[0, 0] = File.join(File.dirname(__FILE__), "..", "lib")
 
-previous_verbose, $VERBOSE = $VERBOSE, nil
+previous_verbose = $VERBOSE
+$VERBOSE = nil
 require "dependabot/linguist"
 require "optparse"
 require "yaml"
@@ -41,7 +42,7 @@ def dependabot_linguist(args)
   verbose = false
 
   # Parse opts
-  OptionParser.new do |opts|
+  OptionParser.new do |opts| # rubocop:disable Metrics/BlockLength
     opts.banner = BANNER
     opts.version = VERSION
 
@@ -139,7 +140,6 @@ def dependabot_linguist(args)
   validator.write_new_config if write_file || submit_pull_request
 
   validator.commit_new_config if submit_pull_request
-
 end
 
 dependabot_linguist(ARGV)

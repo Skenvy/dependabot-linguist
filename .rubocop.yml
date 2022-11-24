@@ -7,7 +7,7 @@ AllCops:
   Exclude:
   - 'vendor/**/*'
   - 'smoke-test/**/*'
-  - 'spec/dependabot/*_spec.rb'
+  # - 'spec/dependabot/*_spec.rb'
 
 Gemspec/DeprecatedAttributeAssignment:
   Enabled: true
@@ -27,6 +27,8 @@ Security/IoMethods:
   Enabled: true
 
 Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+Layout/HeredocIndentation:
   Enabled: false
 Layout/LineLength:
   Max: 180
