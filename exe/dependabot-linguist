@@ -1,0 +1,145 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# For this to run without the context of the gem being on the path.
+$LOAD_PATH[0, 0] = File.join(File.dirname(__FILE__), "..", "lib")
+
+previous_verbose = $VERBOSE
+$VERBOSE = nil
+require "dependabot/linguist"
+require "optparse"
+require "yaml"
+$VERBOSE = previous_verbose
+
+VERSION = ::Dependabot::Linguist::VERSION
+BANNER = <<~BANNER
+Dependabot Linguist v#{VERSION}
+Detect dependabot ecosystems present for a given git repository, based off using
+linguist to determine the files present, that could be relevant to an ecosystem,
+and then verifying that the ecosystem's FileFetcher class is valid on the files.
+Usage: dependabot-linguist
+       dependabot-linguist <path> <name>
+       dependabot-linguist <path> <name> <options>
+BANNER
+
+def dependabot_linguist(args)
+  # Specify defaults
+  # If path is automatic, then remove the test environment path.
+  repo_path = Dir.pwd.delete_suffix("/tmp/aruba")
+  repo_name = nil
+  ignore_linguist = 0
+
+  remove_undiscovered = false
+  update_existing = true
+  minimum_interval = "weekly"
+  max_open_pull_requests_limit = 5
+
+  ecosystem_directories = false
+  print_yaml = true
+  write_file = false
+  submit_pull_request = false
+
+  verbose = false
+
+  # Parse opts
+  OptionParser.new do |opts| # rubocop:disable Metrics/BlockLength
+    opts.banner = BANNER
+    opts.version = VERSION
+
+    opts.on "-i", "--ignore-linguist LEVEL", Integer, "A number, [0, 1, 2] for \"how much to ignore linguist's suggestions\"." do |level|
+      ignore_linguist = level
+    end
+
+    opts.on "-r", "--remove-undiscovered", "Remove entries in an existing dependabot config that weren't found by this." do
+      remove_undiscovered = true
+    end
+
+    opts.on "-u", "--no-update-existing", "By default, existing entries are updated. Use this to toggle that off." do
+      update_existing = false
+    end
+
+    opts.on "-m", "--minimum-interval INTERVAL", String, "The minimum schedule interval; [\"monthly\", \"weekly\", \"daily\"]." do |interval|
+      minimum_interval = interval
+    end
+
+    opts.on "-l", "--max-open-pull-requests-limit LIMIT", Integer, "Limit dependabot's open PR #. Default 5. 0 to disallow non-security updates." do |limit|
+      max_open_pull_requests_limit = limit
+    end
+
+    opts.on "-v", "--verbose", "Output more information." do
+      verbose = true
+    end
+
+    opts.on "-e", "--ecosystem-directories", "Print out the list of directories found for each ecosystem." do
+      ecosystem_directories = true
+    end
+
+    opts.on "-y", "--no-yaml", "Turn off the default output -- the updated dependabot yaml." do
+      print_yaml = false
+    end
+
+    opts.on "-w", "--write-file", "Write the new dependabot config to the file." do
+      write_file = true
+    end
+
+    opts.on "-x", "--pull-request", "Use the external subshell's git/gh cli to commit, push, and PR changes." do
+      submit_pull_request = true
+    end
+
+    opts.on "-h", "--help", "Show help banner." do
+      puts opts
+      exit
+    end
+  end.parse!(args)
+
+  # If all output is turned off, then what's the point in running...
+  if [ecosystem_directories, print_yaml, write_file, submit_pull_request].none? true
+    abort BANNER
+  end
+
+  # Parse optional unopts
+  path_in = args.shift
+  repo_path = path_in if path_in
+
+  name_in = args.shift
+  repo_name = name_in if name_in
+
+  # If no name in, then seek the name in the path'd repo.
+  if repo_name.nil?
+    repo = ::Rugged::Repository.new(repo_path)
+    # Assume there is a remote "origin", and the user/host and path are : sep'd
+    repo_name = repo.remotes["origin"].url.delete_suffix(".git").partition(":").last
+    # Specifying the name in the call is a small sacrifice for this assumption.
+    repo.close
+  end
+
+  this_repo = ::Dependabot::Linguist::Repository.new(
+    repo_path,
+    repo_name,
+    ignore_linguist: ignore_linguist,
+    verbose: verbose
+  )
+
+  puts this_repo.directories_per_ecosystem_validated_by_dependabot.to_yaml if ecosystem_directories
+
+  validator = ::Dependabot::Linguist::DependabotFileValidator.new(
+    repo_path,
+    remove_undiscovered: remove_undiscovered,
+    update_existing: update_existing,
+    minimum_interval: minimum_interval,
+    max_open_pull_requests_limit: max_open_pull_requests_limit,
+    verbose: verbose
+  )
+
+  if [print_yaml, write_file, submit_pull_request].any? true
+    validator.load_ecosystem_directories(incoming: this_repo.directories_per_ecosystem_validated_by_dependabot)
+  end
+
+  puts validator.new_config.to_yaml if print_yaml
+
+  validator.write_new_config if write_file || submit_pull_request
+
+  validator.commit_new_config if submit_pull_request
+end
+
+dependabot_linguist(ARGV)

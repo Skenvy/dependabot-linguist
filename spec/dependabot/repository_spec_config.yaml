@@ -1,0 +1,464 @@
+# <ecosystem-name>:
+# # folder under the folder with the name of the <ecosystem-name>
+# # i.e. "abc" traslates to a path of <repo>/smoke-test/<ecosystem-name>/abc/
+# - ecosystem_subdirectory: "."  # linguist_languages:
+#   # linguist_cache:
+#   files_per_linguist_language:
+#   directories_per_linguist_language:
+#   directories_per_package_manager:
+#   directories_per_package_ecosystem:
+#   # file_fetcher_class_per_package_ecosystem:
+#   # ll_directories:
+#   # all_sources:
+#   linguist_directories:
+#   # linguist_sources:
+#   # all_ecosystem_classes:
+#   directories_per_ecosystem_validated_by_dependabot:
+#   - "/" # List of dirs that should be mapped to by <ecosystem-name>
+#   # Or none (and no directories_per_ecosystem_validated_by_dependabot: key) if there shouldn't be any valid dirs
+
+bundler:
+- ecosystem_subdirectory: "."
+  files_per_linguist_language:
+    Gemfile.lock:
+    - "Gemfile.lock"
+    Ruby:
+    - "Gemfile"
+    - "dependabot-all-updates-test-staging.gemspec"
+  directories_per_linguist_language:
+    Gemfile.lock:
+    - "/"
+    Ruby:
+    - "/"
+  directories_per_package_manager:
+    Bundler:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+cargo:
+- ecosystem_subdirectory: "."
+  files_per_linguist_language:
+    TOML:
+    - "Cargo.toml"
+  directories_per_linguist_language:
+    TOML:
+    - "/"
+  directories_per_package_manager:
+    Cargo:
+    - "/"
+    pipenv:
+    - "/"
+    poetry:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+composer:
+- ecosystem_subdirectory: "."
+  files_per_linguist_language:
+    JSON:
+    - "composer.json"
+  directories_per_linguist_language:
+    JSON:
+    - "/"
+  directories_per_package_manager:
+    Composer:
+    - "/"
+    elm-package:
+    - "/"
+    npm:
+    - "/"
+    pipenv:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+docker:
+- ecosystem_subdirectory: "."
+  files_per_linguist_language:
+    Dockerfile:
+    - "Dockerfile"
+  directories_per_linguist_language:
+    Dockerfile:
+    - "/"
+  directories_per_package_manager:
+    Docker:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+elm:
+- ecosystem_subdirectory: "."
+  files_per_linguist_language:
+    JSON:
+    - "elm-package.json"
+    - "elm.json"
+  directories_per_linguist_language:
+    JSON:
+    - "/"
+  directories_per_package_manager:
+    Composer:
+    - "/"
+    elm-package:
+    - "/"
+    npm:
+    - "/"
+    pipenv:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+github-actions:
+- ecosystem_subdirectory: "invalid"
+  files_per_linguist_language: {}
+  directories_per_linguist_language: {}
+  directories_per_package_manager: {}
+  # directories_per_package_ecosystem:
+  linguist_directories: []
+- ecosystem_subdirectory: "yaml"
+  files_per_linguist_language:
+    YAML:
+    - "action.yml"
+  directories_per_linguist_language:
+    YAML:
+    - "/"
+  directories_per_package_manager:
+    Docker:
+    - "/"
+    GitHub Actions:
+    - "/"
+    pub:
+    - "/"
+    yarn:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+- ecosystem_subdirectory: "workflow"
+  files_per_linguist_language:
+    YAML:
+    - ".github/workflows/this.yaml"
+  directories_per_linguist_language:
+    YAML:
+    - "/.github/workflows"
+  directories_per_package_manager:
+    Docker:
+    - "/.github/workflows"
+    GitHub Actions:
+    - "/"
+    pub:
+    - "/.github/workflows"
+    yarn:
+    - "/.github/workflows"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/.github/workflows"
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+- ecosystem_subdirectory: "both"
+  files_per_linguist_language:
+    YAML:
+    - ".github/workflows/this.yaml"
+    - "yaml/action.yml"
+  directories_per_linguist_language:
+    YAML:
+    - "/.github/workflows"
+    - "/yaml"
+  directories_per_package_manager:
+    Docker:
+    - "/.github/workflows"
+    - "/yaml"
+    GitHub Actions:
+    - "/"
+    - "/yaml"
+    pub:
+    - "/.github/workflows"
+    - "/yaml"
+    yarn:
+    - "/.github/workflows"
+    - "/yaml"
+  directories_per_package_ecosystem:
+  - "/"
+  - "/yaml"
+  linguist_directories:
+  - "/.github/workflows"
+  - "/yaml"
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+  - "/yaml"
+gitsubmodule:
+- ecosystem_subdirectory: "."
+  files_per_linguist_language:
+    Git Config:
+    - ".gitmodules"
+  directories_per_linguist_language:
+    Git Config:
+    - "/"
+  directories_per_package_manager:
+    git submodule:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+gomod:
+- ecosystem_subdirectory: "."
+  files_per_linguist_language:
+    Go Checksums:
+    - "go.sum"
+    Go Module:
+    - "go.mod"
+    Go:
+    - "gomain.go"
+  directories_per_linguist_language:
+    Go Checksums:
+    - "/"
+    Go Module:
+    - "/"
+    Go:
+    - "/"
+  directories_per_package_manager:
+    Go modules:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+gradle:
+- ecosystem_subdirectory: "."
+  files_per_linguist_language:
+    Gradle:
+    - "build.gradle"
+  directories_per_linguist_language:
+    Gradle:
+    - "/"
+  directories_per_package_manager:
+    Gradle:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+maven:
+- ecosystem_subdirectory: "."
+  files_per_linguist_language:
+    Maven POM:
+    - "pom.xml"
+  directories_per_linguist_language:
+    Maven POM:
+    - "/"
+  directories_per_package_manager:
+    Maven:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+mix:
+- ecosystem_subdirectory: "."
+  files_per_linguist_language:
+    Elixir:
+    - "mix.exs"
+    - "mix.lock"
+  directories_per_linguist_language:
+    Elixir:
+    - "/"
+  directories_per_package_manager:
+    Hex:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+npm:
+- ecosystem_subdirectory: "."
+  files_per_linguist_language:
+    JSON:
+    - "package.json"
+    - "removed/package.json"
+  directories_per_linguist_language:
+    JSON:
+    - "/"
+    - "/removed"
+  directories_per_package_manager:
+    Composer:
+    - "/"
+    - "/removed"
+    elm-package:
+    - "/"
+    - "/removed"
+    npm:
+    - "/"
+    - "/removed"
+    pipenv:
+    - "/"
+    - "/removed"
+  directories_per_package_ecosystem:
+  - "/"
+  - "/removed"
+  linguist_directories:
+  - "/"
+  - "/removed"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+  - "/removed"
+nuget:
+- ecosystem_subdirectory: "."
+  files_per_linguist_language:
+    XML:
+    - "project.csproj"
+  directories_per_linguist_language:
+    XML:
+    - "/"
+  directories_per_package_manager:
+    NuGet:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+pip:
+- ecosystem_subdirectory: "pip-compile"
+  files_per_linguist_language:
+    Text:
+    - "requirements.txt"
+  directories_per_linguist_language:
+    Text:
+    - "/"
+  directories_per_package_manager:
+    pip:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+- ecosystem_subdirectory: "pip"
+  files_per_linguist_language:
+    Text:
+    - "requirements.txt"
+  directories_per_linguist_language:
+    Text:
+    - "/"
+  directories_per_package_manager:
+    pip:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+- ecosystem_subdirectory: "pipenv"
+  files_per_linguist_language:
+    TOML:
+    - "Pipfile"
+  directories_per_linguist_language:
+    TOML:
+    - "/"
+  directories_per_package_manager:
+    Cargo:
+    - "/"
+    pipenv:
+    - "/"
+    poetry:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+- ecosystem_subdirectory: "poetry"
+  files_per_linguist_language:
+    TOML:
+    - "pyproject.toml"
+  directories_per_linguist_language:
+    TOML:
+    - "/"
+  directories_per_package_manager:
+    Cargo:
+    - "/"
+    pipenv:
+    - "/"
+    poetry:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+pub:
+- ecosystem_subdirectory: "."
+  files_per_linguist_language:
+    YAML:
+    - "pubspec.yaml"
+  directories_per_linguist_language:
+    YAML:
+    - "/"
+  directories_per_package_manager:
+    Docker:
+    - "/"
+    pub:
+    - "/"
+    yarn:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"
+terraform:
+- ecosystem_subdirectory: "."
+  files_per_linguist_language:
+    HCL:
+    - "main.tf"
+  directories_per_linguist_language:
+    HCL:
+    - "/"
+  directories_per_package_manager:
+    Terraform:
+    - "/"
+  directories_per_package_ecosystem:
+  - "/"
+  linguist_directories:
+  - "/"
+  directories_per_ecosystem_validated_by_dependabot:
+  - "/"

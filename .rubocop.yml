@@ -4,9 +4,15 @@ AllCops:
   SuggestExtensions: false
   # NewCops: enable # would silence the recommendation
   # # to enable new, but would hide which ones were run
+  Exclude:
+  - 'vendor/**/*'
+  - 'smoke-test/**/*'
+  # - 'spec/dependabot/*_spec.rb'
 
 Gemspec/DeprecatedAttributeAssignment:
   Enabled: true
+Gemspec/OrderedDependencies:
+  Enabled: false
 Gemspec/RequireMFA:
   Enabled: false
 
@@ -22,8 +28,10 @@ Security/IoMethods:
 
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
+Layout/HeredocIndentation:
+  Enabled: false
 Layout/LineLength:
-  Max: 120
+  Max: 180
 Layout/LineContinuationLeadingSpace:
   Enabled: true
 Layout/LineContinuationSpacing:
@@ -40,8 +48,10 @@ Layout/SpaceBeforeBrackets:
 Metrics/AbcSize:
   Enabled: false
 Metrics/BlockLength:
-  AllowedMethods: ['describe', 'context']
+  AllowedMethods: ['describe', 'context', 'tap']
 Metrics/BlockNesting:
+  Enabled: false
+Metrics/ClassLength:
   Enabled: false
 Metrics/CyclomaticComplexity:
   Enabled: false
@@ -63,6 +73,8 @@ Lint/ConstantOverwrittenInRescue:
 Lint/DeprecatedConstants:
   Enabled: true
 Lint/DuplicateBranch:
+  Enabled: true
+Lint/DuplicateMagicComment: # new in 1.37
   Enabled: true
 Lint/DuplicateRegexpCharacterClassElement:
   Enabled: true
@@ -136,7 +148,7 @@ Style/FetchEnvVar:
 Style/FileRead:
   Enabled: true
 Style/FileWrite:
-  Enabled: true
+  Enabled: false
 Style/For:
   Enabled: false
 Style/HashConversion:
@@ -145,6 +157,8 @@ Style/HashExcept:
   Enabled: true
 Style/IfWithBooleanLiteralBranches:
   Enabled: true
+Style/IfUnlessModifier:
+  Enabled: false
 Style/InPatternThen:
   Enabled: true
 Style/Lambda:
@@ -175,9 +189,13 @@ Style/ObjectThen:
   Enabled: true
 Style/OpenStructUse:
   Enabled: true
+Style/OperatorMethodCall: # new in 1.37
+  Enabled: true
 Style/QuotedSymbols:
   Enabled: true
 Style/RedundantArgument:
+  Enabled: true
+Style/RedundantEach: # new in 1.38
   Enabled: true
 Style/RedundantInitialize:
   Enabled: true
@@ -185,9 +203,13 @@ Style/RedundantSelf:
   Enabled: false
 Style/RedundantSelfAssignmentBranch:
   Enabled: true
+Style/RedundantStringEscape: # new in 1.37
+  Enabled: true
 Style/SelectByRegexp:
   Enabled: true
 Style/StringChars:
   Enabled: true
 Style/SwapValues:
   Enabled: true
+Style/WordArray:
+  Enabled: false

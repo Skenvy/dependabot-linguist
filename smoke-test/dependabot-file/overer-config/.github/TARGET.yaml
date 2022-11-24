@@ -1,0 +1,19 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/bundler"
+  schedule:
+    interval: daily
+- package-ecosystem: gradle
+  directory: "/gradle"
+  schedule:
+    interval: monthly
+  open-pull-requests-limit: 20
+- package-ecosystem: cargo
+  directory: "/cargo"
+  schedule:
+    interval: daily
+- package-ecosystem: composer
+  directory: "/composer"
+  schedule:
+    interval: daily

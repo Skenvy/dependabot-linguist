@@ -15,8 +15,8 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 2.7.0"
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/Skenvy/dependabot-linguist/tree/main/"
-  # Specify which files should be added to the gem when it is released.
-  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
+
+  spec.require_paths = ["lib"]
   spec.files = Dir.chdir(__dir__) do
     `git ls-files -z`.split("\x0").reject do |f|
       (f == __FILE__) || f.match(%r{\A(?:(?:bin|test|spec|features)/|\.(?:git|travis|circleci)|appveyor)})
@@ -24,7 +24,18 @@ Gem::Specification.new do |spec|
   end
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
-  # Uncomment to register a new dependency of your gem
-  # spec.add_dependency "example-gem", "~> 1.0"
+
+  spec.add_dependency "rugged", "~> 1.5.0"
+  spec.add_dependency "github-linguist", "7.23.0"
+  # All ecosystem gems from https://rubygems.org/profiles/dependabot can be
+  # required via https://rubygems.org/gems/dependabot-omnibus/versions/0.212.0
+  # which will include all dependencies of omnibus (16 ecosystems and common).
+  # https://github.com/dependabot/dependabot-core/blob/v0.212.0/omnibus/dependabot-omnibus.gemspec#L24-L40
+  spec.add_dependency "dependabot-omnibus", "0.212.0"
+
+  # spec.add_development_dependency "aruba", "~> 2.1" # TODO
+  spec.add_development_dependency "rake", "~> 13.0"
+  spec.add_development_dependency "rdoc", "~> 6.0"
+  spec.add_development_dependency "rspec", "~> 3.12"
+  spec.add_development_dependency "rubocop", "~> 1.37"
 end

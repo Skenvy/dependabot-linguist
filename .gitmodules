@@ -1,0 +1,4 @@
+[submodule "dependabot-linguist"]
+	path = smoke-test/dependabot-linguist
+	url = https://github.com/Skenvy/dependabot-linguist
+	branch = master

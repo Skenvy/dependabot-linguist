@@ -1,0 +1,17 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/bundler"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 3
+- package-ecosystem: cargo
+  directory: "/cargo"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 3
+- package-ecosystem: composer
+  directory: "/composer"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 3

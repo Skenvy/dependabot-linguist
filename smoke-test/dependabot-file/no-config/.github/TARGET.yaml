@@ -1,0 +1,14 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/bundler"
+  schedule:
+    interval: weekly
+- package-ecosystem: cargo
+  directory: "/cargo"
+  schedule:
+    interval: weekly
+- package-ecosystem: composer
+  directory: "/composer"
+  schedule:
+    interval: weekly
