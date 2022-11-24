@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   # https://github.com/dependabot/dependabot-core/blob/v0.212.0/omnibus/dependabot-omnibus.gemspec#L24-L40
   spec.add_dependency "dependabot-omnibus", "0.212.0"
 
-  spec.add_development_dependency "aruba", "~> 2.1"
+  # spec.add_development_dependency "aruba", "~> 2.1" # TODO
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rdoc", "~> 6.0"
   spec.add_development_dependency "rspec", "~> 3.12"

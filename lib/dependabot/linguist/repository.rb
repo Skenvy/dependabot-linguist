@@ -220,12 +220,9 @@ module Dependabot
                 # Most of these will be Dependabot::DependencyFileNotFound
                 # or Dependabot::PathDependenciesNotReachable
                 puts "-- Caught a DependabotError, #{e.class}, for package-ecosystem #{package_ecosystem} at #{source.directory}: #{e.message}" if @verbose
-              rescue => e
-                puts "-- Caught SOMETHING ELSE #{e}" if @verbose
               end
             end
           end
-          puts "Finish spawning class instances" if @verbose
           @directories_per_ecosystem_validated_by_dependabot = @directories_per_ecosystem_validated_by_dependabot.delete_if { |_, v| v.empty? }.sort.to_h
         end
         @directories_per_ecosystem_validated_by_dependabot

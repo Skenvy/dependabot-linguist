@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-$LOAD_PATH[0, 0] = File.join(__dir__, "..", "lib")
+# For this to run without the context of the gem being on the path.
+$LOAD_PATH[0, 0] = File.join(File.dirname(__FILE__), "..", "lib")
 
 previous_verbose, $VERBOSE = $VERBOSE, nil
 require "dependabot/linguist"
@@ -117,7 +118,7 @@ def dependabot_linguist(args)
     ignore_linguist: ignore_linguist,
     verbose: verbose
   )
-  
+
   puts this_repo.directories_per_ecosystem_validated_by_dependabot.to_yaml if ecosystem_directories
 
   validator = ::Dependabot::Linguist::DependabotFileValidator.new(
