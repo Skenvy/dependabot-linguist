@@ -23,6 +23,8 @@ module Dependabot
 
       YML_FILE_PATH = ".github/dependabot.yml"
 
+      CONFIG_FILE_PATH = ".github/.dependabot-linguist"
+
       def dependabot_file_path
         @dependabot_file_path ||= if @repo.blob_at(@repo.head.target_id, YML_FILE_PATH)
           # the yml extension is preferred by GitHub, so even though this
@@ -40,6 +42,31 @@ module Dependabot
         dependabot_file_path # to = {} if the file doesn't exist or isn't committed.
         # @existing_config ||= YAML.load_file(File.join(@repo.path, dependabot_file_path))
         @existing_config ||= YAML.safe_load(@repo.blob_at(@repo.head.target_id, dependabot_file_path).content)
+      end
+
+      def meta_config
+        @meta_config ||= if @repo.blob_at(@repo.head.target_id, CONFIG_FILE_PATH)
+          YAML.safe_load(@repo.blob_at(@repo.head.target_id, CONFIG_FILE_PATH).content)
+        else
+          {}
+        end
+      end
+
+      # Is a yaml config file exists that looks like
+      #
+      # ignore:
+      #   directory:
+      #     /path/to/somewhere:
+      #     - some_ecosystem
+      #   ecosystem:
+      #     some_other_ecosystem:
+      #     - /path/to/somewhere_else
+      #
+      # then both (some_ecosystem, "/path/to/somewhere") and
+      # (some_other_ecosystem, "/path/to/somewhere_else")
+      # should be "ignored" by this system.
+      def ecodir_is_ignored(eco, dir)
+        (((meta_config["ignore"] || {})["directory"] || {})[dir] || []).any? eco || (((meta_config["ignore"] || {})["ecosystem"] || {})[eco] || []).any? dir
       end
 
       def confirm_config_version_is_valid
@@ -83,6 +110,7 @@ module Dependabot
           this[ConfigDriftStatus::UNDISCOVERED] = []
           this.freeze
           ecodir_list.each do |checking_ecodir|
+            next if ecodir_is_ignored(checking_ecodir[0], checking_ecodir[1])
             if !existing_config.empty? && !existing_config["updates"].nil?
               existed_ecodir = nil
               existing_config["updates"].each do |existing_ecodir|
@@ -105,6 +133,7 @@ module Dependabot
             existing_config["updates"].each do |existing_ecodir|
               existed_ecodir = nil
               ecodir_list.each do |checking_ecodir|
+                break if ecodir_is_ignored(checking_ecodir[0], checking_ecodir[1])
                 existed_ecodir = checking_ecodir if self.class.checking_exists(checking_ecodir, existing_ecodir)
                 break unless existed_ecodir.nil?
               end

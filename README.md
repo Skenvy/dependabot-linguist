@@ -67,6 +67,26 @@ dependabot-linguist ../../some/other/repo -w
 # You can also specify a name, which will be required if there isn't a "origin" remote.
 dependabot-linguist ../../some/other/repo Username/Reponame -x
 ```
+### Configure
+A yaml config file can be placed at `~/.github/.dependabot-linguist`. See this [example](https://github.com/Skenvy/dependabot-linguist/blob/main/.github/.dependabot-linguist). Although it's a dotfile, it'll be read by rugged, so for it to be utilised it should be checked in. The options available to this configuration file currently are;
+#### `ignore`
+The below options, `directory` and `ecosystem` are not mutually exclusive, and can be mixed, according to what top level catagorisation requires less verbose configuration, if you want to ignore many directories for one or two ecosystems, or many ecosystems for one or two directories!
+##### `directory`
+To ignore some ecosystems per directory, you can add
+```yaml
+ignore:
+  directory:
+    /path/to/somewhere:
+    - some_ecosystem
+```
+##### `ecosystem`
+To ignore some directories per ecosystem, you can add
+```yaml
+ignore:
+  ecosystem:
+    some_other_ecosystem:
+    - /path/to/somewhere_else
+```
 ## [RDoc generated docs](https://skenvy.github.io/dependabot-linguist/)
 ## Developing
 ### The first time setup
