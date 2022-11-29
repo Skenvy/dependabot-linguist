@@ -30,8 +30,14 @@ source "https://rubygems.pkg.github.com/skenvy" do
   gem "dependabot-linguist", ">= 0.212.0"
 end
 ```
+### Setup external CLIs
+If you intend to use `::Dependabot::Linguist::DependabotFileValidator.commit_new_config`, you'll need to also setup the [`gh`](https://cli.github.com/manual/) CLI. You can follow instructions on [cli/cli](https://github.com/cli/cli) to install it, which for the intended use case should be [this guide](https://github.com/cli/cli/blob/trunk/docs/install_linux.md). Once you've installed it, [you'll need to log in](https://cli.github.com/manual/gh_auth_login) prior to running this script, as the credentials are expected to already be in place.
+
+It also expects `git` to be installed and credentialed, for pushing the branch.
 ## Usage
 The two main classes this provides, `::Dependabot::Linguist::Repository` and `::Dependabot::Linguist::DependabotFileValidator`, can be utilised independently, although the intention is that they be utilised together; to discover the contents of a repository that should be watched with a dependabot file by `Repository`, and subsequently using `DependabotFileValidator` to edit an existing, or add a new, dependabot file to watch the directories that were validated earlier. There is also a CLI tool, `dependabot-linguist`, that wraps these classes and surfaces all the available options to them, although adding automated tests for the executable is still a `#TODO`.
+
+The intended end goal is to use this to automatically raise a PR on GitHub with the recommended changes to the `~/.github/dependabot.y[a]ml` file. This is performed by `::Dependabot::Linguist::DependabotFileValidator.commit_new_config`, which utilises Ruby's `Kernel` to run commands in an external shell that perform actions using the `gh` cli, and `git`. If you intend to use these you'll want to follow [Setup external CLIs](https://github.com/Skenvy/dependabot-linguist#setup-external-clis).
 ### Use the classes in a ruby script, with defaults
 ```ruby
 require "dependabot/linguist"
@@ -51,6 +57,7 @@ require "dependabot/linguist"
 @validator.commit_new_config
 ```
 ### Use the CLI
+If you installed this with **bundler**, you'll need to preface these with `bundle exec`.
 ```bash
 # With no flags, it'll run "here", and print out the recommended new config.
 dependabot-linguist
@@ -59,6 +66,26 @@ dependabot-linguist ../../some/other/repo -w
 # With -x, you'll be trusting it to raise a pull request of the recommended config.
 # You can also specify a name, which will be required if there isn't a "origin" remote.
 dependabot-linguist ../../some/other/repo Username/Reponame -x
+```
+### Configure
+A yaml config file can be placed at `~/.github/.dependabot-linguist`. See this [example](https://github.com/Skenvy/dependabot-linguist/blob/main/.github/.dependabot-linguist). Although it's a dotfile, it'll be read by rugged, so for it to be utilised it should be checked in. The options available to this configuration file currently are;
+#### `ignore`
+The below options, `directory` and `ecosystem` are not mutually exclusive, and can be mixed, according to what top level catagorisation requires less verbose configuration, if you want to ignore many directories for one or two ecosystems, or many ecosystems for one or two directories!
+##### `directory`
+To ignore some ecosystems per directory, you can add
+```yaml
+ignore:
+  directory:
+    /path/to/somewhere:
+    - some_ecosystem
+```
+##### `ecosystem`
+To ignore some directories per ecosystem, you can add
+```yaml
+ignore:
+  ecosystem:
+    some_other_ecosystem:
+    - /path/to/somewhere_else
 ```
 ## [RDoc generated docs](https://skenvy.github.io/dependabot-linguist/)
 ## Developing

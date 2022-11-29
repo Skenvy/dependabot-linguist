@@ -1,0 +1,7 @@
+ignore:
+  directory:
+    /path/to/somewhere:
+    - some_ecosystem
+  ecosystem:
+    some_other_ecosystem:
+    - /path/to/somewhere_else

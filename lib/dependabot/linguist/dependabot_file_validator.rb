@@ -23,23 +23,54 @@ module Dependabot
 
       YML_FILE_PATH = ".github/dependabot.yml"
 
+      CONFIG_FILE_PATH = ".github/.dependabot-linguist"
+
+      # rubocop:disable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
+
       def dependabot_file_path
         @dependabot_file_path ||= if @repo.blob_at(@repo.head.target_id, YML_FILE_PATH)
           # the yml extension is preferred by GitHub, so even though this
           # returns the same as the `else`, check it before YAML.
-          YML_FILE_PATH # rubocop:disable Layout/IndentationWidth
-        elsif @repo.blob_at(@repo.head.target_id, YAML_FILE_PATH) # rubocop:disable Layout/ElseAlignment
+          YML_FILE_PATH
+        elsif @repo.blob_at(@repo.head.target_id, YAML_FILE_PATH)
           YAML_FILE_PATH
-        else # rubocop:disable Layout/ElseAlignment
+        else
           @existing_config = { "version" => 2, "updates" => [] }
           YML_FILE_PATH
-        end # rubocop:disable Layout/EndAlignment
+        end
       end
 
       def existing_config
         dependabot_file_path # to = {} if the file doesn't exist or isn't committed.
         # @existing_config ||= YAML.load_file(File.join(@repo.path, dependabot_file_path))
         @existing_config ||= YAML.safe_load(@repo.blob_at(@repo.head.target_id, dependabot_file_path).content)
+      end
+
+      def meta_config
+        @meta_config ||= if @repo.blob_at(@repo.head.target_id, CONFIG_FILE_PATH)
+          YAML.safe_load(@repo.blob_at(@repo.head.target_id, CONFIG_FILE_PATH).content)
+        else
+          {}
+        end
+      end
+
+      # rubocop:enable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
+
+      # Is a yaml config file exists that looks like
+      #
+      # ignore:
+      #   directory:
+      #     /path/to/somewhere:
+      #     - some_ecosystem
+      #   ecosystem:
+      #     some_other_ecosystem:
+      #     - /path/to/somewhere_else
+      #
+      # then both (some_ecosystem, "/path/to/somewhere") and
+      # (some_other_ecosystem, "/path/to/somewhere_else")
+      # should be "ignored" by this system.
+      def ecodir_is_ignored(eco, dir)
+        ((((meta_config["ignore"] || {})["directory"] || {})[dir] || []).any? eco) || ((((meta_config["ignore"] || {})["ecosystem"] || {})[eco] || []).any? dir)
       end
 
       def confirm_config_version_is_valid
@@ -83,6 +114,7 @@ module Dependabot
           this[ConfigDriftStatus::UNDISCOVERED] = []
           this.freeze
           ecodir_list.each do |checking_ecodir|
+            next if ecodir_is_ignored(checking_ecodir[0], checking_ecodir[1])
             if !existing_config.empty? && !existing_config["updates"].nil?
               existed_ecodir = nil
               existing_config["updates"].each do |existing_ecodir|
@@ -105,6 +137,7 @@ module Dependabot
             existing_config["updates"].each do |existing_ecodir|
               existed_ecodir = nil
               ecodir_list.each do |checking_ecodir|
+                break if ecodir_is_ignored(checking_ecodir[0], checking_ecodir[1])
                 existed_ecodir = checking_ecodir if self.class.checking_exists(checking_ecodir, existing_ecodir)
                 break unless existed_ecodir.nil?
               end
@@ -128,7 +161,7 @@ module Dependabot
 
       def new_config
         confirm_config_version_is_valid
-        @new_config ||= existing_config.clone.tap do |this|
+        @new_config ||= YAML.safe_load(existing_config.to_yaml).tap do |this|
           this["updates"] = [] if this["updates"].nil?
           # If "remove_undiscovered" is set, then set this to reject any
           # updates that are in the list of those undiscovered. Removing
@@ -178,8 +211,9 @@ module Dependabot
       # credentials being provided to this class.
       def commit_new_config
         new_branch = @repo.create_branch("dependabot-linguist_auto-config-update")
+        in_repo = "cd #{@repo.path.delete_suffix("/.git/")} &&"
+        `#{"#{in_repo} git checkout #{new_branch.name}"}`
         write_new_config
-        in_repo = "cd #{@repo.path} &&"
         `#{"#{in_repo} git add #{dependabot_file_path}"}`
         `#{"#{in_repo} git commit -m \"Auto update #{dependabot_file_path} -- dependabot-linguist\""}`
         `#{"#{in_repo} git push --set-upstream #{@repo.remotes["origin"].name} #{new_branch.name}"}`
