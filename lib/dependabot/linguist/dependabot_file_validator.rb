@@ -25,17 +25,19 @@ module Dependabot
 
       CONFIG_FILE_PATH = ".github/.dependabot-linguist"
 
+      # rubocop:disable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
+
       def dependabot_file_path
         @dependabot_file_path ||= if @repo.blob_at(@repo.head.target_id, YML_FILE_PATH)
           # the yml extension is preferred by GitHub, so even though this
           # returns the same as the `else`, check it before YAML.
-          YML_FILE_PATH # rubocop:disable Layout/IndentationWidth
-        elsif @repo.blob_at(@repo.head.target_id, YAML_FILE_PATH) # rubocop:disable Layout/ElseAlignment
+          YML_FILE_PATH
+        elsif @repo.blob_at(@repo.head.target_id, YAML_FILE_PATH)
           YAML_FILE_PATH
-        else # rubocop:disable Layout/ElseAlignment
+        else
           @existing_config = { "version" => 2, "updates" => [] }
           YML_FILE_PATH
-        end # rubocop:disable Layout/EndAlignment
+        end
       end
 
       def existing_config
@@ -52,6 +54,8 @@ module Dependabot
         end
       end
 
+      # rubocop:enable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
+
       # Is a yaml config file exists that looks like
       #
       # ignore:
@@ -66,7 +70,7 @@ module Dependabot
       # (some_other_ecosystem, "/path/to/somewhere_else")
       # should be "ignored" by this system.
       def ecodir_is_ignored(eco, dir)
-        (((meta_config["ignore"] || {})["directory"] || {})[dir] || []).any? eco || (((meta_config["ignore"] || {})["ecosystem"] || {})[eco] || []).any? dir
+        ((((meta_config["ignore"] || {})["directory"] || {})[dir] || []).any? eco) || ((((meta_config["ignore"] || {})["ecosystem"] || {})[eco] || []).any? dir)
       end
 
       def confirm_config_version_is_valid
