@@ -128,7 +128,7 @@ module Dependabot
 
       def new_config
         confirm_config_version_is_valid
-        @new_config ||= existing_config.clone.tap do |this|
+        @new_config ||= YAML.safe_load(existing_config.to_yaml).tap do |this|
           this["updates"] = [] if this["updates"].nil?
           # If "remove_undiscovered" is set, then set this to reject any
           # updates that are in the list of those undiscovered. Removing
@@ -178,8 +178,9 @@ module Dependabot
       # credentials being provided to this class.
       def commit_new_config
         new_branch = @repo.create_branch("dependabot-linguist_auto-config-update")
+        in_repo = "cd #{@repo.path.delete_suffix("/.git/")} &&"
+        `#{"#{in_repo} git checkout #{new_branch.name}"}`
         write_new_config
-        in_repo = "cd #{@repo.path} &&"
         `#{"#{in_repo} git add #{dependabot_file_path}"}`
         `#{"#{in_repo} git commit -m \"Auto update #{dependabot_file_path} -- dependabot-linguist\""}`
         `#{"#{in_repo} git push --set-upstream #{@repo.remotes["origin"].name} #{new_branch.name}"}`
