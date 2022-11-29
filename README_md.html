@@ -63,9 +63,14 @@
     <li><a href="#label-Linguist+dependencies-3B"><a href="https://github.com/github/linguist#dependencies">Linguist dependencies</a>;</a>
     <li><a href="#label-Install+this">Install <em>this</em></a>
     <li><a href="#label-Or+add+to+the+Gemfile">Or add to the Gemfile</a>
+    <li><a href="#label-Setup+external+CLIs">Setup external CLIs</a>
     <li><a href="#label-Usage">Usage</a>
     <li><a href="#label-Use+the+classes+in+a+ruby+script-2C+with+defaults">Use the classes in a ruby script, with defaults</a>
     <li><a href="#label-Use+the+CLI">Use the CLI</a>
+    <li><a href="#label-Configure">Configure</a>
+    <li><a href="#label-ignore"><code>ignore</code></a>
+    <li><a href="#label-directory"><code>directory</code></a>
+    <li><a href="#label-ecosystem"><code>ecosystem</code></a>
     <li><a href="#label-RDoc+generated+docs"><a href="https://skenvy.github.io/dependabot-linguist/">RDoc generated docs</a></a>
     <li><a href="#label-Developing">Developing</a>
     <li><a href="#label-The+first+time+setup">The first time setup</a>
@@ -131,9 +136,17 @@
 <span class="ruby-keyword">end</span>
 </pre>
 
+<h3 id="label-Setup+external+CLIs">Setup external CLIs<span><a href="#label-Setup+external+CLIs">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>If you intend to use <code>::Dependabot::Linguist::DependabotFileValidator.commit_new_config</code>, you’ll need to also setup the {<code>gh</code><a href="https://cli.github.com/manual/">}</a> CLI. You can follow instructions on <a href="https://github.com/cli/cli">cli/cli</a> to install it, which for the intended use case should be <a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md">this guide</a>. Once you’ve installed it, <a href="https://cli.github.com/manual/gh_auth_login">you’ll need to log in</a> prior to running this script, as the credentials are expected to already be in place.</p>
+
+<p>It also expects <code>git</code> to be installed and credentialed, for pushing the branch.</p>
+
 <h2 id="label-Usage">Usage<span><a href="#label-Usage">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
 <p>The two main classes this provides, <code>::Dependabot::Linguist::Repository</code> and <code>::Dependabot::Linguist::DependabotFileValidator</code>, can be utilised independently, although the intention is that they be utilised together; to discover the contents of a repository that should be watched with a dependabot file by <code>Repository</code>, and subsequently using <code>DependabotFileValidator</code> to edit an existing, or add a new, dependabot file to watch the directories that were validated earlier. There is also a CLI tool, <code>dependabot-linguist</code>, that wraps these classes and surfaces all the available options to them, although adding automated tests for the executable is still a <code>#TODO</code>.</p>
+
+<p>The intended end goal is to use this to automatically raise a PR on GitHub with the recommended changes to the <code>~/.github/dependabot.y[a]ml</code> file. This is performed by <code>::Dependabot::Linguist::DependabotFileValidator.commit_new_config</code>, which utilises Ruby’s <code>Kernel</code> to run commands in an external shell that perform actions using the <code>gh</code> cli, and <code>git</code>. If you intend to use these you’ll want to follow <a href="https://github.com/Skenvy/dependabot-linguist#setup-external-clis">Setup external CLIs</a>.</p>
 
 <h3 id="label-Use+the+classes+in+a+ruby+script-2C+with+defaults">Use the classes in a ruby script, with defaults<span><a href="#label-Use+the+classes+in+a+ruby+script-2C+with+defaults">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
@@ -156,6 +169,8 @@
 
 <h3 id="label-Use+the+CLI">Use the CLI<span><a href="#label-Use+the+CLI">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
+<p>If you installed this with <strong>bundler</strong>, you’ll need to preface these with <code>bundle exec</code>.</p>
+
 <pre># With no flags, it&#39;ll run &quot;here&quot;, and print out the recommended new config.
 dependabot-linguist
 # With -w, it&#39;ll write the file. You can also specify a path.
@@ -163,6 +178,32 @@ dependabot-linguist ../../some/other/repo -w
 # With -x, you&#39;ll be trusting it to raise a pull request of the recommended config.
 # You can also specify a name, which will be required if there isn&#39;t a &quot;origin&quot; remote.
 dependabot-linguist ../../some/other/repo Username/Reponame -x</pre>
+
+<h3 id="label-Configure">Configure<span><a href="#label-Configure">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>A yaml config file can be placed at <code>~/.github/.dependabot-linguist</code>. See this <a href="https://github.com/Skenvy/dependabot-linguist/blob/main/.github/.dependabot-linguist">example</a>. Although it’s a dotfile, it’ll be read by rugged, so for it to be utilised it should be checked in. The options available to this configuration file currently are;</p>
+
+<h4 id="label-ignore"><code>ignore</code><span><a href="#label-ignore">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<p>The below options, <code>directory</code> and <code>ecosystem</code> are not mutually exclusive, and can be mixed, according to what top level catagorisation requires less verbose configuration, if you want to ignore many directories for one or two ecosystems, or many ecosystems for one or two directories!</p>
+
+<h5 id="label-directory"><code>directory</code><span><a href="#label-directory">&para;</a> <a href="#top">&uarr;</a></span></h5>
+
+<p>To ignore some ecosystems per directory, you can add</p>
+
+<pre>ignore:
+  directory:
+    /path/to/somewhere:
+    - some_ecosystem</pre>
+
+<h5 id="label-ecosystem"><code>ecosystem</code><span><a href="#label-ecosystem">&para;</a> <a href="#top">&uarr;</a></span></h5>
+
+<p>To ignore some directories per ecosystem, you can add</p>
+
+<pre>ignore:
+  ecosystem:
+    some_other_ecosystem:
+    - /path/to/somewhere_else</pre>
 
 <h2 id="label-RDoc+generated+docs"><a href="https://skenvy.github.io/dependabot-linguist/">RDoc generated docs</a><span><a href="#label-RDoc+generated+docs">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
