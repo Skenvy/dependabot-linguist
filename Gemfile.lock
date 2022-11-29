@@ -3,7 +3,7 @@ PATH
   specs:
     dependabot-linguist (0.212.1)
       dependabot-omnibus (= 0.212.0)
-      github-linguist (= 7.23.0)
+      github-linguist (= 7.24.1)
       rugged (~> 1.5.0)
 
 GEM
@@ -113,7 +113,7 @@ GEM
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
-    github-linguist (7.23.0)
+    github-linguist (7.24.1)
       cgi
       charlock_holmes (~> 0.7.7)
       mini_mime (~> 1.0)
