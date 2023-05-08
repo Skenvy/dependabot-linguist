@@ -40,6 +40,8 @@ jobs:
       run: make setup
     - name: 🦂 Test
       run: make test
+    - name: 🧹 Lint
+      run: make lint
   full-test:
     name: 🔻 Full Test 🦂
     if: >- 
@@ -64,6 +66,8 @@ jobs:
       run: make setup
     - name: 🦂 Test
       run: make test
+    - name: 🧹 Lint
+      run: make lint
   codeql:
     name: 🔻 CodeQL 🛡👨‍💻🛡
     runs-on: ubuntu-latest

@@ -96,4 +96,5 @@ git clone https://github.com/Skenvy/dependabot-linguist.git && cd dependabot-lin
 ### Iterative development
 The majority of `make` recipes for this are just wrapping a `bundle` invocation of `rake`.
 * `make docs` will recreate the RDoc docs
-* `make test` will run both the RSpec tests and the RuboCop linter.
+* `make test` will run the RSpec tests.
+* `make lint` will run the RuboCop linter.

@@ -1,4 +1,4 @@
-.PHONY: setup setup_github clean docs docs_view demo test build install push_rubygems push_github
+.PHONY: setup setup_github clean docs docs_view demo test lint build install push_rubygems push_github
 SHELL:=/bin/bash
 
 # Assumes `gem install bundler`
@@ -27,12 +27,14 @@ demo:
 # default (just `rake`) is spec + rubocop, but be pedantic in case this changes.
 test: clean
 	bundle exec rake spec
+
+lint: clean
 	bundle exec rake rubocop
 
 # We can choose from `gem build dependabot-linguist.gemspec` or `bundle exec rake build`.
 # The gem build command creates a ./dependabot-linguist-$VER.gem file, and the rake build
 # (within bundle context) creates a ./pkg/dependabot-linguist-$VER.gem file.
-build: test
+build: test lint
 	bundle exec rake build
 
 # --user-install means no need for sudo or expectation of
