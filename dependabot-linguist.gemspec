@@ -12,7 +12,9 @@ Gem::Specification.new do |spec|
   spec.description = "Use linguist to check the contents of a repository,
   and then scan for dependabot-core ecosystems relevant to those languages!"
   spec.homepage = "https://skenvy.github.io/dependabot-linguist"
-  spec.required_ruby_version = ">= 2.7.0"
+  # https://github.com/dependabot/dependabot-core/blob/v0.217.0/common/dependabot-common.gemspec#L23-L24
+  spec.required_ruby_version = ">= 3.1.0"
+  spec.required_rubygems_version = ">= 3.3.7"
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/Skenvy/dependabot-linguist/tree/main/"
 
@@ -25,13 +27,13 @@ Gem::Specification.new do |spec|
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
 
-  spec.add_dependency "rugged", "~> 1.5.0"
-  spec.add_dependency "github-linguist", "7.23.0"
+  spec.add_dependency "rugged", "1.6.3"
+  spec.add_dependency "github-linguist", "7.25.0"
   # All ecosystem gems from https://rubygems.org/profiles/dependabot can be
-  # required via https://rubygems.org/gems/dependabot-omnibus/versions/0.212.0
+  # required via https://rubygems.org/gems/dependabot-omnibus/versions/0.217.0
   # which will include all dependencies of omnibus (16 ecosystems and common).
-  # https://github.com/dependabot/dependabot-core/blob/v0.212.0/omnibus/dependabot-omnibus.gemspec#L24-L40
-  spec.add_dependency "dependabot-omnibus", "0.212.0"
+  # https://github.com/dependabot/dependabot-core/blob/v0.217.0/omnibus/dependabot-omnibus.gemspec#L29-L45
+  spec.add_dependency "dependabot-omnibus", "0.217.0"
 
   # spec.add_development_dependency "aruba", "~> 2.1" # TODO
   spec.add_development_dependency "rake", "~> 13.0"

@@ -12,6 +12,8 @@ permissions: {}
 defaults:
   run:
     shell: bash
+env:
+  development_ruby_version: 3.1.0
 jobs:
   test:
     name: 🔻 Test 🦂
@@ -63,7 +65,7 @@ jobs:
     - name: 🔻 Set up Ruby
       uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c # v1.148.0
       with:
-        ruby-version: '2.7'
+        ruby-version: ${{ env.development_node_version }}
         bundler-cache: true
     - name: 🧱 Install build dependencies
       run: make setup
@@ -109,7 +111,7 @@ jobs:
     - name: 🔻 Set up Ruby
       uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c # v1.148.0
       with:
-        ruby-version: '2.7'
+        ruby-version: ${{ env.development_node_version }}
         bundler-cache: true
     - name: 🔑 Keycutter for GitHub
       run: make setup_github
@@ -146,7 +148,7 @@ jobs:
     - name: 🔻 Set up Ruby
       uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c # v1.148.0
       with:
-        ruby-version: '2.7'
+        ruby-version: ${{ env.development_node_version }}
         bundler-cache: true
     - name: 🧱 Install build dependencies
       run: make setup
