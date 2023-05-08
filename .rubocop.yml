@@ -11,6 +11,8 @@ AllCops:
 
 Gemspec/DeprecatedAttributeAssignment:
   Enabled: true
+Gemspec/DevelopmentDependencies: # new in 1.44
+  Enabled: true
 Gemspec/OrderedDependencies:
   Enabled: false
 Gemspec/RequireMFA:
@@ -53,6 +55,8 @@ Metrics/BlockNesting:
   Enabled: false
 Metrics/ClassLength:
   Enabled: false
+Metrics/CollectionLiteralLength: # new in 1.47
+  Enabled: true
 Metrics/CyclomaticComplexity:
   Enabled: false
 Metrics/MethodLength:
@@ -75,6 +79,8 @@ Lint/DeprecatedConstants:
 Lint/DuplicateBranch:
   Enabled: true
 Lint/DuplicateMagicComment: # new in 1.37
+  Enabled: true
+Lint/DuplicateMatchPattern: # new in 1.50
   Enabled: true
 Lint/DuplicateRegexpCharacterClassElement:
   Enabled: true
@@ -116,9 +122,10 @@ Lint/UnexpectedBlockArity:
   Enabled: true
 Lint/UnmodifiedReduceAccumulator:
   Enabled: true
+Lint/UselessRescue: # new in 1.43
+  Enabled: true
 Lint/UselessRuby2Keywords:
   Enabled: true
-
 
 Style/StringLiterals:
   Enabled: true
@@ -131,10 +138,20 @@ Style/AccessModifierDeclarations:
   AllowModifiersOnSymbols: false
 Style/ArgumentsForwarding:
   Enabled: true
+Style/ArrayIntersect: # new in 1.40
+  Enabled: true
 Style/CollectionCompact:
+  Enabled: true
+Style/ComparableClamp: # new in 1.44
+  Enabled: true
+Style/ConcatArrayLiterals: # new in 1.41
   Enabled: true
 Style/ConditionalAssignment:
   Enabled: false
+Style/DataInheritance: # new in 1.49
+  Enabled: true
+Style/DirEmpty: # new in 1.48
+  Enabled: true
 Style/DocumentDynamicEvalDefinition:
   Enabled: true
 Style/EmptyHeredoc:
@@ -144,6 +161,8 @@ Style/EndlessMethod:
 Style/EnvHome:
   Enabled: true
 Style/FetchEnvVar:
+  Enabled: true
+Style/FileEmpty: # new in 1.48
   Enabled: true
 Style/FileRead:
   Enabled: true
@@ -155,6 +174,9 @@ Style/HashConversion:
   Enabled: true
 Style/HashExcept:
   Enabled: true
+Style/HashSyntax:
+  Enabled: true
+  EnforcedShorthandSyntax: 'never'
 Style/IfWithBooleanLiteralBranches:
   Enabled: true
 Style/IfUnlessModifier:
@@ -169,7 +191,13 @@ Style/MapCompactWithConditionalBlock:
   Enabled: true
 Style/MapToHash:
   Enabled: true
+Style/MapToSet: # new in 1.42
+  Enabled: true
+Style/MinMaxComparison: # new in 1.42
+  Enabled: true
 Style/MultilineInPatternThen:
+  Enabled: true
+Style/MutableConstant:
   Enabled: true
 Style/NegatedIfElseCondition:
   Enabled: true
@@ -195,9 +223,17 @@ Style/QuotedSymbols:
   Enabled: true
 Style/RedundantArgument:
   Enabled: true
+Style/RedundantConstantBase: # new in 1.40
+  Enabled: false
+Style/RedundantDoubleSplatHashBraces: # new in 1.41
+  Enabled: true
 Style/RedundantEach: # new in 1.38
   Enabled: true
+Style/RedundantHeredocDelimiterQuotes: # new in 1.45
+  Enabled: true
 Style/RedundantInitialize:
+  Enabled: true
+Style/RedundantLineContinuation: # new in 1.49
   Enabled: true
 Style/RedundantSelf:
   Enabled: false

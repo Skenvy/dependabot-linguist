@@ -26,7 +26,7 @@ module Dependabot
           puts "Repository #{@repo_name} not found at #{@repo_path}; falling back to cloning public url"
           @repo = Rugged::Repository.clone_at("https://github.com/#{@repo_name}.git", @repo_path)
         end
-        @ignore_linguist = [[0, ignore_linguist].max, 2].min
+        @ignore_linguist = ignore_linguist.clamp(0, 2)
         @verbose = verbose
         @linguist = ::Linguist::Repository.new(@repo, @repo.head.target_id)
       end
