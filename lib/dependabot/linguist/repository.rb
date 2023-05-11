@@ -16,7 +16,9 @@ module Dependabot
     # the languages it thought was relevant to each dependabot ecosystem.
     class Repository
       def initialize(repo_path, repo_name, ignore_linguist: 0, verbose: false)
-        @repo_path = repo_path.chomp.delete_suffix("/")
+        @repo_path = repo_path.chomp.delete_suffix("/") unless repo_path.nil?
+        # If repo_path is nil, say that the current workdir is the path.
+        @repo_path ||= "."
         @repo_name = repo_name
         begin
           @repo = Rugged::Repository.new(@repo_path)
@@ -24,6 +26,9 @@ module Dependabot
           # Either the folder doesn't exist, or it does and doesn't have a `.git/`
           # Try to clone into it, if it's public
           puts "Repository #{@repo_name} not found at #{@repo_path}; falling back to cloning public url"
+          # If the current path isn't empty, make a temporary repository path.
+          @repo_path = "./tmp/#{@repo_name}" unless Dir.empty? @repo_path
+          puts "Cloning https://github.com/#{@repo_name}.git into #{@repo_path}"
           @repo = Rugged::Repository.clone_at("https://github.com/#{@repo_name}.git", @repo_path)
         end
         @ignore_linguist = ignore_linguist.clamp(0, 2)

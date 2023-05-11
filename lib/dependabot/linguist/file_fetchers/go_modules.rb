@@ -12,9 +12,8 @@
 #########################################################################################
 
 # Patches Dependabot::GoModules::FileFetcher.fetch_files
-# https://github.com/dependabot/dependabot-core/blob/v0.212.0/go_modules/lib/dependabot/go_modules/file_fetcher.rb#L19-L41
 
-# Patch to remove the online requirement for fetching go modules
+# Patched to remove the online requirement for fetching go modules
 
 # See the git_submodule patch for a comment explaining the reorder pattern,
 # due to `go_mod` being acquired via `fetch_file_if_present` and hitting
@@ -28,6 +27,7 @@ require "dependabot/go_modules"
 module Dependabot
   module GoModules
     class FileFetcher
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/go_modules/lib/dependabot/go_modules/file_fetcher.rb#L30-L50
       def fetch_files
         raise(Dependabot::DependencyFileNotFound, Pathname.new(File.join(directory, "go.mod")).cleanpath.to_path) if go_mod.nil?
         fetched_files = [go_mod]
