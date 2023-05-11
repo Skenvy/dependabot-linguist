@@ -12,10 +12,10 @@
 #########################################################################################
 
 # Patches the class Dependabot::FileFetchers::Base that all file fetching classes sub class.
-# https://github.com/dependabot/dependabot-core/blob/v0.212.0/common/lib/dependabot/file_fetchers/base.rb
+# https://github.com/dependabot/dependabot-core/blob/v0.217.0/common/lib/dependabot/file_fetchers/base.rb
 
-# cloned_commit was added in 0.213.0; so we need to patch it in for 0.212.0 with an edit that
-# removes the `SharedHelpers.with_git_configured(credentials: credentials) do` wrap
+# We need to patch cloned_commit with an edit that removes the wrapping
+# `SharedHelpers.with_git_configured(credentials: credentials) do`
 
 require "dependabot/file_fetchers"
 
@@ -24,6 +24,7 @@ require "dependabot/file_fetchers"
 module Dependabot
   module FileFetchers
     class Base
+      # Original at https://github.com/dependabot/dependabot-core/blob/v0.217.0/common/lib/dependabot/file_fetchers/base.rb#L189-L197
       def cloned_commit
         return if repo_contents_path.nil? || !File.directory?(File.join(repo_contents_path, ".git"))
         Dir.chdir(repo_contents_path) do
@@ -31,16 +32,8 @@ module Dependabot
         end
       end
 
-      def commit
-        return cloned_commit if cloned_commit
-        return source.commit if source.commit
-        branch = target_branch || default_branch_for_repo
-        @commit ||= client_for_provider.fetch_commit(repo, branch)
-      rescue *CLIENT_NOT_FOUND_ERRORS
-        raise Dependabot::BranchNotFound, branch
-      rescue Octokit::Conflict => e
-        raise unless e.message.include?("Repository is empty")
-      end
+      # No need to patch other uses; the _clone_repo_contents function returns the path if a git repo already exists:
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/common/lib/dependabot/file_fetchers/base.rb#L595
     end
   end
 end
