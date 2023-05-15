@@ -33,6 +33,7 @@ require "linguist"
 
 module Linguist
   # https://github.com/github/linguist/blob/v7.25.0/lib/linguist/language.rb
+
   class Language
     def ungroup_language
       @group_name = self.name
