@@ -123,6 +123,8 @@ jobs:
       with:
         name: Gem
         path: pkg
+    - name: 🌵 Ensure ~/.gem exists
+      run: mkdir -p ~/.gem
     - name: 📦 Publish to GitHub Packages
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
