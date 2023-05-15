@@ -128,10 +128,12 @@
        </header>
 
       <div id="method-c-checking_exists" class="method-detail ">
-        <div class="method-heading">
-          <span class="method-name">checking_exists</span><span
-            class="method-args">(checking, exists)</span>
-          <span class="method-click-advice">click to toggle source</span>
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">checking_exists</span><span
+              class="method-args">(checking, exists)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
         </div>
 
         <div class="method-description">
@@ -149,10 +151,12 @@
       </div>
 
       <div id="method-c-flatten_ecodirs_to_ecodir" class="method-detail ">
-        <div class="method-heading">
-          <span class="method-name">flatten_ecodirs_to_ecodir</span><span
-            class="method-args">(ecosystem_directories_map)</span>
-          <span class="method-click-advice">click to toggle source</span>
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">flatten_ecodirs_to_ecodir</span><span
+              class="method-args">(ecosystem_directories_map)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
         </div>
 
         <div class="method-description">
@@ -170,10 +174,12 @@
       </div>
 
       <div id="method-c-new" class="method-detail ">
-        <div class="method-heading">
-          <span class="method-name">new</span><span
-            class="method-args">(repo_path, remove_undiscovered: false, update_existing: true, minimum_interval: &quot;weekly&quot;, max_open_pull_requests_limit: 5, verbose: false)</span>
-          <span class="method-click-advice">click to toggle source</span>
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">new</span><span
+              class="method-args">(repo_path, remove_undiscovered: false, update_existing: true, minimum_interval: &quot;weekly&quot;, max_open_pull_requests_limit: 5, verbose: false)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
         </div>
 
         <div class="method-description">
@@ -204,17 +210,19 @@
        </header>
 
       <div id="method-i-commit_new_config" class="method-detail ">
-        <div class="method-heading">
-          <span class="method-name">commit_new_config</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">commit_new_config</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
         </div>
 
         <div class="method-description">
           <p>The expected environment to run this final step in should have ‘git’ AND ‘gh’ available as commands to run, and calls out to a subshell to run them as set up by the environment that runs this, rather than requiring credentials being provided to this class.</p>
 
           <div class="method-source-code" id="commit_new_config-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/dependabot_file_validator.rb, line 212</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/dependabot_file_validator.rb, line 214</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">commit_new_config</span>
   <span class="ruby-identifier">new_branch</span> = <span class="ruby-ivar">@repo</span>.<span class="ruby-identifier">create_branch</span>(<span class="ruby-string">&quot;dependabot-linguist_auto-config-update&quot;</span>)
   <span class="ruby-identifier">in_repo</span> = <span class="ruby-node">&quot;cd #{@repo.path.delete_suffix(&quot;/.git/&quot;)} &amp;&amp;&quot;</span>
@@ -232,10 +240,12 @@
       </div>
 
       <div id="method-i-config_drift" class="method-detail ">
-        <div class="method-heading">
-          <span class="method-name">config_drift</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">config_drift</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
         </div>
 
         <div class="method-description">
@@ -294,10 +304,12 @@
       </div>
 
       <div id="method-i-confirm_config_version_is_valid" class="method-detail ">
-        <div class="method-heading">
-          <span class="method-name">confirm_config_version_is_valid</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">confirm_config_version_is_valid</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
         </div>
 
         <div class="method-description">
@@ -315,10 +327,12 @@
       </div>
 
       <div id="method-i-dependabot_file_path" class="method-detail ">
-        <div class="method-heading">
-          <span class="method-name">dependabot_file_path</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">dependabot_file_path</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
         </div>
 
         <div class="method-description">
@@ -345,10 +359,12 @@
       </div>
 
       <div id="method-i-ecodir_is_ignored" class="method-detail ">
-        <div class="method-heading">
-          <span class="method-name">ecodir_is_ignored</span><span
-            class="method-args">(eco, dir)</span>
-          <span class="method-click-advice">click to toggle source</span>
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">ecodir_is_ignored</span><span
+              class="method-args">(eco, dir)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
         </div>
 
         <div class="method-description">
@@ -377,10 +393,12 @@ ecosystem:
       </div>
 
       <div id="method-i-existing_config" class="method-detail ">
-        <div class="method-heading">
-          <span class="method-name">existing_config</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">existing_config</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
         </div>
 
         <div class="method-description">
@@ -400,10 +418,12 @@ ecosystem:
       </div>
 
       <div id="method-i-load_ecosystem_directories" class="method-detail ">
-        <div class="method-heading">
-          <span class="method-name">load_ecosystem_directories</span><span
-            class="method-args">(incoming: @load_ecosystem_directories)</span>
-          <span class="method-click-advice">click to toggle source</span>
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">load_ecosystem_directories</span><span
+              class="method-args">(incoming: @load_ecosystem_directories)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
         </div>
 
         <div class="method-description">
@@ -428,10 +448,12 @@ ecosystem:
       </div>
 
       <div id="method-i-meta_config" class="method-detail ">
-        <div class="method-heading">
-          <span class="method-name">meta_config</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">meta_config</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
         </div>
 
         <div class="method-description">
@@ -453,10 +475,12 @@ ecosystem:
       </div>
 
       <div id="method-i-new_config" class="method-detail ">
-        <div class="method-heading">
-          <span class="method-name">new_config</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">new_config</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
         </div>
 
         <div class="method-description">
@@ -512,10 +536,12 @@ ecosystem:
       </div>
 
       <div id="method-i-parsed_schedule_interval" class="method-detail ">
-        <div class="method-heading">
-          <span class="method-name">parsed_schedule_interval</span><span
-            class="method-args">(interval)</span>
-          <span class="method-click-advice">click to toggle source</span>
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">parsed_schedule_interval</span><span
+              class="method-args">(interval)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
         </div>
 
         <div class="method-description">
@@ -538,10 +564,12 @@ ecosystem:
       </div>
 
       <div id="method-i-write_new_config" class="method-detail ">
-        <div class="method-heading">
-          <span class="method-name">write_new_config</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">write_new_config</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
         </div>
 
         <div class="method-description">
@@ -550,7 +578,9 @@ ecosystem:
           <div class="method-source-code" id="write_new_config-source">
             <pre><span class="ruby-comment"># File lib/dependabot/linguist/dependabot_file_validator.rb, line 204</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">write_new_config</span>
-  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-node">&quot;#{@repo.path.delete_suffix(&quot;/.git/&quot;)}/#{dependabot_file_path}&quot;</span>, <span class="ruby-string">&quot;w&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">new_config</span>.<span class="ruby-identifier">to_yaml</span>) } <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_config</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">existing_config</span>
+  <span class="ruby-identifier">full_file_path</span> = <span class="ruby-node">&quot;#{@repo.path.delete_suffix(&quot;/.git/&quot;)}/#{dependabot_file_path}&quot;</span>
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">full_file_path</span>)
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">full_file_path</span>, <span class="ruby-string">&quot;w&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">new_config</span>.<span class="ruby-identifier">to_yaml</span>) } <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_config</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">existing_config</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
         </div>
@@ -566,7 +596,7 @@ ecosystem:
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.4.0.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.5.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

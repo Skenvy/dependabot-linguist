@@ -68,15 +68,22 @@
   <h3>Class and Module Index</h3>
 
   <ul class="link-list">
-    <li><a href="./Dependabot.html">Dependabot</a>
-    <li><a href="./Dependabot/Linguist.html">Dependabot::Linguist</a>
-    <li><a href="./Dependabot/Linguist/DependabotFileValidator.html">Dependabot::Linguist::DependabotFileValidator</a>
-    <li><a href="./Dependabot/Linguist/DependabotFileValidator/ConfigDriftStatus.html">Dependabot::Linguist::DependabotFileValidator::ConfigDriftStatus</a>
-    <li><a href="./Dependabot/Linguist/Repository.html">Dependabot::Linguist::Repository</a>
-    <li><a href="./Linguist.html">Linguist</a>
-    <li><a href="./Linguist/BlobHelper.html">Linguist::BlobHelper</a>
-    <li><a href="./Linguist/Language.html">Linguist::Language</a>
-  </ul>
+  <li><details><summary><code><a href="./Dependabot.html">Dependabot</a></code></summary>
+  <ul class="link-list">
+  <li><details><summary><code><a href="./Dependabot/Linguist.html">Linguist</a></code></summary>
+  <ul class="link-list">
+  <li><details><summary><code><a href="./Dependabot/Linguist/DependabotFileValidator.html">DependabotFileValidator</a></code></summary>
+  <ul class="link-list">
+  <li><code><a href="./Dependabot/Linguist/DependabotFileValidator/ConfigDriftStatus.html">ConfigDriftStatus</a></code>
+  </ul></details>
+  <li><code><a href="./Dependabot/Linguist/Repository.html">Repository</a></code>
+  </ul></details>
+  </ul></details>
+  <li><details><summary><code><a href="./Linguist.html">Linguist</a></code></summary>
+  <ul class="link-list">
+  <li><code><a href="./Linguist/BlobHelper.html">BlobHelper</a></code>
+  <li><code><a href="./Linguist/Language.html">Language</a></code>
+  </ul></details>
 </div>
 
   </div>
@@ -93,7 +100,7 @@
 
 <h3 id="label-Linguist+dependencies-3B"><a href="https://github.com/github/linguist#dependencies">Linguist dependencies</a>;<span><a href="#label-Linguist+dependencies-3B">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
-<p>Before installing this gem, which will install the <a href="https://rubygems.org/gems/github-linguist">github-linguist gem</a>, linguists dependencies should be installed. A number of these are enabling <a href="https://rubygems.org/gems/rugged">rugged</a>, so they can’t be “ignored” like <a href="https://github.com/dependabot/dependabot-core#setup">dependabot’s setup</a>, which <em>can</em> be ignored for the purpose of <strong>this</strong> gem, which only intends to use the <a href="https://github.com/dependabot/dependabot-core/blob/v0.212.0/common/lib/dependabot/file_fetchers/README.md">file fetchers</a>.</p>
+<p>Before installing this gem, which will install the <a href="https://rubygems.org/gems/github-linguist">github-linguist gem</a>, linguists dependencies should be installed. A number of these are enabling <a href="https://rubygems.org/gems/rugged">rugged</a>, so they can’t be “ignored” like <a href="https://github.com/dependabot/dependabot-core#setup">dependabot’s setup</a>, which <em>can</em> be ignored for the purpose of <strong>this</strong> gem, which only intends to use the <a href="https://github.com/dependabot/dependabot-core/blob/v0.217.0/common/lib/dependabot/file_fetchers/README.md">file fetchers</a>.</p>
 
 <pre>sudo apt-get install build-essential cmake pkg-config libicu-dev zlib1g-dev libcurl4-openssl-dev libssl-dev ruby-dev</pre>
 
@@ -117,13 +124,13 @@
 
 <p>Or add the following line to your <code>Gemfile</code> manually</p>
 
-<pre class="ruby"><span class="ruby-identifier">gem</span> <span class="ruby-string">&quot;dependabot-linguist&quot;</span>, <span class="ruby-string">&quot;&gt;= 0.212.0</span>
+<pre class="ruby"><span class="ruby-identifier">gem</span> <span class="ruby-string">&quot;dependabot-linguist&quot;</span>, <span class="ruby-string">&quot;&gt;= 0.217.0</span>
 </pre>
 
 <p><a href="https://github.com/Skenvy/dependabot-linguist/packages/1704407">Add the GitHub hosted gem</a>;</p>
 
 <pre class="ruby"><span class="ruby-identifier">source</span> <span class="ruby-string">&quot;https://rubygems.pkg.github.com/skenvy&quot;</span> <span class="ruby-keyword">do</span>
-  <span class="ruby-identifier">gem</span> <span class="ruby-string">&quot;dependabot-linguist&quot;</span>, <span class="ruby-string">&quot;&gt;= 0.212.0&quot;</span>
+  <span class="ruby-identifier">gem</span> <span class="ruby-string">&quot;dependabot-linguist&quot;</span>, <span class="ruby-string">&quot;&gt;= 0.217.0&quot;</span>
 <span class="ruby-keyword">end</span>
 </pre>
 
@@ -206,14 +213,14 @@ dependabot-linguist ../../some/other/repo Username/Reponame -x</pre>
 
 <h3 id="label-Iterative+development">Iterative development<span><a href="#label-Iterative+development">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
-<p>The majority of <code>make</code> recipes for this are just wrapping a <code>bundle</code> invocation of <code>rake</code>. * <code>make docs</code> will recreate the RDoc docs * <code>make test</code> will run both the RSpec tests and the RuboCop linter.</p>
+<p>The majority of <code>make</code> recipes for this are just wrapping a <code>bundle</code> invocation of <code>rake</code>. * <code>make docs</code> will recreate the RDoc docs * <code>make test</code> will run the RSpec tests. * <code>make lint</code> will run the RuboCop linter.</p>
 
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.4.0.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.5.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
