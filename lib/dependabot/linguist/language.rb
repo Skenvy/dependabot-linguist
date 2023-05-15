@@ -11,26 +11,28 @@
 #                 |___/                                             #
 #####################################################################
 
-# Patches the class Linguist::Language to selectively "ungroup"
-# and change the type of "languages" to a detectable type.
-# https://github.com/github/linguist/blob/v7.23.0/lib/linguist/language.rb
+# Patches the class Linguist::Language to selectively "ungroup" and
+# change the type of "languages" to a detectable type. This patches
+# the class with new functions, so there are no links to the "orig".
 
-# Patch https://github.com/github/linguist/blob/v7.23.0/lib/linguist/blob_helper.rb#L220
-# Need to remove the "(^|/)\.gitmodules$" string (plus one of the adjacent "|") as we
-# can't rely on the gitmodules to be unvendored in a `.gitattributes` and patching
-# https://github.com/github/linguist/blob/v7.23.0/lib/linguist/lazy_blob.rb#L35-L38 or
-# https://github.com/github/linguist/blob/v7.23.0/lib/linguist/lazy_blob.rb#L56-L62
-# would be too cumbersome. It also seems easier than duplicating the vendor patterns
-# from https://github.com/github/linguist/blob/v7.23.0/lib/linguist/vendor.yml
-# See https://ruby-doc.org/core-2.7.0/Regexp.html
-# We also need to remove the "(^|/)\.github/" string (plus one of the adjacent "|"),
-# to capture yaml files under .github/workflows/*.yaml
+# Patch Linguist::BlobHelper::VendoredRegexp. Need to remove the
+# "(^|/)\.gitmodules$" string (plus one of the adjacent "|") as we
+# can't rely on the gitmodules to be unvendored in a `.gitattributes`.
+# Need to remove the "(^|/)\.github/" string (plus the adjacent "|"),
+# to capture yaml files under `.github/workflows/*.yaml`
+# See https://ruby-doc.org/core-3.1.0/Regexp.html
+
+# Patching either Linguist::LazyBlob::git_attributes or
+# Linguist::LazyBlob::vendored? would be too cumbersome.
+# It also seems easier than duplicating the vendor patterns from
+# https://github.com/github/linguist/blob/v7.25.0/lib/linguist/vendor.yml
 
 require "linguist"
 
 # rubocop:disable Style/Documentation
 
 module Linguist
+  # https://github.com/github/linguist/blob/v7.25.0/lib/linguist/language.rb
   class Language
     def ungroup_language
       @group_name = self.name
@@ -55,6 +57,7 @@ module Linguist
   end
 
   module BlobHelper
+    # https://github.com/github/linguist/blob/v7.25.0/lib/linguist/blob_helper.rb#L220
     VendoredRegexp = Regexp.new(VendoredRegexp.source.gsub("(^|/)\\.gitmodules$|", "").gsub("|(^|/)\\.github/", ""))
   end
 end
