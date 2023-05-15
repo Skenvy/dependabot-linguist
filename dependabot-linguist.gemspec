@@ -17,6 +17,7 @@ Gem::Specification.new do |spec|
   spec.required_rubygems_version = ">= 3.3.7"
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/Skenvy/dependabot-linguist/tree/main/"
+  spec.metadata["github_repo"] = "https://github.com/Skenvy/dependabot-linguist"
 
   spec.require_paths = ["lib"]
   spec.files = Dir.chdir(__dir__) do
