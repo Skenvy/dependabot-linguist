@@ -8,7 +8,7 @@
 # as it's source directory is not the directory it is valid to "fetch" from.
 
 # For a list of "linguist languages", see
-# https://github.com/github/linguist/blob/v7.23.0/lib/linguist/languages.yml
+# https://github.com/github/linguist/blob/v7.25.0/lib/linguist/languages.yml
 
 require_relative "manager_ecosystem_maps"
 
@@ -23,6 +23,7 @@ module Dependabot
       # is derived from inspecting the rules the file fetcher class actually
       # uses itself to determine if it can "fetch files" for a directory.
       # Possibly also based on the `def self.required_files_message` message.
+      # Or alternatively the `def self.required_files_in?`, the actual check!
       FETCH_FILES = "def fetch_files"
       # PRIMARY_LANGUAGES implies that the language should be the main or only
       # languages that that package manager could be used for, and the presence
@@ -60,7 +61,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::BUNDLER][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/bundler/lib/dependabot/bundler/file_fetcher.rb#L22-L24
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/bundler/lib/dependabot/bundler/file_fetcher.rb#L22-L24
       "Gemfile.lock", # Gemfile.lock
       "Ruby" # Gemfile or .gemspec
     ]
@@ -69,7 +70,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::CARGO][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/cargo/lib/dependabot/cargo/file_fetcher.rb#L19-L21
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/cargo/lib/dependabot/cargo/file_fetcher.rb#L19-L21
       "TOML" # Cargo.toml and Cargo.lock
     ]
     CONTEXT_RULES[PackageManagers::CARGO][ContextRule::PRIMARY_LANGUAGES] = ["Rust"]
@@ -77,7 +78,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::COMPOSER][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/composer/lib/dependabot/composer/file_fetcher.rb#L16-L18
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/composer/lib/dependabot/composer/file_fetcher.rb#L16-L18
       "JSON" # composer.json and composer.lock
     ]
     CONTEXT_RULES[PackageManagers::COMPOSER][ContextRule::PRIMARY_LANGUAGES] = ["PHP"]
@@ -85,7 +86,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::DOCKER][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/docker/lib/dependabot/docker/file_fetcher.rb#L17-L19
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/docker/lib/dependabot/docker/file_fetcher.rb#L19-L21
       "Dockerfile", # Dockerfile
       "YAML" # .yaml, if kubernetes option is set
     ]
@@ -94,7 +95,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::HEX][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/hex/lib/dependabot/hex/file_fetcher.rb#L20-L22
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/hex/lib/dependabot/hex/file_fetcher.rb#L19-L21
       "Elixir" # mix.lock and mix.exs by extension
     ]
     CONTEXT_RULES[PackageManagers::HEX][ContextRule::PRIMARY_LANGUAGES] = ["Elixir"]
@@ -102,7 +103,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::ELM_PACKAGE][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/elm/lib/dependabot/elm/file_fetcher.rb#L13-L15
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/elm/lib/dependabot/elm/file_fetcher.rb#L13-L15
       "JSON" # elm-package.json or an elm.json, only seeks via .json extension though.
     ]
     CONTEXT_RULES[PackageManagers::ELM_PACKAGE][ContextRule::PRIMARY_LANGUAGES] = ["Elm"]
@@ -110,7 +111,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::GIT_SUBMODULE][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/git_submodules/lib/dependabot/git_submodules/file_fetcher.rb#L15-L17
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/git_submodules/lib/dependabot/git_submodules/file_fetcher.rb#L15-L17
       "Git Config" # ".gitmodules"
     ]
     CONTEXT_RULES[PackageManagers::GIT_SUBMODULE][ContextRule::PRIMARY_LANGUAGES] = []
@@ -118,7 +119,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::GITHUB_ACTIONS][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/github_actions/lib/dependabot/github_actions/file_fetcher.rb#L15-L17
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/github_actions/lib/dependabot/github_actions/file_fetcher.rb#L15-L17
       # "YAML", but this is handled without linguist
     ]
     CONTEXT_RULES[PackageManagers::GITHUB_ACTIONS][ContextRule::PRIMARY_LANGUAGES] = []
@@ -126,7 +127,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::GO_MODULES][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/go_modules/lib/dependabot/go_modules/file_fetcher.rb#L13-L15
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/go_modules/lib/dependabot/go_modules/file_fetcher.rb#L13-L15
       "Go Checksums", # go.sum
       "Go Module" # go.mod
     ]
@@ -134,7 +135,7 @@ module Dependabot
     CONTEXT_RULES[PackageManagers::GO_MODULES][ContextRule::RELEVANT_LANGUAGES] = []
 
     CONTEXT_RULES[PackageManagers::GRADLE][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/gradle/lib/dependabot/gradle/file_fetcher.rb#L23-L25
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/gradle/lib/dependabot/gradle/file_fetcher.rb#L27-L29
       "Gradle", # for any `.gradle` file
       "Kotlin" # for any `.kts` file"
     ]
@@ -144,7 +145,7 @@ module Dependabot
     ]
 
     CONTEXT_RULES[PackageManagers::MAVEN][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/maven/lib/dependabot/maven/file_fetcher.rb#L17-L19
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/maven/lib/dependabot/maven/file_fetcher.rb#L17-L19
       "Maven POM" # for `pom.xml` files
     ]
     CONTEXT_RULES[PackageManagers::MAVEN][ContextRule::PRIMARY_LANGUAGES] = []
@@ -154,7 +155,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::NPM][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/npm_and_yarn/lib/dependabot/npm_and_yarn/file_fetcher.rb#L36-L51
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/npm_and_yarn/lib/dependabot/npm_and_yarn/file_fetcher.rb#L31-L33
       "JSON", # "package.json" or "package-lock.json" or "npm-shrinkwrap.json" but only by extension
       "NPM Config" # ".npmrc"
     ]
@@ -163,7 +164,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::NUGET][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/nuget/lib/dependabot/nuget/file_fetcher.rb#L20-L22
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/nuget/lib/dependabot/nuget/file_fetcher.rb#L20-L22
       "XML" # .csproj, .vbproj and .fsproj
       # Nothing looks for a packages.config
     ]
@@ -172,7 +173,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::PIP][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/python/lib/dependabot/python/file_fetcher.rb#L35-L38
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/python/lib/dependabot/python/file_fetcher.rb#L35-L38
       # Besides the other pip related package managers, there is no language for `requirements` files. RIP.
       "Text" # for `.txt`
     ]
@@ -181,7 +182,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::PIPENV][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/python/lib/dependabot/python/file_fetcher.rb#L35-L38
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/python/lib/dependabot/python/file_fetcher.rb#L35-L38
       "JSON", # Pipfile.lock
       "TOML" # Pipfile
     ]
@@ -190,7 +191,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::PIP_COMPILE][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/python/lib/dependabot/python/file_fetcher.rb#L35-L38
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/python/lib/dependabot/python/file_fetcher.rb#L35-L38
       # Already captured by the other pip related package manager paths
     ]
     CONTEXT_RULES[PackageManagers::PIP_COMPILE][ContextRule::PRIMARY_LANGUAGES] = ["Python"]
@@ -198,7 +199,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::POETRY][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/python/lib/dependabot/python/file_fetcher.rb#L35-L38
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/python/lib/dependabot/python/file_fetcher.rb#L35-L38
       # pyproject.lock has none and setup.py is vague.
       "TOML" # poetry.lock and pyproject.toml by extension
     ]
@@ -207,7 +208,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::PUB][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/pub/lib/dependabot/pub/file_fetcher.rb#L15-L17
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/pub/lib/dependabot/pub/file_fetcher.rb#L15-L17
       "YAML" # pubspec.yaml, but only by extension.
     ]
     CONTEXT_RULES[PackageManagers::PUB][ContextRule::PRIMARY_LANGUAGES] = ["Dart"]
@@ -215,7 +216,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::TERRAFORM][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/terraform/lib/dependabot/terraform/file_fetcher.rb#L19-L21
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/terraform/lib/dependabot/terraform/file_fetcher.rb#L19-L21
       "HCL" # .tf and .hcl
     ]
     CONTEXT_RULES[PackageManagers::TERRAFORM][ContextRule::PRIMARY_LANGUAGES] = []
@@ -223,7 +224,7 @@ module Dependabot
 
     ##
     CONTEXT_RULES[PackageManagers::YARN][ContextRule::FETCH_FILES] = [
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/npm_and_yarn/lib/dependabot/npm_and_yarn/file_fetcher.rb#L36-L51
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/npm_and_yarn/lib/dependabot/npm_and_yarn/file_fetcher.rb#L31-L33
       "YAML" # yarn.lock
     ]
     CONTEXT_RULES[PackageManagers::YARN][ContextRule::PRIMARY_LANGUAGES] = ["JavaScript", "TypeScript"]

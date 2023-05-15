@@ -12,7 +12,7 @@ require "yaml"
 $VERBOSE = previous_verbose
 
 VERSION = ::Dependabot::Linguist::VERSION
-BANNER = <<~BANNER
+BANNER = <<~BANNER.freeze
 Dependabot Linguist v#{VERSION}
 Detect dependabot ecosystems present for a given git repository, based off using
 linguist to determine the files present, that could be relevant to an ecosystem,

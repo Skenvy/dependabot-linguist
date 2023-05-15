@@ -202,7 +202,9 @@ module Dependabot
       end
 
       def write_new_config
-        File.open("#{@repo.path.delete_suffix("/.git/")}/#{dependabot_file_path}", "w") { |file| file.write(new_config.to_yaml) } if new_config != existing_config
+        full_file_path = "#{@repo.path.delete_suffix("/.git/")}/#{dependabot_file_path}"
+        FileUtils.mkdir_p File.dirname(full_file_path)
+        File.open(full_file_path, "w") { |file| file.write(new_config.to_yaml) } if new_config != existing_config
       end
 
       # The expected environment to run this final step in should have 'git' AND

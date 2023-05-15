@@ -19,6 +19,9 @@ permissions: {}
 defaults:
   run:
     shell: bash
+env:
+  development_ruby_version: 3.1.0
+  development_rubygems_version: 3.4.12
 jobs:
   quick-test:
     name: 🔻 Quick Test 🦂
@@ -30,12 +33,15 @@ jobs:
     - name: 🔻 Set up Ruby
       uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c # v1.148.0
       with:
-        ruby-version: '2.7'
+        ruby-version: ${{ env.development_ruby_version }}
+        rubygems: ${{ env.development_rubygems_version }}
         bundler-cache: true
     - name: 🧱 Install build dependencies
       run: make setup
     - name: 🦂 Test
       run: make test
+    - name: 🧹 Lint
+      run: make lint
   full-test:
     name: 🔻 Full Test 🦂
     if: >- 
@@ -45,7 +51,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: ['2.7.0', '3.0', '3.1']
+        version: ['3.1', '3.2']
         os: [ubuntu-latest, macOS-latest] # , windows-latest
     steps:
     - name: 🏁 Checkout
@@ -54,11 +60,14 @@ jobs:
       uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c # v1.148.0
       with:
         ruby-version: ${{ matrix.version }}
+        rubygems: ${{ env.development_rubygems_version }}
         bundler-cache: true
     - name: 🧱 Install build dependencies
       run: make setup
     - name: 🦂 Test
       run: make test
+    - name: 🧹 Lint
+      run: make lint
   codeql:
     name: 🔻 CodeQL 🛡👨‍💻🛡
     runs-on: ubuntu-latest
@@ -92,7 +101,8 @@ jobs:
     - name: 🔻 Set up Ruby
       uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c # v1.148.0
       with:
-        ruby-version: '2.7'
+        ruby-version: ${{ env.development_ruby_version }}
+        rubygems: ${{ env.development_rubygems_version }}
         bundler-cache: true
     - name: 🧱 Install build dependencies
       run: make setup
