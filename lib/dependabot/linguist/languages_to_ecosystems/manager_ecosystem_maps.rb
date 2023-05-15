@@ -7,7 +7,7 @@
 # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem
 
 # For the file_fetchers' register function, whose keys we map to, see
-# https://github.com/dependabot/dependabot-core/blob/v0.212.0/common/lib/dependabot/file_fetchers.rb#L14-L16
+# https://github.com/dependabot/dependabot-core/blob/v0.217.0/common/lib/dependabot/file_fetchers.rb#L14-L16
 
 module Dependabot
   module Linguist
@@ -92,37 +92,37 @@ module Dependabot
     # so each mapping |K,V| element should have a comment linking to the place
     # that its value was registered!
     PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY = {
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/bundler/lib/dependabot/bundler/file_fetcher.rb#L216
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/bundler/lib/dependabot/bundler/file_fetcher.rb#L225
       PackageEcosystems::BUNDLER => "bundler",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/cargo/lib/dependabot/cargo/file_fetcher.rb#L295
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/cargo/lib/dependabot/cargo/file_fetcher.rb#L324
       PackageEcosystems::CARGO => "cargo",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/composer/lib/dependabot/composer/file_fetcher.rb#L183
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/composer/lib/dependabot/composer/file_fetcher.rb#L183
       PackageEcosystems::COMPOSER => "composer",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/docker/lib/dependabot/docker/file_fetcher.rb#L103
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/docker/lib/dependabot/docker/file_fetcher.rb#L101
       PackageEcosystems::DOCKER => "docker",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/elm/lib/dependabot/elm/file_fetcher.rb#L46
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/elm/lib/dependabot/elm/file_fetcher.rb#L46
       PackageEcosystems::ELM => "elm",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/github_actions/lib/dependabot/github_actions/file_fetcher.rb#L72-L73
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/github_actions/lib/dependabot/github_actions/file_fetcher.rb#L79-L80
       PackageEcosystems::GITHUB_ACTIONS => "github_actions",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/git_submodules/lib/dependabot/git_submodules/file_fetcher.rb#L84-L85
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/git_submodules/lib/dependabot/git_submodules/file_fetcher.rb#L88-L89
       PackageEcosystems::GIT_SUBMODULE => "submodules",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/go_modules/lib/dependabot/go_modules/file_fetcher.rb#L54-L55
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/go_modules/lib/dependabot/go_modules/file_fetcher.rb#L67-L68
       PackageEcosystems::GOMOD => "go_modules",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/gradle/lib/dependabot/gradle/file_fetcher.rb#L131
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/gradle/lib/dependabot/gradle/file_fetcher.rb#L176
       PackageEcosystems::GRADLE => "gradle",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/maven/lib/dependabot/maven/file_fetcher.rb#L142
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/maven/lib/dependabot/maven/file_fetcher.rb#L162
       PackageEcosystems::MAVEN => "maven",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/hex/lib/dependabot/hex/file_fetcher.rb#L98
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/hex/lib/dependabot/hex/file_fetcher.rb#L97
       PackageEcosystems::MIX => "hex",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/npm_and_yarn/lib/dependabot/npm_and_yarn/file_fetcher.rb#L419-L420
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/npm_and_yarn/lib/dependabot/npm_and_yarn/file_fetcher.rb#L527-L528
       PackageEcosystems::NPM => "npm_and_yarn",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/nuget/lib/dependabot/nuget/file_fetcher.rb#L271
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/nuget/lib/dependabot/nuget/file_fetcher.rb#L278
       PackageEcosystems::NUGET => "nuget",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/python/lib/dependabot/python/file_fetcher.rb#L409
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/python/lib/dependabot/python/file_fetcher.rb#L418
       PackageEcosystems::PIP => "pip",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/pub/lib/dependabot/pub/file_fetcher.rb#L46
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/pub/lib/dependabot/pub/file_fetcher.rb#L46
       PackageEcosystems::PUB => "pub",
-      # https://github.com/dependabot/dependabot-core/blob/v0.212.0/terraform/lib/dependabot/terraform/file_fetcher.rb#L90-L91
+      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/terraform/lib/dependabot/terraform/file_fetcher.rb#L90-L91
       PackageEcosystems::TERRAFORM => "terraform"
     }.freeze
 
