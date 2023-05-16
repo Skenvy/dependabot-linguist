@@ -34,7 +34,7 @@
 
 require "aruba/rspec"
 
-YAML_OUT = <<~YAML
+YAML_OUT = <<~YAML.strip
 ---
 version: 2
 updates:
@@ -184,7 +184,7 @@ updates:
     interval: weekly
 YAML
 
-ECODIRS_OUT = <<~ECODIRS
+ECODIRS_OUT = <<~ECODIRS.strip
 ---
 bundler:
 - "/"
