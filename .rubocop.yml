@@ -1,3 +1,6 @@
+# For any failing cops, whether new or old ones that have been changed, visit;
+# https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/<Name_of_failing_cop>
+
 AllCops:
   TargetRubyVersion: 3.1.0
   UseCache: false
@@ -11,8 +14,9 @@ AllCops:
 
 Gemspec/DeprecatedAttributeAssignment:
   Enabled: true
-Gemspec/DevelopmentDependencies: # new in 1.44
+Gemspec/DevelopmentDependencies:
   Enabled: true
+  EnforcedStyle: gemspec
 Gemspec/OrderedDependencies:
   Enabled: false
 Gemspec/RequireMFA:
@@ -160,6 +164,8 @@ Style/EndlessMethod:
   Enabled: true
 Style/EnvHome:
   Enabled: true
+Style/ExactRegexpMatch:
+  Enabled: false
 Style/FetchEnvVar:
   Enabled: true
 Style/FileEmpty: # new in 1.48
