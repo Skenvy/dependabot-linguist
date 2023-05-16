@@ -15,7 +15,7 @@
 # #<Thread:0x00007fb737265480 /home/skenvy/.rvm/rubies/ruby-3.1.0/lib/ruby/3.1.0/open3.rb:404 run> terminated with exception (report_on_exception is true):
 # /home/skenvy/.rvm/rubies/ruby-3.1.0/lib/ruby/3.1.0/open3.rb:404:in `read': stream closed in another thread (IOError)
 #         from /home/skenvy/.rvm/rubies/ruby-3.1.0/lib/ruby/3.1.0/open3.rb:404:in `block (2 levels) in capture2e'
-       
+
 # ./spec/dependabot/cli_spec.rb:251:in `block (3 levels) in <top (required)>'
 # /home/skenvy/.rvm/gems/ruby-3.1.0/gems/aruba-2.1.0/lib/aruba/rspec.rb:35:in `block (3 levels) in <top (required)>'
 # /home/skenvy/.rvm/gems/ruby-3.1.0/gems/aruba-2.1.0/lib/aruba/platforms/local_environment.rb:22:in `call'
@@ -240,7 +240,7 @@ terraform:
 - "/smoke-test/terraform"
 ECODIRS
 
-RSpec.describe "exe/dependabot-linguist", :type => :aruba do
+RSpec.describe "exe/dependabot-linguist", :type => :aruba do # rubocop:disable Style/HashSyntax
   context "default yaml" do
     let(:content) { YAML_OUT }
     before { run_command("dependabot-linguist") }
