@@ -38,7 +38,7 @@ Gem::Specification.new do |spec|
 
   # spec.add_development_dependency "aruba", "~> 2.1" # TODO
   spec.add_development_dependency "rake", "~> 13.0"
-  spec.add_development_dependency "rdoc", "~> 6.0"
+  spec.add_development_dependency "rdoc", "~> 6.5"
   spec.add_development_dependency "rspec", "~> 3.12"
-  spec.add_development_dependency "rubocop", "~> 1.37"
+  spec.add_development_dependency "rubocop", "~> 1.51"
 end
