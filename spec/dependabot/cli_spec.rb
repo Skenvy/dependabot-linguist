@@ -1,16 +1,8 @@
 # frozen_string_literal: true
 
-# It would be nice to have a test for the CLI, and Aruba "should" be the best
-# way of testing that. Since updating the ruby version in the CI step to 3.1,
-# this now no longer produces this error in the CI step, but it still produces
-# the below error when running localling, with ruby installed via RVM, but it is
-# installed at the same version and with the same version of rubygems, and both
-# CI and local should be using the Gemfile.lock versions.
-
-# Locally, it cannot stop crashing half way through the ecosystem directories
+# If config.exit_timeout is not set and remains at the default of 15 seconds,
+# it will repeatedly keep crashing half way through the ecosystem directories
 # discovery, (line 123 of `./exe/dependabot-linguist`) stopping on the error;
-# (although noting that this error only occurs when running it via aruba, if
-# run on its own, it works totally fine..)
 
 # #<Thread:0x00007fb737265480 /home/skenvy/.rvm/rubies/ruby-3.1.0/lib/ruby/3.1.0/open3.rb:404 run> terminated with exception (report_on_exception is true):
 # /home/skenvy/.rvm/rubies/ruby-3.1.0/lib/ruby/3.1.0/open3.rb:404:in `read': stream closed in another thread (IOError)
@@ -30,9 +22,29 @@
 # in Open3.capture2e, using Open3.popen2e |i, oe, t| -- so the oe.read is
 # attempting to read a stdout/stderr stream?
 
-# Fixing this is a TODO. The code prior to the cli is tested thoroughly at least.
-
 require "aruba/rspec"
+
+HELP_OUT = <<~HELP.strip
+Dependabot Linguist v#{::Dependabot::Linguist::VERSION}
+Detect dependabot ecosystems present for a given git repository, based off using
+linguist to determine the files present, that could be relevant to an ecosystem,
+and then verifying that the ecosystem's FileFetcher class is valid on the files.
+Usage: dependabot-linguist
+       dependabot-linguist <path> <name>
+       dependabot-linguist <path> <name> <options>
+    -i, --ignore-linguist LEVEL      A number, [0, 1, 2] for "how much to ignore linguist's suggestions".
+    -r, --remove-undiscovered        Remove entries in an existing dependabot config that weren't found by this.
+    -u, --no-update-existing         By default, existing entries are updated. Use this to toggle that off.
+    -m, --minimum-interval INTERVAL  The minimum schedule interval; ["monthly", "weekly", "daily"].
+    -l LIMIT,                        Limit dependabot's open PR #. Default 5. 0 to disallow non-security updates.
+        --max-open-pull-requests-limit
+    -v, --verbose                    Output more information.
+    -e, --ecosystem-directories      Print out the list of directories found for each ecosystem.
+    -y, --no-yaml                    Turn off the default output -- the updated dependabot yaml.
+    -w, --write-file                 Write the new dependabot config to the file.
+    -x, --pull-request               Use the external subshell's git/gh cli to commit, push, and PR changes.
+    -h, --help                       Show help banner.
+HELP
 
 YAML_OUT = <<~YAML.strip
 ---
@@ -240,7 +252,29 @@ terraform:
 - "/smoke-test/terraform"
 ECODIRS
 
+RUNNING_IN_WSL = (begin
+  `cat /proc/version`
+rescue Errno::ENOENT
+  ""
+end).include? "microsoft"
+
+Aruba.configure do |config|
+  config.exit_timeout = RUNNING_IN_WSL ? 25 : 10
+  config.io_wait_timeout = RUNNING_IN_WSL ? 1 : 0.4
+end
+
 RSpec.describe "exe/dependabot-linguist", :type => :aruba do # rubocop:disable Style/HashSyntax
+  # context "check defaults" do
+  #   it {p aruba.config.exit_timeout }
+  #   it {p aruba.config.io_wait_timeout }
+  # end
+
+  context "help message" do
+    let(:content) { HELP_OUT }
+    before { run_command("dependabot-linguist -h") }
+    it { expect(last_command_started).to have_output content }
+  end
+
   context "default yaml" do
     let(:content) { YAML_OUT }
     before { run_command("dependabot-linguist") }
