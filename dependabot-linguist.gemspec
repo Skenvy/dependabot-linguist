@@ -17,6 +17,7 @@ Gem::Specification.new do |spec|
   spec.required_rubygems_version = ">= 3.3.7"
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/Skenvy/dependabot-linguist/tree/main/"
+  spec.metadata["github_repo"] = "https://github.com/Skenvy/dependabot-linguist"
 
   spec.require_paths = ["lib"]
   spec.files = Dir.chdir(__dir__) do
@@ -35,9 +36,9 @@ Gem::Specification.new do |spec|
   # https://github.com/dependabot/dependabot-core/blob/v0.217.0/omnibus/dependabot-omnibus.gemspec#L29-L45
   spec.add_dependency "dependabot-omnibus", "0.217.0"
 
-  # spec.add_development_dependency "aruba", "~> 2.1" # TODO
+  spec.add_development_dependency "aruba", "~> 2.1"
   spec.add_development_dependency "rake", "~> 13.0"
-  spec.add_development_dependency "rdoc", "~> 6.0"
+  spec.add_development_dependency "rdoc", "~> 6.5"
   spec.add_development_dependency "rspec", "~> 3.12"
-  spec.add_development_dependency "rubocop", "~> 1.37"
+  spec.add_development_dependency "rubocop", "~> 1.51"
 end
