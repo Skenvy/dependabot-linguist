@@ -82,14 +82,14 @@ jobs:
     - name: 🏁 Checkout
       uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
     - name: 🛡👨‍💻🛡 Init CodeQL
-      uses: github/codeql-action/init@83f0fe6c4988d98a455712a27f0255212bba9bd4 # v2.3.6
+      uses: github/codeql-action/init@a09933a12a80f87b87005513f0abb1494c27a716 # v2.21.4
       with:
         languages: 'ruby'
         queries: +security-extended,security-and-quality
     - name: 🛠 Autobuild
-      uses: github/codeql-action/autobuild@83f0fe6c4988d98a455712a27f0255212bba9bd4 # v2.3.6
+      uses: github/codeql-action/autobuild@a09933a12a80f87b87005513f0abb1494c27a716 # v2.21.4
     - name: 🛡👨‍💻🛡 Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@83f0fe6c4988d98a455712a27f0255212bba9bd4 # v2.3.6
+      uses: github/codeql-action/analyze@a09933a12a80f87b87005513f0abb1494c27a716 # v2.21.4
       with:
         category: "/language:ruby"
   docs:
