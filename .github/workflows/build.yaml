@@ -31,7 +31,7 @@ jobs:
       version-tag-exists: ${{ steps.version-tag-exists.outputs.version-tag-exists }}
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+      uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       with:
         fetch-depth: 2
     - name: Check if version files changed
@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+      uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
     - name: 🔻 Set up Ruby
       uses: ruby/setup-ruby@52b8784594ec115fd17094752708121dc5dabb47 # v1.154.0
       with:
@@ -87,7 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+      uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
     - name: 🆒 Download dists
       uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
       with:
@@ -109,7 +109,7 @@ jobs:
     # Although the dists are built uses checkout to satisfy refs/tags existence
     # which were created by the release, prior to uploading to pypi.
     - name: 🏁 Checkout
-      uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+      uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
     - name: 🔻 Set up Ruby
       uses: ruby/setup-ruby@52b8784594ec115fd17094752708121dc5dabb47 # v1.154.0
       with:
@@ -149,7 +149,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+      uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
     - name: 🔻 Set up Ruby
       uses: ruby/setup-ruby@52b8784594ec115fd17094752708121dc5dabb47 # v1.154.0
       with:
