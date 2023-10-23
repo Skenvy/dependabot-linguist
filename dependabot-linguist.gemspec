@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   # required via https://rubygems.org/gems/dependabot-omnibus/versions/0.217.0
   # which will include all dependencies of omnibus (16 ecosystems and common).
   # https://github.com/dependabot/dependabot-core/blob/v0.217.0/omnibus/dependabot-omnibus.gemspec#L29-L45
-  spec.add_dependency "dependabot-omnibus", "0.217.0"
+  spec.add_dependency "dependabot-omnibus", "0.235.0"
 
   spec.add_development_dependency "aruba", "~> 2.1"
   spec.add_development_dependency "rake", "~> 13.0"
