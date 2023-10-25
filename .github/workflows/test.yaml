@@ -31,7 +31,7 @@ jobs:
     - name: 🏁 Checkout
       uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
     - name: 🔻 Set up Ruby
-      uses: ruby/setup-ruby@52b8784594ec115fd17094752708121dc5dabb47 # v1.154.0
+      uses: ruby/setup-ruby@cd48c8e22733480b66887b42bfeb6c0b88ea1a56 # v1.158.0
       with:
         ruby-version: ${{ env.development_ruby_version }}
         rubygems: ${{ env.development_rubygems_version }}
@@ -57,7 +57,7 @@ jobs:
     - name: 🏁 Checkout
       uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
     - name: 🔻 Set up Ruby ${{ matrix.version }}
-      uses: ruby/setup-ruby@52b8784594ec115fd17094752708121dc5dabb47 # v1.154.0
+      uses: ruby/setup-ruby@cd48c8e22733480b66887b42bfeb6c0b88ea1a56 # v1.158.0
       with:
         ruby-version: ${{ matrix.version }}
         rubygems: ${{ env.development_rubygems_version }}
@@ -99,7 +99,7 @@ jobs:
     - name: 🏁 Checkout
       uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
     - name: 🔻 Set up Ruby
-      uses: ruby/setup-ruby@52b8784594ec115fd17094752708121dc5dabb47 # v1.154.0
+      uses: ruby/setup-ruby@cd48c8e22733480b66887b42bfeb6c0b88ea1a56 # v1.158.0
       with:
         ruby-version: ${{ env.development_ruby_version }}
         rubygems: ${{ env.development_rubygems_version }}
