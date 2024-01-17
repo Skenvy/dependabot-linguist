@@ -64,7 +64,7 @@ jobs:
     - name: 🏁 Checkout
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
     - name: 🔻 Set up Ruby
-      uses: ruby/setup-ruby@c6e5aea595231e84ab850672e08b27c40e28f630 # v1.166.0
+      uses: ruby/setup-ruby@b203567269b5bbc256dbc1c84f7495913f977353 # v1.167.0
       with:
         ruby-version: ${{ env.development_ruby_version }}
         rubygems: ${{ env.development_rubygems_version }}
@@ -111,7 +111,7 @@ jobs:
     - name: 🏁 Checkout
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
     - name: 🔻 Set up Ruby
-      uses: ruby/setup-ruby@c6e5aea595231e84ab850672e08b27c40e28f630 # v1.166.0
+      uses: ruby/setup-ruby@b203567269b5bbc256dbc1c84f7495913f977353 # v1.167.0
       with:
         ruby-version: ${{ env.development_ruby_version }}
         rubygems: ${{ env.development_rubygems_version }}
@@ -151,7 +151,7 @@ jobs:
     - name: 🏁 Checkout
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
     - name: 🔻 Set up Ruby
-      uses: ruby/setup-ruby@c6e5aea595231e84ab850672e08b27c40e28f630 # v1.166.0
+      uses: ruby/setup-ruby@b203567269b5bbc256dbc1c84f7495913f977353 # v1.167.0
       with:
         ruby-version: ${{ env.development_ruby_version }}
         rubygems: ${{ env.development_rubygems_version }}
