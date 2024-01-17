@@ -21,7 +21,7 @@ module Dependabot
     LANGUAGE_TO_PACKAGE_MANAGER = languages.to_h { |name, _| [name, nil] }.tap do |this|
       # Now apply the context rules to "this"
       CONTEXT_RULES.each do |package_manager, context_map|
-        context_map.each do |_context_rule, linguist_languages|
+        context_map.each_value do |linguist_languages|
           linguist_languages.each do |linguist_language|
             if this[linguist_language].nil?
               this[linguist_language] = [package_manager]

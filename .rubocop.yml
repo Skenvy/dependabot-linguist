@@ -96,7 +96,13 @@ Lint/EmptyInPattern:
   Enabled: true
 Lint/IncompatibleIoSelectWithFiberScheduler:
   Enabled: true
+Lint/ItWithoutArgumentsInBlock: # new in 1.59
+  Enabled: true
 Lint/LambdaWithoutLiteralBlock:
+  Enabled: true
+Lint/LiteralAssignmentInCondition: # new in 1.58
+  Enabled: true
+Lint/MixedCaseRange: # new in 1.53
   Enabled: true
 Lint/NoReturnInBeginEndBlocks:
   Enabled: true
@@ -107,6 +113,8 @@ Lint/NumberedParameterAssignment:
 Lint/OrAssignmentToConstant:
   Enabled: true
 Lint/RedundantDirGlobSort:
+  Enabled: true
+Lint/RedundantRegexpQuantifiers: # new in 1.53
   Enabled: true
 Lint/RefinementImportMethods:
   Enabled: true
@@ -230,11 +238,17 @@ Style/QuotedSymbols:
   Enabled: true
 Style/RedundantArgument:
   Enabled: true
+Style/RedundantArrayConstructor: # new in 1.52
+  Enabled: true
 Style/RedundantConstantBase: # new in 1.40
   Enabled: false
+Style/RedundantCurrentDirectoryInPath: # new in 1.53
+  Enabled: true
 Style/RedundantDoubleSplatHashBraces: # new in 1.41
   Enabled: true
 Style/RedundantEach: # new in 1.38
+  Enabled: true
+Style/RedundantFilterChain: # new in 1.52
   Enabled: true
 Style/RedundantHeredocDelimiterQuotes: # new in 1.45
   Enabled: true
@@ -242,17 +256,29 @@ Style/RedundantInitialize:
   Enabled: true
 Style/RedundantLineContinuation: # new in 1.49
   Enabled: true
+Style/RedundantRegexpArgument: # new in 1.53
+  Enabled: true
+Style/RedundantRegexpConstructor: # new in 1.52
+  Enabled: true
 Style/RedundantSelf:
   Enabled: false
 Style/RedundantSelfAssignmentBranch:
   Enabled: true
 Style/RedundantStringEscape: # new in 1.37
   Enabled: true
+Style/ReturnNilInPredicateMethodDefinition: # new in 1.53
+  Enabled: true
 Style/SelectByRegexp:
   Enabled: true
+Style/SingleLineDoEndBlock: # new in 1.57
+  Enabled: true
 Style/StringChars:
+  Enabled: true
+Style/SuperWithArgsParentheses: # new in 1.58
   Enabled: true
 Style/SwapValues:
   Enabled: true
 Style/WordArray:
   Enabled: false
+Style/YAMLFileRead: # new in 1.53
+  Enabled: true

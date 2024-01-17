@@ -1,27 +1,5 @@
 # frozen_string_literal: true
 
-# If config.exit_timeout is not set and remains at the default of 15 seconds,
-# it will repeatedly keep crashing half way through the ecosystem directories
-# discovery, (line 123 of `./exe/dependabot-linguist`) stopping on the error;
-
-# #<Thread:0x00007fb737265480 /home/skenvy/.rvm/rubies/ruby-3.1.0/lib/ruby/3.1.0/open3.rb:404 run> terminated with exception (report_on_exception is true):
-# /home/skenvy/.rvm/rubies/ruby-3.1.0/lib/ruby/3.1.0/open3.rb:404:in `read': stream closed in another thread (IOError)
-#         from /home/skenvy/.rvm/rubies/ruby-3.1.0/lib/ruby/3.1.0/open3.rb:404:in `block (2 levels) in capture2e'
-
-# ./spec/dependabot/cli_spec.rb:251:in `block (3 levels) in <top (required)>'
-# /home/skenvy/.rvm/gems/ruby-3.1.0/gems/aruba-2.1.0/lib/aruba/rspec.rb:35:in `block (3 levels) in <top (required)>'
-# /home/skenvy/.rvm/gems/ruby-3.1.0/gems/aruba-2.1.0/lib/aruba/platforms/local_environment.rb:22:in `call'
-# /home/skenvy/.rvm/gems/ruby-3.1.0/gems/aruba-2.1.0/lib/aruba/platforms/unix_platform.rb:79:in `with_environment'
-# /home/skenvy/.rvm/gems/ruby-3.1.0/gems/aruba-2.1.0/lib/aruba/api/core.rb:222:in `block in with_environment'
-# /home/skenvy/.rvm/gems/ruby-3.1.0/gems/aruba-2.1.0/lib/aruba/platforms/unix_environment_variables.rb:189:in `nest'
-# /home/skenvy/.rvm/gems/ruby-3.1.0/gems/aruba-2.1.0/lib/aruba/api/core.rb:220:in `with_environment'
-# /home/skenvy/.rvm/gems/ruby-3.1.0/gems/aruba-2.1.0/lib/aruba/rspec.rb:34:in `block (2 levels) in <top (required)>'
-# /home/skenvy/.rvm/gems/ruby-3.1.0/gems/aruba-2.1.0/lib/aruba/rspec.rb:25:in `block (2 levels) in <top (required)>'
-
-# It seems that it's hitting a wall on `outerr_reader = Thread.new { oe.read }`
-# in Open3.capture2e, using Open3.popen2e |i, oe, t| -- so the oe.read is
-# attempting to read a stdout/stderr stream?
-
 require "aruba/rspec"
 
 HELP_OUT = <<~HELP.strip
@@ -259,15 +237,16 @@ rescue Errno::ENOENT
 end).include? "microsoft"
 
 Aruba.configure do |config|
-  config.exit_timeout = RUNNING_IN_WSL ? 25 : 10
-  config.io_wait_timeout = RUNNING_IN_WSL ? 1 : 0.4
+  config.exit_timeout = RUNNING_IN_WSL ? 40 : 10
+  config.io_wait_timeout = RUNNING_IN_WSL ? 3 : 0.4
 end
 
 RSpec.describe "exe/dependabot-linguist", :type => :aruba do # rubocop:disable Style/HashSyntax
-  # context "check defaults" do
-  #   it {p aruba.config.exit_timeout }
-  #   it {p aruba.config.io_wait_timeout }
-  # end
+  context "Include config in output" do
+    it { p "Running in WSL?: #{RUNNING_IN_WSL}" }
+    it { p "Aruba Exit Timeout: #{aruba.config.exit_timeout}" }
+    it { p "Aruba IO Wait Timeout: #{aruba.config.io_wait_timeout}" }
+  end
 
   context "help message" do
     let(:content) { HELP_OUT }
