@@ -237,15 +237,16 @@ rescue Errno::ENOENT
 end).include? "microsoft"
 
 Aruba.configure do |config|
-  config.exit_timeout = RUNNING_IN_WSL ? 25 : 10
-  config.io_wait_timeout = RUNNING_IN_WSL ? 1 : 0.4
+  config.exit_timeout = RUNNING_IN_WSL ? 40 : 10
+  config.io_wait_timeout = RUNNING_IN_WSL ? 3 : 0.4
 end
 
 RSpec.describe "exe/dependabot-linguist", :type => :aruba do # rubocop:disable Style/HashSyntax
-  # context "check defaults" do
-  #   it {p aruba.config.exit_timeout }
-  #   it {p aruba.config.io_wait_timeout }
-  # end
+  context "Include config in output" do
+    it {p "Running in WSL?: #{RUNNING_IN_WSL}"}
+    it {p "Aruba Exit Timeout: #{aruba.config.exit_timeout}" }
+    it {p "Aruba IO Wait Timeout: #{aruba.config.io_wait_timeout}" }
+  end
 
   context "help message" do
     let(:content) { HELP_OUT }
