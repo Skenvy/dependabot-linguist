@@ -243,9 +243,9 @@ end
 
 RSpec.describe "exe/dependabot-linguist", :type => :aruba do # rubocop:disable Style/HashSyntax
   context "Include config in output" do
-    it {p "Running in WSL?: #{RUNNING_IN_WSL}"}
-    it {p "Aruba Exit Timeout: #{aruba.config.exit_timeout}" }
-    it {p "Aruba IO Wait Timeout: #{aruba.config.io_wait_timeout}" }
+    it { p "Running in WSL?: #{RUNNING_IN_WSL}" }
+    it { p "Aruba Exit Timeout: #{aruba.config.exit_timeout}" }
+    it { p "Aruba IO Wait Timeout: #{aruba.config.io_wait_timeout}" }
   end
 
   context "help message" do
