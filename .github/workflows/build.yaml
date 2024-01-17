@@ -31,7 +31,7 @@ jobs:
       version-tag-exists: ${{ steps.version-tag-exists.outputs.version-tag-exists }}
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       with:
         fetch-depth: 2
     - name: Check if version files changed
@@ -62,9 +62,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
     - name: 🔻 Set up Ruby
-      uses: ruby/setup-ruby@7d546f4868fb108ed378764d873683f920672ae2 # v1.149.0
+      uses: ruby/setup-ruby@c6e5aea595231e84ab850672e08b27c40e28f630 # v1.166.0
       with:
         ruby-version: ${{ env.development_ruby_version }}
         rubygems: ${{ env.development_rubygems_version }}
@@ -74,7 +74,7 @@ jobs:
     - name: 💎 Build gem
       run: make build
     - name: 🆙 Upload dists
-      uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+      uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4.1.0
       with:
         name: Gem
         path: pkg/dependabot-linguist-*.gem
@@ -87,9 +87,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
     - name: 🆒 Download dists
-      uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
+      uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
       with:
         name: Gem
         path: pkg
@@ -109,9 +109,9 @@ jobs:
     # Although the dists are built uses checkout to satisfy refs/tags existence
     # which were created by the release, prior to uploading to pypi.
     - name: 🏁 Checkout
-      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
     - name: 🔻 Set up Ruby
-      uses: ruby/setup-ruby@7d546f4868fb108ed378764d873683f920672ae2 # v1.149.0
+      uses: ruby/setup-ruby@c6e5aea595231e84ab850672e08b27c40e28f630 # v1.166.0
       with:
         ruby-version: ${{ env.development_ruby_version }}
         rubygems: ${{ env.development_rubygems_version }}
@@ -119,7 +119,7 @@ jobs:
     - name: 🔑 Keycutter for GitHub
       run: make setup_github
     - name: 🆒 Download dists
-      uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
+      uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
       with:
         name: Gem
         path: pkg
@@ -149,9 +149,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
     - name: 🔻 Set up Ruby
-      uses: ruby/setup-ruby@7d546f4868fb108ed378764d873683f920672ae2 # v1.149.0
+      uses: ruby/setup-ruby@c6e5aea595231e84ab850672e08b27c40e28f630 # v1.166.0
       with:
         ruby-version: ${{ env.development_ruby_version }}
         rubygems: ${{ env.development_rubygems_version }}

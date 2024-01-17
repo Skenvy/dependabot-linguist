@@ -29,9 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
     - name: 🔻 Set up Ruby
-      uses: ruby/setup-ruby@7d546f4868fb108ed378764d873683f920672ae2 # v1.149.0
+      uses: ruby/setup-ruby@c6e5aea595231e84ab850672e08b27c40e28f630 # v1.166.0
       with:
         ruby-version: ${{ env.development_ruby_version }}
         rubygems: ${{ env.development_rubygems_version }}
@@ -55,9 +55,9 @@ jobs:
         os: [ubuntu-latest] # , macOS-latest, windows-latest
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
     - name: 🔻 Set up Ruby ${{ matrix.version }}
-      uses: ruby/setup-ruby@7d546f4868fb108ed378764d873683f920672ae2 # v1.149.0
+      uses: ruby/setup-ruby@c6e5aea595231e84ab850672e08b27c40e28f630 # v1.166.0
       with:
         ruby-version: ${{ matrix.version }}
         rubygems: ${{ env.development_rubygems_version }}
@@ -80,16 +80,16 @@ jobs:
       security-events: write
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
     - name: 🛡👨‍💻🛡 Init CodeQL
-      uses: github/codeql-action/init@29b1f65c5e92e24fe6b6647da1eaabe529cec70f # v2.3.3
+      uses: github/codeql-action/init@e5f05b81d5b6ff8cfa111c80c22c5fd02a384118 # v3.23.0
       with:
         languages: 'ruby'
         queries: +security-extended,security-and-quality
     - name: 🛠 Autobuild
-      uses: github/codeql-action/autobuild@29b1f65c5e92e24fe6b6647da1eaabe529cec70f # v2.3.3
+      uses: github/codeql-action/autobuild@e5f05b81d5b6ff8cfa111c80c22c5fd02a384118 # v3.23.0
     - name: 🛡👨‍💻🛡 Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@29b1f65c5e92e24fe6b6647da1eaabe529cec70f # v2.3.3
+      uses: github/codeql-action/analyze@e5f05b81d5b6ff8cfa111c80c22c5fd02a384118 # v3.23.0
       with:
         category: "/language:ruby"
   docs:
@@ -97,9 +97,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
     - name: 🔻 Set up Ruby
-      uses: ruby/setup-ruby@7d546f4868fb108ed378764d873683f920672ae2 # v1.149.0
+      uses: ruby/setup-ruby@c6e5aea595231e84ab850672e08b27c40e28f630 # v1.166.0
       with:
         ruby-version: ${{ env.development_ruby_version }}
         rubygems: ${{ env.development_rubygems_version }}
