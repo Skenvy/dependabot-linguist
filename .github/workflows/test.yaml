@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
     - name: 🔻 Set up Ruby
       uses: ruby/setup-ruby@bd03e04863f52d169e18a2b190e8fa6b84938215 # v1.170.0
       with:
@@ -55,7 +55,7 @@ jobs:
         os: [ubuntu-latest] # , macOS-latest, windows-latest
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
     - name: 🔻 Set up Ruby ${{ matrix.version }}
       uses: ruby/setup-ruby@bd03e04863f52d169e18a2b190e8fa6b84938215 # v1.170.0
       with:
@@ -80,7 +80,7 @@ jobs:
       security-events: write
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
     - name: 🛡👨‍💻🛡 Init CodeQL
       uses: github/codeql-action/init@b7bf0a3ed3ecfa44160715d7c442788f65f0f923 # v3.23.2
       with:
@@ -97,7 +97,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🏁 Checkout
-      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
     - name: 🔻 Set up Ruby
       uses: ruby/setup-ruby@bd03e04863f52d169e18a2b190e8fa6b84938215 # v1.170.0
       with:
