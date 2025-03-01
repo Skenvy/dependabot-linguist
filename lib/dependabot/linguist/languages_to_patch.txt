@@ -30,6 +30,7 @@ Kotlin
 Objective-C++
 PHP
 Python
+Pip Requirements
 Ruby
 Rust
 Scala

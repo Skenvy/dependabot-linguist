@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
 
   spec.add_dependency "rugged", "1.7.2"
-  spec.add_dependency "github-linguist", "7.28.0"
+  spec.add_dependency "github-linguist", "7.30.0"
   # All ecosystem gems from https://rubygems.org/profiles/dependabot can be
   # required via https://rubygems.org/gems/dependabot-omnibus/versions/0.217.0
   # which will include all dependencies of omnibus (16 ecosystems and common).

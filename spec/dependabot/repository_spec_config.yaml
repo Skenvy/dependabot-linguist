@@ -354,10 +354,10 @@ nuget:
 pip:
 - ecosystem_subdirectory: "pip-compile"
   files_per_linguist_language:
-    Text:
+    Pip Requirements:
     - "requirements.txt"
   directories_per_linguist_language:
-    Text:
+    Pip Requirements:
     - "/"
   directories_per_package_manager:
     pip:
@@ -370,10 +370,10 @@ pip:
   - "/"
 - ecosystem_subdirectory: "pip"
   files_per_linguist_language:
-    Text:
+    Pip Requirements:
     - "requirements.txt"
   directories_per_linguist_language:
-    Text:
+    Pip Requirements:
     - "/"
   directories_per_package_manager:
     pip:

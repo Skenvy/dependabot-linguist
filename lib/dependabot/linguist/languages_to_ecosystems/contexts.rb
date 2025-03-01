@@ -8,7 +8,7 @@
 # as it's source directory is not the directory it is valid to "fetch" from.
 
 # For a list of "linguist languages", see
-# https://github.com/github/linguist/blob/v7.25.0/lib/linguist/languages.yml
+# https://github.com/github/linguist/blob/v7.30.0/lib/linguist/languages.yml
 
 require_relative "manager_ecosystem_maps"
 
@@ -175,6 +175,7 @@ module Dependabot
     CONTEXT_RULES[PackageManagers::PIP][ContextRule::FETCH_FILES] = [
       # https://github.com/dependabot/dependabot-core/blob/v0.217.0/python/lib/dependabot/python/file_fetcher.rb#L35-L38
       # Besides the other pip related package managers, there is no language for `requirements` files. RIP.
+      "Pip Requirements", # Added in https://github.com/github-linguist/linguist/pull/6739 to specifically match what this pkg mngr is about
       "Text" # for `.txt`
     ]
     CONTEXT_RULES[PackageManagers::PIP][ContextRule::PRIMARY_LANGUAGES] = ["Python"]
