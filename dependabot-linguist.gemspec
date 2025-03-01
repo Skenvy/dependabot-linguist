@@ -35,6 +35,9 @@ Gem::Specification.new do |spec|
   # which will include all dependencies of omnibus (16 ecosystems and common).
   # https://github.com/dependabot/dependabot-core/blob/v0.217.0/omnibus/dependabot-omnibus.gemspec#L29-L45
   spec.add_dependency "dependabot-omnibus", "0.217.0"
+  # We can't update from this json version without getting some weird
+  # uninitialized constant Dependabot::FileFetchers::Base::OpenStruct
+  spec.add_dependency "json", "2.7.1"
 
   spec.add_development_dependency "aruba", "~> 2.1"
   spec.add_development_dependency "rake", "~> 13.0"
