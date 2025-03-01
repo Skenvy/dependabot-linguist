@@ -20,8 +20,8 @@ defaults:
   run:
     shell: bash
 env:
-  development_ruby_version: 3.1.0
-  development_rubygems_version: 3.4.12
+  development_ruby_version: 3.3.6
+  development_rubygems_version: 3.5.23
   disable_rvm_proctoring: INSTALL_RUBY='' _=''
 jobs:
   quick-test:
