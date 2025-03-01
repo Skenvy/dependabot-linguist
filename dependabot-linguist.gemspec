@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
 
   spec.add_dependency "rugged", "1.7.2"
-  spec.add_dependency "github-linguist", "7.25.0"
+  spec.add_dependency "github-linguist", "7.28.0"
   # All ecosystem gems from https://rubygems.org/profiles/dependabot can be
   # required via https://rubygems.org/gems/dependabot-omnibus/versions/0.217.0
   # which will include all dependencies of omnibus (16 ecosystems and common).
@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dependabot-omnibus", "0.217.0"
   # We can't update from this json version without getting some weird
   # uninitialized constant Dependabot::FileFetchers::Base::OpenStruct
+  # ~= https://github.com/ruby/json/compare/v2.7.1...v2.7.2 but idk
   spec.add_dependency "json", "2.7.1"
 
   spec.add_development_dependency "aruba", "~> 2.1"
