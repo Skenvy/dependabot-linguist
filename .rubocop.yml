@@ -12,6 +12,8 @@ AllCops:
   - 'smoke-test/**/*'
   # - 'spec/dependabot/*_spec.rb'
 
+Gemspec/AddRuntimeDependency: # new in 1.65
+  Enabled: true
 Gemspec/DeprecatedAttributeAssignment:
   Enabled: true
 Gemspec/DevelopmentDependencies:
@@ -76,7 +78,13 @@ Lint/AmbiguousOperatorPrecedence:
   Enabled: true
 Lint/AmbiguousRange:
   Enabled: true
+Lint/ArrayLiteralInRegexp: # new in 1.71
+  Enabled: true
 Lint/ConstantOverwrittenInRescue:
+  Enabled: true
+Lint/ConstantReassignment: # new in 1.70
+  Enabled: true
+Lint/CopDirectiveSyntax: # new in 1.72
   Enabled: true
 Lint/DeprecatedConstants:
   Enabled: true
@@ -88,11 +96,15 @@ Lint/DuplicateMatchPattern: # new in 1.50
   Enabled: true
 Lint/DuplicateRegexpCharacterClassElement:
   Enabled: true
+Lint/DuplicateSetElement: # new in 1.67
+  Enabled: true
 Lint/EmptyBlock:
   Enabled: true
 Lint/EmptyClass:
   Enabled: true
 Lint/EmptyInPattern:
+  Enabled: true
+Lint/HashNewWithKeywordArgumentsAsDefault: # new in 1.69
   Enabled: true
 Lint/IncompatibleIoSelectWithFiberScheduler:
   Enabled: true
@@ -110,11 +122,15 @@ Lint/NonAtomicFileOperation:
   Enabled: true
 Lint/NumberedParameterAssignment:
   Enabled: true
+Lint/NumericOperationWithConstantResult: # new in 1.69
+  Enabled: true
 Lint/OrAssignmentToConstant:
   Enabled: true
 Lint/RedundantDirGlobSort:
   Enabled: true
 Lint/RedundantRegexpQuantifiers: # new in 1.53
+  Enabled: true
+Lint/RedundantTypeConversion: # new in 1.72
   Enabled: true
 Lint/RefinementImportMethods:
   Enabled: true
@@ -124,6 +140,10 @@ Lint/RequireRelativeSelfPath:
   Enabled: true
 Lint/ScriptPermission:
   Enabled: false
+Lint/SharedMutableDefault: # new in 1.70
+  Enabled: true
+Lint/SuppressedExceptionInNumberConversion: # new in 1.72
+  Enabled: true
 Lint/SymbolConversion:
   Enabled: true
 Lint/ToEnumArguments:
@@ -132,7 +152,15 @@ Lint/TripleQuotes:
   Enabled: true
 Lint/UnexpectedBlockArity:
   Enabled: true
+Lint/UnescapedBracketInRegexp: # new in 1.68
+  Enabled: true
 Lint/UnmodifiedReduceAccumulator:
+  Enabled: true
+Lint/UselessConstantScoping: # new in 1.72
+  Enabled: true
+Lint/UselessDefined: # new in 1.69
+  Enabled: true
+Lint/UselessNumericOperation: # new in 1.66
   Enabled: true
 Lint/UselessRescue: # new in 1.43
   Enabled: true
