@@ -20,8 +20,9 @@ defaults:
   run:
     shell: bash
 env:
-  development_ruby_version: 3.1.0
-  development_rubygems_version: 3.4.12
+  development_ruby_version: 3.3.6
+  development_rubygems_version: 3.5.23
+  disable_rvm_proctoring: INSTALL_RUBY='' _=''
 jobs:
   quick-test:
     name: 🔻 Quick Test 🦂
@@ -37,11 +38,11 @@ jobs:
         rubygems: ${{ env.development_rubygems_version }}
         bundler-cache: true
     - name: 🧱 Install build dependencies
-      run: make setup
+      run: make setup ${{ env.disable_rvm_proctoring }}
     - name: 🦂 Test
-      run: make test
+      run: make test ${{ env.disable_rvm_proctoring }}
     - name: 🧹 Lint
-      run: make lint
+      run: make lint ${{ env.disable_rvm_proctoring }}
   full-test:
     name: 🔻 Full Test 🦂
     if: >- 
@@ -51,7 +52,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: ['3.1', '3.2']
+        version: ['3.1', '3.2', '3.3']
         os: [ubuntu-latest] # , macOS-latest, windows-latest
     steps:
     - name: 🏁 Checkout
@@ -63,11 +64,11 @@ jobs:
         rubygems: ${{ env.development_rubygems_version }}
         bundler-cache: true
     - name: 🧱 Install build dependencies
-      run: make setup
+      run: make setup ${{ env.disable_rvm_proctoring }}
     - name: 🦂 Test
-      run: make test
+      run: make test ${{ env.disable_rvm_proctoring }}
     - name: 🧹 Lint
-      run: make lint
+      run: make lint ${{ env.disable_rvm_proctoring }}
   codeql:
     name: 🔻 CodeQL 🛡👨‍💻🛡
     runs-on: ubuntu-latest
@@ -105,6 +106,6 @@ jobs:
         rubygems: ${{ env.development_rubygems_version }}
         bundler-cache: true
     - name: 🧱 Install build dependencies
-      run: make setup
+      run: make setup ${{ env.disable_rvm_proctoring }}
     - name: 📄 Docs
-      run: make docs
+      run: make docs ${{ env.disable_rvm_proctoring }}

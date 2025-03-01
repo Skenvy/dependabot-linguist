@@ -13,8 +13,9 @@ defaults:
   run:
     shell: bash
 env:
-  development_ruby_version: 3.1.0
-  development_rubygems_version: 3.4.12
+  development_ruby_version: 3.3.6
+  development_rubygems_version: 3.5.23
+  disable_rvm_proctoring: INSTALL_RUBY='' _=''
 jobs:
   test:
     name: 🔻 Test 🦂
@@ -70,9 +71,9 @@ jobs:
         rubygems: ${{ env.development_rubygems_version }}
         bundler-cache: true
     - name: 🧱 Install build dependencies
-      run: make setup
+      run: make setup ${{ env.disable_rvm_proctoring }}
     - name: 💎 Build gem
-      run: make build
+      run: make build ${{ env.disable_rvm_proctoring }}
     - name: 🆙 Upload dists
       uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
       with:
@@ -117,7 +118,7 @@ jobs:
         rubygems: ${{ env.development_rubygems_version }}
         bundler-cache: true
     - name: 🔑 Keycutter for GitHub
-      run: make setup_github
+      run: make setup_github ${{ env.disable_rvm_proctoring }}
     - name: 🆒 Download dists
       uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
       with:
@@ -131,7 +132,7 @@ jobs:
       run: |
         echo -e "---\n:github: Bearer $GITHUB_TOKEN" > ~/.gem/credentials
         chmod 0600 ~/.gem/credentials
-        make push_github
+        make push_github ${{ env.disable_rvm_proctoring }}
         rm ~/.gem/credentials
     - name: 📦 Publish to RubyGems
       env:
@@ -139,7 +140,7 @@ jobs:
       run: |
         echo -n "$RUBYGEMS_API_KEY_BASE64" | base64 --decode > ~/.gem/credentials
         chmod 0600 ~/.gem/credentials
-        make push_rubygems
+        make push_rubygems ${{ env.disable_rvm_proctoring }}
         rm ~/.gem/credentials
   docs:
     name: 🔻 Docs 📄
@@ -157,9 +158,9 @@ jobs:
         rubygems: ${{ env.development_rubygems_version }}
         bundler-cache: true
     - name: 🧱 Install build dependencies
-      run: make setup
+      run: make setup ${{ env.disable_rvm_proctoring }}
     - name: 📄 Docs Generation
-      run: make docs
+      run: make docs ${{ env.disable_rvm_proctoring }}
     - name: 📄 Docs Publishing
       run: |
         git config --local user.email "actions@github.com"

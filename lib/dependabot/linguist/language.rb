@@ -25,14 +25,14 @@
 # Patching either Linguist::LazyBlob::git_attributes or
 # Linguist::LazyBlob::vendored? would be too cumbersome.
 # It also seems easier than duplicating the vendor patterns from
-# https://github.com/github/linguist/blob/v7.25.0/lib/linguist/vendor.yml
+# https://github.com/github/linguist/blob/v9.0.0/lib/linguist/vendor.yml
 
 require "linguist"
 
 # rubocop:disable Style/Documentation
 
 module Linguist
-  # https://github.com/github/linguist/blob/v7.25.0/lib/linguist/language.rb
+  # https://github.com/github/linguist/blob/v9.0.0/lib/linguist/language.rb
 
   class Language
     def ungroup_language
@@ -58,7 +58,7 @@ module Linguist
   end
 
   module BlobHelper
-    # https://github.com/github/linguist/blob/v7.25.0/lib/linguist/blob_helper.rb#L220
+    # https://github.com/github/linguist/blob/v9.0.0/lib/linguist/blob_helper.rb#L220
     VendoredRegexp = Regexp.new(VendoredRegexp.source.gsub("(^|/)\\.gitmodules$|", "").gsub("|(^|/)\\.github/", ""))
   end
 end
