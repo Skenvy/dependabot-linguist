@@ -75,3 +75,6 @@ build-iPhoneSimulator/
 
 ################################################################################
 git.store
+# vscode .net extension ocassionally rebuilds this because it finds the csproj
+# in the nuget smoketest.
+dependabot-linguist.sln
