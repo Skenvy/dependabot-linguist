@@ -89,6 +89,13 @@ ignore:
 ```
 ## [RDoc generated docs](https://skenvy.github.io/dependabot-linguist/)
 ## Developing
+You will need to install [rvm](https://rvm.io/) and one of its [ruby binaries](https://rvm.io/binaries/).
+
+You'll also need to set the `RVM_DIR` in your shell profile e.g. [like this](https://github.com/Skenvy/dotfiles/blob/1de61272c588a30b634a03a7d304ef51e40c72f1/.bash_login#L17). RVM will set some basic initialisation in your shell profile, but changing what it sets to instead use `RVM_DIR` like this allows you to install it somewhere other than the default.
+
+The `make setup` in [first time setup](#the-first-time-setup) will install the intended development version for you, but it might not be a precompiled binary, depending on your OS and architecture ~ if it isn't precompiled, contributing your time in compiling to [publish the binary for rvm](https://github.com/rvm/rvm/issues/4921) is probably more worth your time than this lol.
+
+RVM is locally how we manage proctoring the ruby environment. It is not on the [github runners](https://github.com/actions/runner-images), so the make invocations in the workflows set the RVM proctors empty.
 ### The first time setup
 ```sh
 git clone https://github.com/Skenvy/dependabot-linguist.git && cd dependabot-linguist && make setup
