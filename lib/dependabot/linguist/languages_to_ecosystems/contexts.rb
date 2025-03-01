@@ -8,7 +8,7 @@
 # as it's source directory is not the directory it is valid to "fetch" from.
 
 # For a list of "linguist languages", see
-# https://github.com/github/linguist/blob/v7.30.0/lib/linguist/languages.yml
+# https://github.com/github/linguist/blob/v9.0.0/lib/linguist/languages.yml
 
 require_relative "manager_ecosystem_maps"
 
