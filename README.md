@@ -7,7 +7,7 @@ Before installing this gem, which will install the [github-linguist gem](https:/
 sudo apt-get install build-essential cmake pkg-config libicu-dev zlib1g-dev libcurl4-openssl-dev libssl-dev ruby-dev
 ```
 ### Dependabot dependencies;
-The `npm` 
+The `npm`/`yarn` module requires [`corepack`](https://www.npmjs.com/package/corepack), so it will be necessary to install, either with npm or yarn
 ### Install _this_
 [To install the latest from RubyGems](https://rubygems.org/gems/dependabot-linguist);
 ```sh
@@ -97,10 +97,12 @@ You'll also need to set the `RVM_DIR` in your shell profile e.g. [like this](htt
 
 The `make setup` in [first time setup](#the-first-time-setup) will install the intended development version for you, but it might not be a precompiled binary, depending on your OS and architecture ~ if it isn't precompiled, contributing your time in compiling to [publish the binary for rvm](https://github.com/rvm/rvm/issues/4921) is probably more worth your time than this lol.
 
-RVM is locally how we manage proctoring the ruby environment. It is not on the [github runners](https://github.com/actions/runner-images), so the make invocations in the workflows set the RVM proctors empty.
+RVM is locally how we manage proctoring the ruby environment. It is not on the [github runners](https://github.com/actions/runner-images), so the make invocations in the workflows set the RVM proctors empty. If you want to manage your own ruby installs you can set `_=''` on each `make ...`.
+
+You should also read the requirements for the gems this uses, see [Linguist dependencies](#linguist-dependencies) and [Dependabot dependencies](#dependabot-dependencies). `Linguist`'s can be acquired with `make preinit` done once. `Dependabot`'s are managed in this project via [`nvm`](https://github.com/nvm-sh/nvm), so `corepack` can be loaded into every subshell the `Makefile` spawns. If you don't want to install `nvm` but would rather manage your own `corepack` install, set `__=''` on each `make ...`.
 ### The first time setup
 ```sh
-git clone https://github.com/Skenvy/dependabot-linguist.git && cd dependabot-linguist && make setup
+git clone https://github.com/Skenvy/dependabot-linguist.git && cd dependabot-linguist && make preinit && make setup
 ```
 ### Iterative development
 The majority of `make` recipes for this are just wrapping a `bundle` invocation of `rake`.

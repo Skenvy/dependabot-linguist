@@ -6,6 +6,8 @@ The _quickest_ way to get the source _without_ contributing is;
 git clone https://github.com/Skenvy/dependabot-linguist.git
 ```
 If you want to _contribute_ to the source, you'll need to [fork this repository](https://github.com/Skenvy/dependabot-linguist/fork), clone it, and create a development branch. Contributions should be received as pull requests from your development branch on your fork.
+## Develop the source
+See the root README's [Developing](https://github.com/Skenvy/dependabot-linguist/blob/main/README.md#developing) section.
 ## Raise an issue
 * [Bug Report](https://github.com/Skenvy/dependabot-linguist/issues/new?assignees=&labels=bug&template=bug-report.yaml)
 * [Feature Request](https://github.com/Skenvy/dependabot-linguist/issues/new?assignees=&labels=enhancement&template=feature-request.yaml)

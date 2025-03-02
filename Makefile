@@ -8,15 +8,24 @@ DEVELOPMENT_BUNDLER_VERSION=2.6.3
 # https://rubygems.org/gems/rubygems-update
 DEVELOPMENT_GEMSYS_VERSION=3.5.23
 
+# Instructions to load corepack in all subshells, required by the npm dependabot
+# Not part of my standard ruby project makefile, but required for this one lol.
+# The gh runners already have a default node installed which is good enough.
+NVM=source $$NVM_DIR/nvm.sh && nvm
+__=$(NVM) use &&
+NPM=$(__) npm
+INSTALL_NODE=$(NVM) install $$(cat ./.nvmrc)
+
+# Back to the standard ruby project makefile config, besides $(__) injected on _
 RVM=source "$$RVM_DIR/scripts/rvm" && rvm
 INSTALL_RUBY=$(RVM) install "$(DEVELOPMENT_RUBY_VERSION)"
 _=$(RVM) use $(DEVELOPMENT_RUBY_VERSION) &&
-GEM=$(_) gem
-RUBY=$(_) ruby
+GEM=$(__) $(_) gem
+RUBY=$(__) $(_) ruby
 INSTALL_BUNDLER=$(GEM) install bundler -v $(DEVELOPMENT_BUNDLER_VERSION)
 UPDATE_RUBYGEMS=$(GEM) update --system $(DEVELOPMENT_GEMSYS_VERSION)
 # With multiple bundler versions installed, specify which to use with _ver_
-BUNDLE=$(_) bundle _$(DEVELOPMENT_BUNDLER_VERSION)_
+BUNDLE=$(__) $(_) bundle _$(DEVELOPMENT_BUNDLER_VERSION)_
 RAKE=$(BUNDLE) exec rake
 
 .PHONY: preinit initialise setup update setup_github clean docs docs_view demo test lint build install push_rubygems push_github
@@ -34,6 +43,7 @@ initialise:
 	$(INSTALL_RUBY)
 	$(INSTALL_BUNDLER)
 	$(UPDATE_RUBYGEMS)
+	$(INSTALL_NODE)
 
 freeze:
 	$(BUNDLE) config set frozen true
