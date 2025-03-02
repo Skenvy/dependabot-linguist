@@ -15,7 +15,7 @@ defaults:
 env:
   # development_ruby_version: from <repo>/.ruby-version
   development_rubygems_version: 3.5.23
-  disable_rvm_proctoring: INSTALL_RUBY='' INSTALL_BUNDLER='' INSTALL_NODE='' _='' __=''
+  disable_rvm_proctoring: INSTALL_RUBY='' INSTALL_NODE='' _='' __=''
 jobs:
   test:
     name: 🔻 Test 🦂
