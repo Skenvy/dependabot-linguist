@@ -27,7 +27,7 @@ require "dependabot/go_modules"
 module Dependabot
   module GoModules
     class FileFetcher
-      # https://github.com/dependabot/dependabot-core/blob/v0.299.1/go_modules/lib/dependabot/go_modules/file_fetcher.rb#L33-L46
+      # https://github.com/dependabot/dependabot-core/blob/v0.299.0/go_modules/lib/dependabot/go_modules/file_fetcher.rb#L33-L46
       def fetch_files
         raise(Dependabot::DependencyFileNotFound, Pathname.new(File.join(directory, "go.mod")).cleanpath.to_path) if go_mod.nil?
         fetched_files = [go_mod]

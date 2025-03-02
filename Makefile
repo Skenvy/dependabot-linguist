@@ -2,7 +2,7 @@
 # https://github.com/Skenvy/dependabot-linguist/blob/main/ruby/README.md#developing
 
 # ruby binaries -- https://rvm.io/binaries/ ~= ubuntu 24 x86
-DEVELOPMENT_RUBY_VERSION=ruby-3.3.6
+DEVELOPMENT_RUBY_VERSION=ruby-$$(cat ./.ruby-version)
 # https://rubygems.org/gems/bundler
 DEVELOPMENT_BUNDLER_VERSION=2.6.3
 # https://rubygems.org/gems/rubygems-update
@@ -41,11 +41,15 @@ freeze:
 unfreeze:
 	$(BUNDLE) config set frozen false
 
+# `--full-index` can be a useful flag on the `bundle install` but the action
+# currently doesn't support this https://github.com/ruby/setup-ruby/issues/714
+# so if we get an error ~ "revealed dependencies not in the API" we rollback.
+
 setup: initialise freeze
-	$(BUNDLE) install --full-index
+	$(BUNDLE) install
 
 update: initialise unfreeze
-	$(BUNDLE) install --full-index
+	$(BUNDLE) install
 
 setup_github: unfreeze
 	$(GEM) install keycutter
