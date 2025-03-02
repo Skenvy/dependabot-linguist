@@ -36,7 +36,6 @@ jobs:
       with:
         # ruby-version: from <repo>/.ruby-version
         rubygems: ${{ env.development_rubygems_version }}
-        bundler: 'Gemfile.lock'
         bundler-cache: true
     - name: 🧱 Install build dependencies
       run: make setup ${{ env.disable_rvm_proctoring }}
@@ -106,7 +105,6 @@ jobs:
       with:
         # ruby-version: from <repo>/.ruby-version
         rubygems: ${{ env.development_rubygems_version }}
-        bundler: 'Gemfile.lock'
         bundler-cache: true
     - name: 🧱 Install build dependencies
       run: make setup ${{ env.disable_rvm_proctoring }}
