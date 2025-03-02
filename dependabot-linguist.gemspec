@@ -35,6 +35,10 @@ Gem::Specification.new do |spec|
   # which will include all dependencies of omnibus (16 ecosystems and common).
   # https://github.com/dependabot/dependabot-core/blob/v0.299.1/omnibus/dependabot-omnibus.gemspec#L29-L51
   spec.add_dependency "dependabot-omnibus", "0.299.1"
+  # We need to temporarily specify this even though it's specified by omnibus,
+  # and we can get around it locally with --full-index, the setup-ruby action
+  # can't have "full index" specified on it.
+  spec.add_dependency "dependabot-uv", "0.299.1"
   # We can't update from this json version without getting some weird
   # uninitialized constant Dependabot::FileFetchers::Base::OpenStruct
   # ~= https://github.com/ruby/json/compare/v2.7.1...v2.7.2 but idk

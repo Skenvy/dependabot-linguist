@@ -4,7 +4,7 @@
 # subsequently to the "file fetcher registry keys"
 
 # For the list of package managers and which ecosystems they map to, see
-# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem
+# https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#package-ecosystem-
 
 # For the file_fetchers' register function, whose keys we map to, see
 # https://github.com/dependabot/dependabot-core/blob/v0.217.0/common/lib/dependabot/file_fetchers.rb#L14-L16

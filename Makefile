@@ -19,7 +19,7 @@ UPDATE_RUBYGEMS=$(GEM) update --system $(DEVELOPMENT_GEMSYS_VERSION)
 BUNDLE=$(_) bundle _$(DEVELOPMENT_BUNDLER_VERSION)_
 RAKE=$(BUNDLE) exec rake
 
-.PHONY: preinit initialise setup install setup_github clean docs docs_view demo test lint build install push_rubygems push_github
+.PHONY: preinit initialise setup update setup_github clean docs docs_view demo test lint build install push_rubygems push_github
 SHELL:=/bin/bash
 
 # See https://github.com/Skenvy/dependabot-linguist?tab=readme-ov-file#linguist-dependencies
@@ -35,15 +35,19 @@ initialise:
 	$(INSTALL_BUNDLER)
 	$(UPDATE_RUBYGEMS)
 
-setup: initialise
+freeze:
 	$(BUNDLE) config set frozen true
-	$(BUNDLE) install --full-index
 
-install: initialise
+unfreeze:
 	$(BUNDLE) config set frozen false
+
+setup: initialise freeze
 	$(BUNDLE) install --full-index
 
-setup_github:
+update: initialise unfreeze
+	$(BUNDLE) install --full-index
+
+setup_github: unfreeze
 	$(GEM) install keycutter
 
 clean:
@@ -79,7 +83,7 @@ build: test lint
 # changing the folder permissions or access but will need
 # "gem environment"'s "USER INSTALLATION DIRECTORY" (+ "/bin")
 # in the PATH to then use any gem executables that it may contain.
-install: build
+install: build unfreeze
 	$(GEM) install ./pkg/dependabot-linguist-$$(grep lib/dependabot/linguist/version.rb -e "VERSION" | cut -d \" -f 2).gem --user-install
 
 # Will be run with one "pkg/dependabot-linguist-*.gem" file

@@ -3,6 +3,7 @@ PATH
   specs:
     dependabot-linguist (0.217.0)
       dependabot-omnibus (= 0.299.1)
+      dependabot-uv (= 0.299.1)
       github-linguist (= 9.0.0)
       json (= 2.6.3)
       rugged (= 1.7.2)
