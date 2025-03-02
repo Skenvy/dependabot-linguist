@@ -36,9 +36,9 @@
 # So we need to be more cautious with this and check it first.
 
 # Dependabot::FileFetchers::Base.load_cloned_file_if_present
-# https://github.com/dependabot/dependabot-core/blob/v0.217.0/common/lib/dependabot/file_fetchers/base.rb#L135-L155
+# https://github.com/dependabot/dependabot-core/blob/v0.299.1/common/lib/dependabot/file_fetchers/base.rb#L218-L240
 # Dependabot::FileFetchers::Base.fetch_file_if_present
-# https://github.com/dependabot/dependabot-core/blob/v0.217.0/common/lib/dependabot/file_fetchers/base.rb#L111-L133
+# https://github.com/dependabot/dependabot-core/blob/v0.299.1/common/lib/dependabot/file_fetchers/base.rb#L194-L216
 
 require "dependabot/errors"
 require "dependabot/git_submodules"
@@ -48,13 +48,13 @@ require "dependabot/git_submodules"
 module Dependabot
   module GitSubmodules
     class FileFetcher
-      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/git_submodules/lib/dependabot/git_submodules/file_fetcher.rb#L21-L26
+      # https://github.com/dependabot/dependabot-core/blob/v0.299.1/git_submodules/lib/dependabot/git_submodules/file_fetcher.rb#L26-L32
       def fetch_files
         raise(Dependabot::DependencyFileNotFound, Pathname.new(File.join(directory, ".gitmodules")).cleanpath.to_path) if gitmodules_file.nil?
         [gitmodules_file]
       end
 
-      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/git_submodules/lib/dependabot/git_submodules/file_fetcher.rb#L28-L30
+      # https://github.com/dependabot/dependabot-core/blob/v0.299.1/git_submodules/lib/dependabot/git_submodules/file_fetcher.rb#L28-L30
       def gitmodules_file
         @gitmodules_file ||= fetch_file_if_present(".gitmodules")
       end
