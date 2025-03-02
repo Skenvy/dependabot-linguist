@@ -4,7 +4,7 @@
 # ruby binaries -- https://rvm.io/binaries/ ~= ubuntu 24 x86
 DEVELOPMENT_RUBY_VERSION=ruby-3.3.6
 # https://rubygems.org/gems/bundler
-DEVELOPMENT_BUNDLER_VERSION=2.5.23
+DEVELOPMENT_BUNDLER_VERSION=2.6.3
 # https://rubygems.org/gems/rubygems-update
 DEVELOPMENT_GEMSYS_VERSION=3.5.23
 
@@ -55,7 +55,7 @@ docs_view: docs
 	$(RUBY) -run -e httpd doc
 
 demo:
-	bundle exec ruby demo_script.rb
+	$(BUNDLE) exec ruby demo_script.rb
 
 # default (just `rake`) is spec + rubocop, but be pedantic in case this changes.
 test: clean
