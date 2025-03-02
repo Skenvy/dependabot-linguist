@@ -1,5 +1,5 @@
 # It's assumed you have https://rvm.io/ -- see "Developing" in the README
-# https://github.com/Skenvy/Collatz/blob/main/ruby/README.md#developing
+# https://github.com/Skenvy/dependabot-linguist/blob/main/ruby/README.md#developing
 
 # ruby binaries -- https://rvm.io/binaries/ ~= ubuntu 24 x86
 DEVELOPMENT_RUBY_VERSION=ruby-3.3.6
@@ -19,7 +19,7 @@ UPDATE_RUBYGEMS=$(GEM) update --system $(DEVELOPMENT_GEMSYS_VERSION)
 BUNDLE=$(_) bundle _$(DEVELOPMENT_BUNDLER_VERSION)_
 RAKE=$(BUNDLE) exec rake
 
-.PHONY: preinit initialise setup setup_github clean docs docs_view demo test lint build install push_rubygems push_github
+.PHONY: preinit initialise setup install setup_github clean docs docs_view demo test lint build install push_rubygems push_github
 SHELL:=/bin/bash
 
 # See https://github.com/Skenvy/dependabot-linguist?tab=readme-ov-file#linguist-dependencies
@@ -36,7 +36,12 @@ initialise:
 	$(UPDATE_RUBYGEMS)
 
 setup: initialise
-	$(BUNDLE) install
+	$(BUNDLE) config set frozen true
+	$(BUNDLE) install --full-index
+
+install: initialise
+	$(BUNDLE) config set frozen false
+	$(BUNDLE) install --full-index
 
 setup_github:
 	$(GEM) install keycutter
