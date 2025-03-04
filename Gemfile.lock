@@ -311,11 +311,11 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  aruba (~> 2.1)
+  aruba (~> 2.3)
   dependabot-linguist!
-  rake (~> 13.0)
-  rdoc (~> 6.5)
-  rspec (~> 3.12)
+  rake (~> 13.2)
+  rdoc (~> 6.12)
+  rspec (~> 3.13)
   rubocop (~> 1.73)
 
 BUNDLED WITH

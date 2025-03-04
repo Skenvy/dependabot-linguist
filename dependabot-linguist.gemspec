@@ -43,9 +43,9 @@ Gem::Specification.new do |spec|
   # stringio (>= 0) leads to ambiguous spec so lock it too.
   spec.add_dependency "stringio", "3.1.5"
 
-  spec.add_development_dependency "aruba", "~> 2.1"
-  spec.add_development_dependency "rake", "~> 13.0"
-  spec.add_development_dependency "rdoc", "~> 6.5"
-  spec.add_development_dependency "rspec", "~> 3.12"
+  spec.add_development_dependency "aruba", "~> 2.3"
+  spec.add_development_dependency "rake", "~> 13.2"
+  spec.add_development_dependency "rdoc", "~> 6.12"
+  spec.add_development_dependency "rspec", "~> 3.13"
   spec.add_development_dependency "rubocop", "~> 1.73"
 end
