@@ -5,7 +5,7 @@ PATH
       dependabot-omnibus (= 0.299.0)
       github-linguist (= 9.0.0)
       json (= 2.6.3)
-      rugged (= 1.7.2)
+      rugged (= 1.9.0)
       stringio (= 3.1.5)
 
 GEM
@@ -281,7 +281,7 @@ GEM
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.4.1)
-    rugged (1.7.2)
+    rugged (1.9.0)
     sawyer (0.9.2)
       addressable (>= 2.3.5)
       faraday (>= 0.17.3, < 3)
