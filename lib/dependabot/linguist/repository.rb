@@ -5,6 +5,7 @@ require_relative "linguist_patch"
 require_relative "languages_to_ecosystems/main"
 require "dependabot/source"
 require "dependabot/errors"
+require "dependabot/shared_helpers"
 require "dependabot/omnibus"
 require_relative "dependabot_patch"
 
@@ -217,14 +218,17 @@ module Dependabot
             sources.each do |source|
               fetcher = file_fetcher_class.new(source: source, credentials: [], repo_contents_path: @repo_path, options: enable_options)
               begin
+                # https://github.com/dependabot/dependabot-core/blob/v0.299.0/common/lib/dependabot/file_fetchers/base.rb#L136-L148
                 unless fetcher.files.map(&:name).empty?
                   @directories_per_ecosystem_validated_by_dependabot[package_ecosystem] |= [source.directory]
                   puts "-- Dependency files FOUND for package-ecosystem #{package_ecosystem} at #{source.directory}; #{fetcher.files.map(&:name)}" if @verbose
                 end
+              rescue Dependabot::SharedHelpers::HelperSubprocessFailed => e
+                puts "-- Caught a DependabotError, #{e.class}, for package-ecosystem #{package_ecosystem} at #{source.directory}: Context #{e.error_context} + Message :: #{e.message}" if @verbose
               rescue Dependabot::DependabotError => e
                 # Most of these will be Dependabot::DependencyFileNotFound
                 # or Dependabot::PathDependenciesNotReachable
-                puts "-- Caught a DependabotError, #{e.class}, for package-ecosystem #{package_ecosystem} at #{source.directory}: #{e.message}" if @verbose
+                puts "-- Caught a DependabotError, #{e.class}, for package-ecosystem #{package_ecosystem} at #{source.directory}: Message :: #{e.message}" if @verbose
               end
             end
           end

@@ -11,10 +11,12 @@ DEVELOPMENT_GEMSYS_VERSION=3.5.23
 # Instructions to load corepack in all subshells, required by the npm dependabot
 # Not part of my standard ruby project makefile, but required for this one lol.
 # The gh runners already have a default node installed which is good enough.
+DEVELOPMENT_COREPACK_VERSION=0.31.0
 NVM=source $$NVM_DIR/nvm.sh && nvm
 __=$(NVM) use &&
 NPM=$(__) npm
 INSTALL_NODE=$(NVM) install $$(cat ./.nvmrc)
+INSTALL_COREPACK=$(NPM) i -g corepack@$(DEVELOPMENT_COREPACK_VERSION)
 
 # Back to the standard ruby project makefile config, besides $(__) injected on _
 RVM=source "$$RVM_DIR/scripts/rvm" && rvm
@@ -28,8 +30,9 @@ UPDATE_RUBYGEMS=$(GEM) update --system $(DEVELOPMENT_GEMSYS_VERSION)
 BUNDLE=$(__) $(_) bundle _$(DEVELOPMENT_BUNDLER_VERSION)_
 RAKE=$(BUNDLE) exec rake
 
-.PHONY: preinit initialise setup update setup_github clean docs docs_view demo test lint build install push_rubygems push_github
 SHELL:=/bin/bash
+
+.PHONY: preinit initialise_ruby initialise_corepack initialise
 
 # See https://github.com/Skenvy/dependabot-linguist?tab=readme-ov-file#linguist-dependencies
 # Packages that need to be installed for native compilation of deps of linguist
@@ -39,11 +42,18 @@ preinit:
 	apt-get install build-essential cmake pkg-config libicu-dev zlib1g-dev libcurl4-openssl-dev libssl-dev ruby-dev
 
 # How to setup for ruby development ~ might require compiling ruby locally.
-initialise:
+initialise_ruby:
 	$(INSTALL_RUBY)
 	$(INSTALL_BUNDLER)
 	$(UPDATE_RUBYGEMS)
+
+initialise_corepack:
 	$(INSTALL_NODE)
+	$(INSTALL_COREPACK)
+
+initialise: initialise_ruby initialise_corepack
+
+.PHONY: freeze unfreeze setup update setup_github clean
 
 freeze:
 	$(BUNDLE) config set frozen true
@@ -70,6 +80,8 @@ clean:
 	rm -f dependabot-linguist-*.gem
 	rm -f pkg/dependabot-linguist-*.gem
 
+.PHONY: docs docs_view demo
+
 docs: clean
 	$(RAKE) rdoc
 
@@ -79,6 +91,8 @@ docs_view: docs
 
 demo:
 	$(BUNDLE) exec ruby demo_script.rb
+
+.PHONY: test lint build install
 
 # default (just `rake`) is spec + rubocop, but be pedantic in case this changes.
 test: clean
@@ -99,6 +113,8 @@ build: test lint
 # in the PATH to then use any gem executables that it may contain.
 install: build unfreeze
 	$(GEM) install ./pkg/dependabot-linguist-$$(grep lib/dependabot/linguist/version.rb -e "VERSION" | cut -d \" -f 2).gem --user-install
+
+.PHONY: push_rubygems push_github
 
 # Will be run with one "pkg/dependabot-linguist-*.gem" file
 # rubygems_api_key and the rubygems host are the default

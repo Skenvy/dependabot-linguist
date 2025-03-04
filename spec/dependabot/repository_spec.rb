@@ -38,7 +38,7 @@ RSpec.describe ::Dependabot::Linguist::Repository do
           # The name doesn't matter, but we don't want it to be open to cloning an
           # existing public repo that happens to collide with a silly name, if it
           # falls back on trying to clone because the above initialisation broke.
-          @uut = Dependabot::Linguist::Repository.new("./smoke-test/#{file_fetcher}/#{test_config["ecosystem_subdirectory"]}", "Skenvy/dependabot-linguits")
+          @uut = Dependabot::Linguist::Repository.new("./smoke-test/#{file_fetcher}/#{test_config["ecosystem_subdirectory"]}", "Skenvy/dependabot-linguits", verbose: false)
         end
 
         # Don't bother testing linguist_languages, linguist_cache,
