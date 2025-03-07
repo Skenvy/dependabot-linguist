@@ -4,9 +4,9 @@
 # ruby binaries -- https://rvm.io/binaries/ ~= ubuntu 24 x86
 DEVELOPMENT_RUBY_VERSION=ruby-$$(cat ./.ruby-version)
 # https://rubygems.org/gems/bundler
-DEVELOPMENT_BUNDLER_VERSION=2.6.3
+DEVELOPMENT_BUNDLER_VERSION=2.6.5
 # https://rubygems.org/gems/rubygems-update
-DEVELOPMENT_GEMSYS_VERSION=3.5.23
+DEVELOPMENT_GEMSYS_VERSION=3.6.5
 
 # Instructions to load corepack in all subshells, required by the npm dependabot
 # Not part of my standard ruby project makefile, but required for this one lol.

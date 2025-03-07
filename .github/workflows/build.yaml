@@ -14,7 +14,7 @@ defaults:
     shell: bash
 env:
   # development_ruby_version: from <repo>/.ruby-version
-  development_rubygems_version: 3.5.23
+  development_rubygems_version: 3.6.5
   disable_rvm_proctoring: INSTALL_RUBY='' INSTALL_NODE='' _='' __=''
 jobs:
   test:
