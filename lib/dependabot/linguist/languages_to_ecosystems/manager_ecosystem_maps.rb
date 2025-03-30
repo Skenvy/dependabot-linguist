@@ -5,6 +5,8 @@
 
 # For the list of package managers and which ecosystems they map to, see
 # https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#package-ecosystem-
+# TODO: This project is still only using the package managers that existed in
+# version 0.217.0 -- it still needs to be updated to include those added since
 
 # For the file_fetchers' register function, whose keys we map to, see
 # https://github.com/dependabot/dependabot-core/blob/v0.303.0/common/lib/dependabot/file_fetchers.rb#L21-L24
