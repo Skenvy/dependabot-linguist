@@ -218,7 +218,7 @@ module Dependabot
             sources.each do |source|
               fetcher = file_fetcher_class.new(source: source, credentials: [], repo_contents_path: @repo_path, options: enable_options)
               begin
-                # https://github.com/dependabot/dependabot-core/blob/v0.299.0/common/lib/dependabot/file_fetchers/base.rb#L136-L148
+                # https://github.com/dependabot/dependabot-core/blob/v0.303.0/common/lib/dependabot/file_fetchers/base.rb#L136-L148
                 unless fetcher.files.map(&:name).empty?
                   @directories_per_ecosystem_validated_by_dependabot[package_ecosystem] |= [source.directory]
                   puts "-- Dependency files FOUND for package-ecosystem #{package_ecosystem} at #{source.directory}; #{fetcher.files.map(&:name)}" if @verbose
