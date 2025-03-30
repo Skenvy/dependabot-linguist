@@ -38,7 +38,7 @@ Gem::Specification.new do |spec|
   # We can't update from this json version without getting some weird
   # uninitialized constant Dependabot::FileFetchers::Base::OpenStruct
   # ~= https://github.com/ruby/json/compare/v2.7.1...v2.7.2 but idk
-  spec.add_dependency "json", "2.7.1"
+  spec.add_dependency "json", "2.10.2"
 
   spec.add_development_dependency "aruba", "~> 2.1"
   spec.add_development_dependency "rake", "~> 13.0"
