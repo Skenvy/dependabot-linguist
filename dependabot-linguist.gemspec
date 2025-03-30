@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   # required via https://rubygems.org/gems/dependabot-omnibus/versions/0.299.0
   # which will include all dependencies of omnibus (16 ecosystems and common).
   # https://github.com/dependabot/dependabot-core/blob/v0.299.0/omnibus/dependabot-omnibus.gemspec#L29-L50
-  spec.add_dependency "dependabot-omnibus", "0.299.1"
+  spec.add_dependency "dependabot-omnibus", "0.303.0"
   # We can't update from this json version without getting some weird
   # uninitialized constant Dependabot::FileFetchers::Base::OpenStruct
   # ~= https://github.com/ruby/json/compare/v2.7.1...v2.7.2 but idk

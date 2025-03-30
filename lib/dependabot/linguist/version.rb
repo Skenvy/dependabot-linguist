@@ -2,6 +2,6 @@
 
 module Dependabot
   module Linguist
-    VERSION = "0.217.0"
+    VERSION = "0.303.0"
   end
 end

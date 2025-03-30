@@ -2,7 +2,7 @@
 Use [linguist](https://github.com/github/linguist) to check the contents of a **local** repository, and then scan for [dependabot-core](https://github.com/dependabot/dependabot-core) ecosystems relevant to those languages! With the list of [ecosystems](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem) present in a repository, add a [dependabot.y[a]ml](https://docs.github.com/en/code-security/dependabot/dependabot-security-updates/configuring-dependabot-security-updates) ([configuration file](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file)).
 ## Getting Started
 ### [Linguist dependencies](https://github.com/github/linguist#dependencies);
-Before installing this gem, which will install the [github-linguist gem](https://rubygems.org/gems/github-linguist), linguists dependencies should be installed. A number of these are enabling [rugged](https://rubygems.org/gems/rugged), so they can't be "ignored" like [dependabot's setup](https://github.com/dependabot/dependabot-core#setup), which _can_ be ignored for the purpose of **this** gem, which only intends to use the [file fetchers](https://github.com/dependabot/dependabot-core/blob/v0.299.0/common/lib/dependabot/file_fetchers/README.md).
+Before installing this gem, which will install the [github-linguist gem](https://rubygems.org/gems/github-linguist), linguists dependencies should be installed. A number of these are enabling [rugged](https://rubygems.org/gems/rugged), so they can't be "ignored" like [dependabot's setup](https://github.com/dependabot/dependabot-core#setup), which _can_ be ignored for the purpose of **this** gem, which only intends to use the [file fetchers](https://github.com/dependabot/dependabot-core/blob/v0.303.0/common/lib/dependabot/file_fetchers/README.md).
 ```bash
 sudo apt-get install build-essential cmake pkg-config libicu-dev zlib1g-dev libcurl4-openssl-dev libssl-dev ruby-dev
 ```
@@ -28,12 +28,12 @@ bundle add dependabot-linguist
 ```
 Or add the following line to your `Gemfile` manually
 ```ruby
-gem "dependabot-linguist", ">= 0.217.0
+gem "dependabot-linguist", ">= 0.303.0
 ```
 [Add the GitHub hosted gem](https://github.com/Skenvy/dependabot-linguist/packages/1704407);
 ```ruby
 source "https://rubygems.pkg.github.com/skenvy" do
-  gem "dependabot-linguist", ">= 0.217.0"
+  gem "dependabot-linguist", ">= 0.303.0"
 end
 ```
 ### Setup external CLIs
@@ -109,8 +109,8 @@ You should also read the requirements for the gems this uses, see [Linguist depe
 [Dependabot dependencies](#dependabot-dependencies) are managed in this project via [`nvm`](https://github.com/nvm-sh/nvm), so `corepack` can be loaded into every subshell the `Makefile` spawns. If you don't want to install `nvm` but would rather manage your own `corepack` install, set `__=''` on each `make ...`.
 
 For the currently targetted version of `dependabot` that this is using, the existing reference versions of `corepack` are;
-* [bun/Dockerfile](https://github.com/dependabot/dependabot-core/blob/v0.299.0/bun/Dockerfile#L4)
-* [npm_and_yarn/Dockerfile](https://github.com/dependabot/dependabot-core/blob/v0.299.0/npm_and_yarn/Dockerfile#L4)
+* [bun/Dockerfile](https://github.com/dependabot/dependabot-core/blob/v0.303.0/bun/Dockerfile#L4)
+* [npm_and_yarn/Dockerfile](https://github.com/dependabot/dependabot-core/blob/v0.303.0/npm_and_yarn/Dockerfile#L4)
 
 Both currently (as of writing) set their `corepack` version to `0.31.0`. However, it's possible for the changes in versions in `corepack` to outstrip the rate of changes of this gem, so don't rely on _this_ to determine what the most suitable version of `corepack` is.
 
