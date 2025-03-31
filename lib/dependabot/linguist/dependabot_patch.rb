@@ -18,3 +18,4 @@
 require_relative "file_fetchers/bundler"
 require_relative "file_fetchers/go_modules"
 require_relative "file_fetchers/git_submodules"
+require_relative "native_helpers/nuget"
