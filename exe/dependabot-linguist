@@ -120,15 +120,6 @@ def dependabot_linguist(args)
     verbose: verbose
   )
 
-  # Before running anything on this new repo, we must ensure we proctor env vars
-  # that dependabot expects to exist that we can reasonably set within this.
-  begin
-    # https://github.com/dependabot/dependabot-core/blob/v0.303.0/nuget/lib/dependabot/nuget/native_helpers.rb#L292
-    if !ENV.include?("DEPENDABOT_REPO_CONTENTS_PATH")
-      ENV.store("DEPENDABOT_REPO_CONTENTS_PATH", repo_path)
-    end
-  end
-
   puts this_repo.directories_per_ecosystem_validated_by_dependabot.to_yaml if ecosystem_directories
 
   validator = ::Dependabot::Linguist::DependabotFileValidator.new(

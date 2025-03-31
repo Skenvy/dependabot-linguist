@@ -35,6 +35,8 @@ module Dependabot
         @ignore_linguist = ignore_linguist.clamp(0, 2)
         @verbose = verbose
         @linguist = ::Linguist::Repository.new(@repo, @repo.head.target_id)
+        # Configure and apply settings to the patches.
+        Dependabot::Linguist::DependabotPatch.apply_patch(repo_path)
       end
 
       # Wraps Linguist::Repository.new(~).languages
