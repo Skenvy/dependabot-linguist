@@ -137,15 +137,15 @@ updates:
   schedule:
     interval: weekly
 - package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: weekly
+- package-ecosystem: npm
   directory: "/smoke-test/npm"
   schedule:
     interval: weekly
 - package-ecosystem: npm
   directory: "/smoke-test/npm/removed"
-  schedule:
-    interval: weekly
-- package-ecosystem: nuget
-  directory: "/smoke-test/nuget"
   schedule:
     interval: weekly
 - package-ecosystem: pip
@@ -215,10 +215,9 @@ maven:
 mix:
 - "/smoke-test/mix"
 npm:
+- "/"
 - "/smoke-test/npm"
 - "/smoke-test/npm/removed"
-nuget:
-- "/smoke-test/nuget"
 pip:
 - "/smoke-test/pip/pip-compile"
 - "/smoke-test/pip/pip"

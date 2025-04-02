@@ -334,23 +334,6 @@ npm:
   directories_per_ecosystem_validated_by_dependabot:
   - "/"
   - "/removed"
-nuget:
-- ecosystem_subdirectory: "."
-  files_per_linguist_language:
-    XML:
-    - "project.csproj"
-  directories_per_linguist_language:
-    XML:
-    - "/"
-  directories_per_package_manager:
-    NuGet:
-    - "/"
-  directories_per_package_ecosystem:
-  - "/"
-  linguist_directories:
-  - "/"
-  directories_per_ecosystem_validated_by_dependabot:
-  - "/"
 pip:
 - ecosystem_subdirectory: "pip-compile"
   files_per_linguist_language:

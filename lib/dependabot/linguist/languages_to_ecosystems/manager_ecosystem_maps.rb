@@ -82,7 +82,7 @@ module Dependabot
       MAVEN = "maven"
       MIX = "mix"
       NPM = "npm"
-      NUGET = "nuget"
+      # NUGET = "nuget"
       PIP = "pip"
       PUB = "pub"
       TERRAFORM = "terraform"
@@ -120,7 +120,7 @@ module Dependabot
       # https://github.com/dependabot/dependabot-core/blob/v0.303.0/npm_and_yarn/lib/dependabot/npm_and_yarn/package_manager.rb#L18
       PackageEcosystems::NPM => "npm_and_yarn",
       # https://github.com/dependabot/dependabot-core/blob/v0.303.0/nuget/lib/dependabot/nuget/file_fetcher.rb#L46
-      PackageEcosystems::NUGET => "nuget",
+      # PackageEcosystems::NUGET => "nuget",
       # https://github.com/dependabot/dependabot-core/blob/v0.303.0/python/lib/dependabot/python/file_fetcher.rb#L463
       PackageEcosystems::PIP => "pip",
       # https://github.com/dependabot/dependabot-core/blob/v0.303.0/pub/lib/dependabot/pub/file_fetcher.rb#L58
@@ -144,7 +144,16 @@ module Dependabot
       PackageManagers::GRADLE => PackageEcosystems::GRADLE,
       PackageManagers::MAVEN => PackageEcosystems::MAVEN,
       PackageManagers::NPM => PackageEcosystems::NPM,
-      PackageManagers::NUGET => PackageEcosystems::NUGET,
+      # TODO: NuGets file fetcher utility within dependabot since this was last
+      # updated has been heavily geared, far more than any other file fetcher,
+      # to a state where it expects to be running within the service container
+      # e.g. the NuGet file fetcher requires several env vars with little to no
+      # explanation, it attempts to install .Net SDKs, and run pwsh scripts via
+      # calling out of the ruby program to a subshell. I've tried a few methods
+      # for circumventing it similar to the way I've patched the other fetchers
+      # in the past, but none of them worked, and I'm just updating the version
+      # here before archiving this repo because it's already served its purpose
+      # PackageManagers::NUGET => PackageEcosystems::NUGET,
       PackageManagers::PIP => PackageEcosystems::PIP,
       PackageManagers::PIPENV => PackageEcosystems::PIP,
       PackageManagers::PIP_COMPILE => PackageEcosystems::PIP,

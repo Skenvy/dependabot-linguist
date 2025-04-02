@@ -35,8 +35,6 @@ module Dependabot
         @ignore_linguist = ignore_linguist.clamp(0, 2)
         @verbose = verbose
         @linguist = ::Linguist::Repository.new(@repo, @repo.head.target_id)
-        # Configure and apply settings to the patches.
-        Dependabot::Linguist::DependabotPatch.apply_patch(repo_path)
       end
 
       # Wraps Linguist::Repository.new(~).languages
@@ -226,7 +224,7 @@ module Dependabot
                   puts "-- Dependency files FOUND for package-ecosystem #{package_ecosystem} at #{source.directory}; #{fetcher.files.map(&:name)}" if @verbose
                 end
               rescue Dependabot::SharedHelpers::HelperSubprocessFailed => e
-                puts "-- Caught a DependabotError, #{e.class}, for package-ecosystem #{package_ecosystem} at #{source.directory}: Context #{e.error_context} + Message :: #{e.message}" if @verbose
+                puts "-- Caught a DependabotError, #{e.class}, for package-ecosystem #{package_ecosystem} at #{source.directory}: Context #{e.error_context} + Message :: #{e.message}" if @verbose # rubocop:disable Layout/LineLength
               rescue Dependabot::DependabotError => e
                 # Most of these will be Dependabot::DependencyFileNotFound
                 # or Dependabot::PathDependenciesNotReachable
