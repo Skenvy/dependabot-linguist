@@ -3,8 +3,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <title>class Dependabot::Linguist::Repository - RDoc Documentation</title>
+
+  <meta name="keywords" content="ruby,class,Dependabot::Linguist::Repository">
+
+    <meta name="description" content="class Dependabot::Linguist::Repository: Repository, to discover &quot;linguist languages&quot; present in a repository, then maps them to Dependabot Ecosystems, finally verifying that those ecosystems">
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../../";
@@ -22,7 +27,12 @@
 
 
 <body id="top" role="document" class="class">
-<nav role="navigation">
+<div id="navigation-toggle" role="button" tabindex="0" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="navigation">
+  <span aria-hidden="true">&#9776;</span>
+</div>
+
+
+<nav id="navigation" role="navigation">
   <div id="project-navigation">
     <div id="home-section" role="region" title="Quick navigation" class="nav-section">
   <h2>
@@ -41,7 +51,7 @@
     <div id="search-field-wrapper">
       <input id="search-field" role="combobox" aria-label="Search"
              aria-autocomplete="list" aria-controls="search-results"
-             type="text" name="search" placeholder="Search" spellcheck="false"
+             type="text" name="search" placeholder="Search (/) for a class, method, ..." spellcheck="false"
              title="Type to search, Up and Down to navigate, Enter to load">
     </div>
 
@@ -54,47 +64,81 @@
   </div>
 
   
-
-  <div id="class-metadata">
-    
-    
-<div id="parent-class-section" class="nav-section">
-  <h3>Parent</h3>
-
-  <p class="link">Object
+  
+  <div id="parent-class-section" class="nav-section">
+  <h3>Ancestors</h3>
+  <ul><li>Object</li></ul>
 </div>
 
-    
-    
-    
-<!-- Method Quickref -->
-<div id="method-list-section" class="nav-section">
-  <h3>Methods</h3>
-
-  <ul class="link-list" role="directory">
-    <li ><a href="#method-c-new">::new</a>
-    <li ><a href="#method-i-all_directories">#all_directories</a>
-    <li ><a href="#method-i-all_ecosystem_classes">#all_ecosystem_classes</a>
-    <li ><a href="#method-i-all_sources">#all_sources</a>
-    <li ><a href="#method-i-directories_per_ecosystem_validated_by_dependabot">#directories_per_ecosystem_validated_by_dependabot</a>
-    <li ><a href="#method-i-directories_per_linguist_language">#directories_per_linguist_language</a>
-    <li ><a href="#method-i-directories_per_package_ecosystem">#directories_per_package_ecosystem</a>
-    <li ><a href="#method-i-directories_per_package_manager">#directories_per_package_manager</a>
-    <li ><a href="#method-i-file_fetcher_class_per_package_ecosystem">#file_fetcher_class_per_package_ecosystem</a>
-    <li ><a href="#method-i-files_per_linguist_language">#files_per_linguist_language</a>
-    <li ><a href="#method-i-linguist_cache">#linguist_cache</a>
-    <li ><a href="#method-i-linguist_directories">#linguist_directories</a>
-    <li ><a href="#method-i-linguist_languages">#linguist_languages</a>
-    <li ><a href="#method-i-linguist_sources">#linguist_sources</a>
-    <li ><a href="#method-i-put_discovery_info">#put_discovery_info</a>
-  </ul>
-</div>
-
+  
+  
+  
+  <div class="nav-section">
+    <h3>Class Methods</h3>
+    <ul class="link-list" role="directory">
+      <li ><a href="#method-c-new">new</a></li>
+    </ul>
   </div>
+
+
+
+  <div class="nav-section">
+    <h3>Instance Methods</h3>
+    <ul class="link-list" role="directory">
+      <li ><a href="#method-i-all_directories">all_directories</a></li>
+      <li ><a href="#method-i-all_ecosystem_classes">all_ecosystem_classes</a></li>
+      <li ><a href="#method-i-all_sources">all_sources</a></li>
+      <li ><a href="#method-i-directories_per_ecosystem_validated_by_dependabot">directories_per_ecosystem_validated_by_dependabot</a></li>
+      <li ><a href="#method-i-directories_per_linguist_language">directories_per_linguist_language</a></li>
+      <li ><a href="#method-i-directories_per_package_ecosystem">directories_per_package_ecosystem</a></li>
+      <li ><a href="#method-i-directories_per_package_manager">directories_per_package_manager</a></li>
+      <li ><a href="#method-i-file_fetcher_class_per_package_ecosystem">file_fetcher_class_per_package_ecosystem</a></li>
+      <li ><a href="#method-i-files_per_linguist_language">files_per_linguist_language</a></li>
+      <li ><a href="#method-i-linguist_cache">linguist_cache</a></li>
+      <li ><a href="#method-i-linguist_directories">linguist_directories</a></li>
+      <li ><a href="#method-i-linguist_languages">linguist_languages</a></li>
+      <li ><a href="#method-i-linguist_sources">linguist_sources</a></li>
+      <li ><a href="#method-i-put_discovery_info">put_discovery_info</a></li>
+    </ul>
+  </div>
+
+
+
+  <footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.13.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
 </nav>
 
 <main role="main" aria-labelledby="class-Dependabot::Linguist::Repository">
-  <h1 id="class-Dependabot::Linguist::Repository" class="class">
+  
+  
+    <ol role="navigation" aria-label="breadcrumb" class="breadcrumb">
+      
+      <li>
+        
+        <a href="../../Dependabot.html">Dependabot</a><span>::</span>
+        
+      </li>
+      
+      <li>
+        
+        <a href="../../Dependabot/Linguist.html">Linguist</a><span>::</span>
+        
+      </li>
+      
+      <li>
+        
+        <span>Repository</span>
+        
+      </li>
+      
+    </ol>
+  
+
+  <h1 id="class-Dependabot::Linguist::Repository" class="anchor-link class">
     class Dependabot::Linguist::Repository
   </h1>
 
@@ -104,31 +148,36 @@
 
   </section>
 
-  <section id="5Buntitled-5D" class="documentation-section">
+  <section id="5Buntitled-5D" class="documentation-section anchor-link">
 
 
 
 
 
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section anchor-link">
        <header>
          <h3>Public Class Methods</h3>
        </header>
 
-      <div id="method-c-new" class="method-detail ">
+      <div id="method-c-new" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">new</span><span
-              class="method-args">(repo_path, repo_name, ignore_linguist: 0, verbose: false)</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-c-new" title="Link to this method">
+                <span class="method-name">new</span>
+                <span class="method-args">(repo_path, repo_name, ignore_linguist: 0, verbose: false)</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 18</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">repo_path</span>, <span class="ruby-identifier">repo_name</span>, <span class="ruby-value">ignore_linguist:</span> <span class="ruby-value">0</span>, <span class="ruby-value">verbose:</span> <span class="ruby-keyword">false</span>)
   <span class="ruby-ivar">@repo_path</span> = <span class="ruby-identifier">repo_path</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">delete_suffix</span>(<span class="ruby-string">&quot;/&quot;</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">repo_path</span>.<span class="ruby-identifier">nil?</span>
   <span class="ruby-comment"># If repo_path is nil, say that the current workdir is the path.</span>
@@ -150,6 +199,7 @@
   <span class="ruby-ivar">@linguist</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Linguist</span><span class="ruby-operator">::</span><span class="ruby-constant">Repository</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@repo</span>, <span class="ruby-ivar">@repo</span>.<span class="ruby-identifier">head</span>.<span class="ruby-identifier">target_id</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
+          
         </div>
 
 
@@ -157,96 +207,119 @@
 
     </section>
 
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section anchor-link">
        <header>
          <h3>Public Instance Methods</h3>
        </header>
 
-      <div id="method-i-all_directories" class="method-detail ">
+      <div id="method-i-all_directories" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">all_directories</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-i-all_directories" title="Link to this method">
+                <span class="method-name">all_directories</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          <p>Get ALL directories for the repo path.</p>
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="all_directories-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 162</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 163</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">all_directories</span>
   <span class="ruby-comment"># /**/*/ rather than /**/ would remove the base path, but delete_prefix</span>
   <span class="ruby-comment"># will also remove it, so it needs to be specially added.</span>
   <span class="ruby-ivar">@all_directories</span> <span class="ruby-operator">||=</span> ([<span class="ruby-string">&quot;/&quot;</span>] <span class="ruby-operator">|</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-node">&quot;#{@repo_path}/**/*/&quot;</span>).<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">subpath</span><span class="ruby-operator">|</span> <span class="ruby-identifier">subpath</span>.<span class="ruby-identifier">delete_prefix</span>(<span class="ruby-ivar">@repo_path</span>).<span class="ruby-identifier">delete_suffix</span>(<span class="ruby-string">&quot;/&quot;</span>) })
 <span class="ruby-keyword">end</span></pre>
           </div>
+          <p>Get ALL directories for the repo path.</p>
         </div>
 
 
       </div>
 
-      <div id="method-i-all_ecosystem_classes" class="method-detail ">
+      <div id="method-i-all_ecosystem_classes" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">all_ecosystem_classes</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-i-all_ecosystem_classes" title="Link to this method">
+                <span class="method-name">all_ecosystem_classes</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="all_ecosystem_classes-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 185</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 186</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">all_ecosystem_classes</span>
   <span class="ruby-ivar">@all_ecosystem_classes</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">PACKAGE_ECOSYSTEM_TO_FILE_FETCHERS_REGISTRY_KEY</span>.<span class="ruby-identifier">transform_values</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">k</span>, <span class="ruby-constant">Dependabot</span><span class="ruby-operator">::</span><span class="ruby-constant">FileFetchers</span>.<span class="ruby-identifier">for_package_manager</span>(<span class="ruby-identifier">v</span>)] }
 <span class="ruby-keyword">end</span></pre>
           </div>
+          
         </div>
 
 
       </div>
 
-      <div id="method-i-all_sources" class="method-detail ">
+      <div id="method-i-all_sources" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">all_sources</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-i-all_sources" title="Link to this method">
+                <span class="method-name">all_sources</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          <p>Get ALL sources from ALL directories for the repo path.</p>
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="all_sources-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 169</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 170</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">all_sources</span>
   <span class="ruby-ivar">@all_sources</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">all_directories</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">directory</span><span class="ruby-operator">|</span> <span class="ruby-constant">Dependabot</span><span class="ruby-operator">::</span><span class="ruby-constant">Source</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">provider:</span> <span class="ruby-string">&quot;github&quot;</span>, <span class="ruby-value">repo:</span> <span class="ruby-ivar">@repo_name</span>, <span class="ruby-value">directory:</span> <span class="ruby-identifier">directory</span>) }
 <span class="ruby-keyword">end</span></pre>
           </div>
+          <p>Get ALL sources from ALL directories for the repo path.</p>
         </div>
 
 
       </div>
 
-      <div id="method-i-directories_per_ecosystem_validated_by_dependabot" class="method-detail ">
+      <div id="method-i-directories_per_ecosystem_validated_by_dependabot" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">directories_per_ecosystem_validated_by_dependabot</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-i-directories_per_ecosystem_validated_by_dependabot" title="Link to this method">
+                <span class="method-name">directories_per_ecosystem_validated_by_dependabot</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          <p><a href="Repository.html#method-i-directories_per_ecosystem_validated_by_dependabot"><code>directories_per_ecosystem_validated_by_dependabot</code></a> maps each identified present ecosystem to a list of the directories that linguist found files for, that were then validated by running the file_fetcher files on them.</p>
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="directories_per_ecosystem_validated_by_dependabot-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 192</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 193</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">directories_per_ecosystem_validated_by_dependabot</span>
   <span class="ruby-ivar">@directories_per_ecosystem_validated_by_dependabot</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">nil</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@directories_per_ecosystem_validated_by_dependabot</span>.<span class="ruby-identifier">nil?</span>
@@ -275,14 +348,17 @@
       <span class="ruby-identifier">sources</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">source</span><span class="ruby-operator">|</span>
         <span class="ruby-identifier">fetcher</span> = <span class="ruby-identifier">file_fetcher_class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">source:</span> <span class="ruby-identifier">source</span>, <span class="ruby-value">credentials:</span> [], <span class="ruby-value">repo_contents_path:</span> <span class="ruby-ivar">@repo_path</span>, <span class="ruby-value">options:</span> <span class="ruby-identifier">enable_options</span>)
         <span class="ruby-keyword">begin</span>
+          <span class="ruby-comment"># https://github.com/dependabot/dependabot-core/blob/v0.303.0/common/lib/dependabot/file_fetchers/base.rb#L136-L148</span>
           <span class="ruby-keyword">unless</span> <span class="ruby-identifier">fetcher</span>.<span class="ruby-identifier">files</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:name</span>).<span class="ruby-identifier">empty?</span>
             <span class="ruby-ivar">@directories_per_ecosystem_validated_by_dependabot</span>[<span class="ruby-identifier">package_ecosystem</span>] <span class="ruby-operator">|=</span> [<span class="ruby-identifier">source</span>.<span class="ruby-identifier">directory</span>]
             <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;-- Dependency files FOUND for package-ecosystem #{package_ecosystem} at #{source.directory}; #{fetcher.files.map(&amp;:name)}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
           <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Dependabot</span><span class="ruby-operator">::</span><span class="ruby-constant">SharedHelpers</span><span class="ruby-operator">::</span><span class="ruby-constant">HelperSubprocessFailed</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>
+          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;-- Caught a DependabotError, #{e.class}, for package-ecosystem #{package_ecosystem} at #{source.directory}: Context #{e.error_context} + Message :: #{e.message}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span> <span class="ruby-comment"># rubocop:disable Layout/LineLength</span>
         <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Dependabot</span><span class="ruby-operator">::</span><span class="ruby-constant">DependabotError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>
           <span class="ruby-comment"># Most of these will be Dependabot::DependencyFileNotFound</span>
           <span class="ruby-comment"># or Dependabot::PathDependenciesNotReachable</span>
-          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;-- Caught a DependabotError, #{e.class}, for package-ecosystem #{package_ecosystem} at #{source.directory}: #{e.message}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;-- Caught a DependabotError, #{e.class}, for package-ecosystem #{package_ecosystem} at #{source.directory}: Message :: #{e.message}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">end</span>
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
@@ -291,25 +367,31 @@
   <span class="ruby-ivar">@directories_per_ecosystem_validated_by_dependabot</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+          <p><a href="Repository.html#method-i-directories_per_ecosystem_validated_by_dependabot"><code>directories_per_ecosystem_validated_by_dependabot</code></a> maps each identified present ecosystem to a list of the directories that linguist found files for, that were then validated by running the file_fetcher files on them.</p>
         </div>
 
 
       </div>
 
-      <div id="method-i-directories_per_linguist_language" class="method-detail ">
+      <div id="method-i-directories_per_linguist_language" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">directories_per_linguist_language</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-i-directories_per_linguist_language" title="Link to this method">
+                <span class="method-name">directories_per_linguist_language</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          <p><a href="Repository.html#method-i-directories_per_linguist_language"><code>directories_per_linguist_language</code></a> inverts the <a href="Repository.html#method-i-linguist_cache"><code>linguist_cache</code></a> map to “&lt;Language&gt;” =&gt; [“&lt;folder_path&gt;”, …], a list of folders per language!</p>
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="directories_per_linguist_language-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 68</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 69</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">directories_per_linguist_language</span>
   <span class="ruby-ivar">@directories_per_linguist_language</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">linguist_cache</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">to_h</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">source_file_path</span><span class="ruby-operator">|</span>
     <span class="ruby-comment"># create the map &quot;&lt;file_path&gt;&quot; =&gt; &quot;&lt;folder_path&gt;&quot;</span>
@@ -324,25 +406,31 @@
   }
 <span class="ruby-keyword">end</span></pre>
           </div>
+          <p><a href="Repository.html#method-i-directories_per_linguist_language"><code>directories_per_linguist_language</code></a> inverts the <a href="Repository.html#method-i-linguist_cache"><code>linguist_cache</code></a> map to “&lt;Language&gt;” =&gt; [“&lt;folder_path&gt;”, …], a list of folders per language!</p>
         </div>
 
 
       </div>
 
-      <div id="method-i-directories_per_package_ecosystem" class="method-detail ">
+      <div id="method-i-directories_per_package_ecosystem" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">directories_per_package_ecosystem</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-i-directories_per_package_ecosystem" title="Link to this method">
+                <span class="method-name">directories_per_package_ecosystem</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          <p><a href="Repository.html#method-i-directories_per_package_ecosystem"><code>directories_per_package_ecosystem</code></a> squashes the map of <a href="Repository.html#method-i-directories_per_package_manager"><code>directories_per_package_manager</code></a> according to the map of managers to ecosystems, as some managers share a common ecosystem name.</p>
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="directories_per_package_ecosystem-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 121</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 122</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">directories_per_package_ecosystem</span>
   <span class="ruby-ivar">@directories_per_package_ecosystem</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">nil</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@directories_per_package_ecosystem</span>.<span class="ruby-identifier">nil?</span>
@@ -359,25 +447,31 @@
   <span class="ruby-ivar">@directories_per_package_ecosystem</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+          <p><a href="Repository.html#method-i-directories_per_package_ecosystem"><code>directories_per_package_ecosystem</code></a> squashes the map of <a href="Repository.html#method-i-directories_per_package_manager"><code>directories_per_package_manager</code></a> according to the map of managers to ecosystems, as some managers share a common ecosystem name.</p>
         </div>
 
 
       </div>
 
-      <div id="method-i-directories_per_package_manager" class="method-detail ">
+      <div id="method-i-directories_per_package_manager" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">directories_per_package_manager</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-i-directories_per_package_manager" title="Link to this method">
+                <span class="method-name">directories_per_package_manager</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          <p><a href="Repository.html#method-i-directories_per_package_manager"><code>directories_per_package_manager</code></a> splits and merges the results of <a href="Repository.html#method-i-directories_per_linguist_language"><code>directories_per_linguist_language</code></a>; split across each package manager that is relevant to the language, and then merges the list of file paths for that language into the list of file paths for each package manager!</p>
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="directories_per_package_manager-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 88</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 89</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">directories_per_package_manager</span>
   <span class="ruby-ivar">@directories_per_package_manager</span> <span class="ruby-operator">||=</span> {}.<span class="ruby-identifier">tap</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">this</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">directories_per_linguist_language</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">linguist_language</span>, <span class="ruby-identifier">source_directories</span><span class="ruby-operator">|</span>
@@ -408,25 +502,31 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+          <p><a href="Repository.html#method-i-directories_per_package_manager"><code>directories_per_package_manager</code></a> splits and merges the results of <a href="Repository.html#method-i-directories_per_linguist_language"><code>directories_per_linguist_language</code></a>; split across each package manager that is relevant to the language, and then merges the list of file paths for that language into the list of file paths for each package manager!</p>
         </div>
 
 
       </div>
 
-      <div id="method-i-file_fetcher_class_per_package_ecosystem" class="method-detail ">
+      <div id="method-i-file_fetcher_class_per_package_ecosystem" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">file_fetcher_class_per_package_ecosystem</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-i-file_fetcher_class_per_package_ecosystem" title="Link to this method">
+                <span class="method-name">file_fetcher_class_per_package_ecosystem</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          <p><a href="Repository.html#method-i-file_fetcher_class_per_package_ecosystem"><code>file_fetcher_class_per_package_ecosystem</code></a> maps ecosystem names to the class objects for each dependabot file fetcher class that’s relevant based on the list of ecosystems found by linguist languages.</p>
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="file_fetcher_class_per_package_ecosystem-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 140</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 141</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">file_fetcher_class_per_package_ecosystem</span>
   <span class="ruby-ivar">@file_fetcher_class_per_package_ecosystem</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">nil</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@file_fetcher_class_per_package_ecosystem</span>.<span class="ruby-identifier">nil?</span>
@@ -441,25 +541,31 @@
   <span class="ruby-ivar">@file_fetcher_class_per_package_ecosystem</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+          <p><a href="Repository.html#method-i-file_fetcher_class_per_package_ecosystem"><code>file_fetcher_class_per_package_ecosystem</code></a> maps ecosystem names to the class objects for each dependabot file fetcher class that’s relevant based on the list of ecosystems found by linguist languages.</p>
         </div>
 
 
       </div>
 
-      <div id="method-i-files_per_linguist_language" class="method-detail ">
+      <div id="method-i-files_per_linguist_language" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">files_per_linguist_language</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-i-files_per_linguist_language" title="Link to this method">
+                <span class="method-name">files_per_linguist_language</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          <p><a href="Repository.html#method-i-files_per_linguist_language"><code>files_per_linguist_language</code></a> inverts the <a href="Repository.html#method-i-linguist_cache"><code>linguist_cache</code></a> map to “&lt;Language&gt;” =&gt; [“&lt;file_path&gt;”, …], a list of files per language! Note that they are not cleaned in the same way the folder paths in each of the “directories per *” are prepended with a ‘/’.</p>
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="files_per_linguist_language-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 59</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">files_per_linguist_language</span>
   <span class="ruby-ivar">@files_per_linguist_language</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">linguist_cache</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">group_by</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">source_file_path</span><span class="ruby-operator">|</span>
     <span class="ruby-comment"># create the map &quot;&lt;Language&gt;&quot; =&gt; [&quot;&lt;file_path&gt;&quot;, ...]</span>
@@ -467,123 +573,154 @@
   }
 <span class="ruby-keyword">end</span></pre>
           </div>
+          <p><a href="Repository.html#method-i-files_per_linguist_language"><code>files_per_linguist_language</code></a> inverts the <a href="Repository.html#method-i-linguist_cache"><code>linguist_cache</code></a> map to “&lt;Language&gt;” =&gt; [“&lt;file_path&gt;”, …], a list of files per language! Note that they are not cleaned in the same way the folder paths in each of the “directories per *” are prepended with a ‘/’.</p>
         </div>
 
 
       </div>
 
-      <div id="method-i-linguist_cache" class="method-detail ">
+      <div id="method-i-linguist_cache" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">linguist_cache</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-i-linguist_cache" title="Link to this method">
+                <span class="method-name">linguist_cache</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          <p><a href="Repository.html#method-i-linguist_cache"><code>linguist_cache</code></a>, linguist.cache, is a map of “&lt;file_path&gt;” =&gt; [“&lt;Language&gt;”, &lt;loc&gt;] for any files found for any language looked for.</p>
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="linguist_cache-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 47</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 48</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">linguist_cache</span>
   <span class="ruby-ivar">@linguist_cache</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@linguist</span>.<span class="ruby-identifier">cache</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+          <p><a href="Repository.html#method-i-linguist_cache"><code>linguist_cache</code></a>, linguist.cache, is a map of “&lt;file_path&gt;” =&gt; [“&lt;Language&gt;”, &lt;loc&gt;] for any files found for any language looked for.</p>
         </div>
 
 
       </div>
 
-      <div id="method-i-linguist_directories" class="method-detail ">
+      <div id="method-i-linguist_directories" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">linguist_directories</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-i-linguist_directories" title="Link to this method">
+                <span class="method-name">linguist_directories</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          <p>Get the list of all directories identified by linguist, that had their language mapped to a relevant dependabot ecosystem.</p>
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="linguist_directories-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 175</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 176</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">linguist_directories</span>
   <span class="ruby-ivar">@linguist_directories</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">directories_per_package_ecosystem</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">uniq</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+          <p>Get the list of all directories identified by linguist, that had their language mapped to a relevant dependabot ecosystem.</p>
         </div>
 
 
       </div>
 
-      <div id="method-i-linguist_languages" class="method-detail ">
+      <div id="method-i-linguist_languages" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">linguist_languages</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-i-linguist_languages" title="Link to this method">
+                <span class="method-name">linguist_languages</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          <p>Wraps <a href="Repository.html#method-c-new"><code>Linguist::Repository.new</code></a>(~).languages</p>
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="linguist_languages-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 40</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 41</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">linguist_languages</span>
   <span class="ruby-ivar">@linguist_languages</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@linguist</span>.<span class="ruby-identifier">languages</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+          <p>Wraps <a href="Repository.html#method-c-new"><code>Linguist::Repository.new</code></a>(~).languages</p>
         </div>
 
 
       </div>
 
-      <div id="method-i-linguist_sources" class="method-detail ">
+      <div id="method-i-linguist_sources" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">linguist_sources</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-i-linguist_sources" title="Link to this method">
+                <span class="method-name">linguist_sources</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          <p>Get the list of all sources from all directories identified by linguist, that had their language mapped to a relevant dependabot ecosystem.</p>
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="linguist_sources-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 181</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 182</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">linguist_sources</span>
   <span class="ruby-ivar">@linguist_sources</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">linguist_directories</span>.<span class="ruby-identifier">to_h</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">directory</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">directory</span>, <span class="ruby-constant">Dependabot</span><span class="ruby-operator">::</span><span class="ruby-constant">Source</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">provider:</span> <span class="ruby-string">&quot;github&quot;</span>, <span class="ruby-value">repo:</span> <span class="ruby-ivar">@repo_name</span>, <span class="ruby-value">directory:</span> <span class="ruby-identifier">directory</span>)] }
 <span class="ruby-keyword">end</span></pre>
           </div>
+          <p>Get the list of all sources from all directories identified by linguist, that had their language mapped to a relevant dependabot ecosystem.</p>
         </div>
 
 
       </div>
 
-      <div id="method-i-put_discovery_info" class="method-detail ">
+      <div id="method-i-put_discovery_info" class="method-detail anchor-link ">
         <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">put_discovery_info</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
+            <div class="method-heading">
+              <a href="#method-i-put_discovery_info" title="Link to this method">
+                <span class="method-name">put_discovery_info</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
         </div>
 
-        <div class="method-description">
-          <p>Print out the lists of languages, managers, and ecosystems found here.</p>
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
 
+        <div class="method-description">
           <div class="method-source-code" id="put_discovery_info-source">
-            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 155</span>
+            <pre><span class="ruby-comment"># File lib/dependabot/linguist/repository.rb, line 156</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">put_discovery_info</span>
   <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;List of languages: #{directories_per_linguist_language.keys}&quot;</span>
   <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;List of package managers: #{directories_per_package_manager.keys}&quot;</span>
   <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;List of package ecosystems: #{directories_per_package_ecosystem.keys}&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+          <p>Print out the lists of languages, managers, and ecosystems found here.</p>
         </div>
 
 
@@ -593,11 +730,4 @@
 
   </section>
 </main>
-
-
-<footer id="validator-badges" role="contentinfo">
-  <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.5.0.
-  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
-</footer>
 
