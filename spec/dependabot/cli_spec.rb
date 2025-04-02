@@ -137,10 +137,6 @@ updates:
   schedule:
     interval: weekly
 - package-ecosystem: npm
-  directory: "/"
-  schedule:
-    interval: weekly
-- package-ecosystem: npm
   directory: "/smoke-test/npm"
   schedule:
     interval: weekly
@@ -215,7 +211,6 @@ maven:
 mix:
 - "/smoke-test/mix"
 npm:
-- "/"
 - "/smoke-test/npm"
 - "/smoke-test/npm/removed"
 pip:
@@ -234,6 +229,11 @@ RUNNING_IN_WSL = (begin
 rescue Errno::ENOENT
   ""
 end).include? "microsoft"
+
+# The introduction of corepack to support npm file fetcher results in this
+# failing on missing npm settings for "/" the root folder of the repo, if
+# a package json / lock exists after installing corepack. Just delete them,
+# the corepack install is managed by each make call.
 
 Aruba.configure do |config|
   config.exit_timeout = RUNNING_IN_WSL ? 40 : 10
