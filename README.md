@@ -1,3 +1,8 @@
+> [!CAUTION]
+> This is archived. If you want to keep it going, [feel free to](https://github.com/Skenvy/dependabot-linguist/blob/main/LICENSE), although not sure why you would lol.
+>
+> It was always an overkill approach, even before dependabot security alerts without a dependabot configuration became more prevalent. It served its purpose for me years ago, and I don't need it any more, and some of the file fetchers e.g. the NuGet one, have become too unweildy for this to patch to be used to just check if it can "fetch the files" it needs. So it's probably best to just archive it. It'd probably be best off convincing the people that maintain dependabot-core to implement the functionality in their services.
+
 # [dependabot-linguist](https://github.com/Skenvy/dependabot-linguist)
 Use [linguist](https://github.com/github/linguist) to check the contents of a **local** repository, and then scan for [dependabot-core](https://github.com/dependabot/dependabot-core) ecosystems relevant to those languages! With the list of [ecosystems](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem) present in a repository, add a [dependabot.y[a]ml](https://docs.github.com/en/code-security/dependabot/dependabot-security-updates/configuring-dependabot-security-updates) ([configuration file](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file)).
 ## Getting Started
