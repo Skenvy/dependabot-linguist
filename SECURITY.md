@@ -4,6 +4,7 @@ The `<major>.<minor>.*` versions of this are pinned to the **supported** `<major
 * Support version `0.212.0`, centric to [dependabot-common@0.212.0](https://rubygems.org/gems/dependabot-common/versions/0.212.0)
     * This is because this is the last version to support a Ruby version of `2.7.0`.
 * Support version `0.217.0`, centric to [dependabot-common@0.217.0](https://rubygems.org/gems/dependabot-common/versions/0.217.0)
+* Version `0.303.0` is a partial update to [dependabot-common@0.303.0](https://rubygems.org/gems/dependabot-common/versions/0.303.0)
 
 Bugs present in only the most recent pinned minor version may be patched and contribute to successive patch versions. If a bug exists in an older version and no longer exists in a newer version, it is suggested to update to the newer version. As the underlying package this wraps, dependabot[-omnibus], is a live service, it makes sense for this to only roll forward.
 ## Reporting a Vulnerability

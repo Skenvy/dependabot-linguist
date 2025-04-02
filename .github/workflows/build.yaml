@@ -13,9 +13,9 @@ defaults:
   run:
     shell: bash
 env:
-  development_ruby_version: 3.3.6
-  development_rubygems_version: 3.5.23
-  disable_rvm_proctoring: INSTALL_RUBY='' _=''
+  # development_ruby_version: from <repo>/.ruby-version
+  development_rubygems_version: 3.6.5
+  disable_rvm_proctoring: INSTALL_RUBY='' INSTALL_NODE='' _='' __=''
 jobs:
   test:
     name: 🔻 Test 🦂
@@ -67,8 +67,9 @@ jobs:
     - name: 🔻 Set up Ruby
       uses: ruby/setup-ruby@354a1ad156761f5ee2b7b13fa8e09943a5e8d252 # v1.229.0
       with:
-        ruby-version: ${{ env.development_ruby_version }}
+        # ruby-version: from <repo>/.ruby-version
         rubygems: ${{ env.development_rubygems_version }}
+        bundler: 'Gemfile.lock'
         bundler-cache: true
     - name: 🧱 Install build dependencies
       run: make setup ${{ env.disable_rvm_proctoring }}
@@ -114,8 +115,9 @@ jobs:
     - name: 🔻 Set up Ruby
       uses: ruby/setup-ruby@354a1ad156761f5ee2b7b13fa8e09943a5e8d252 # v1.229.0
       with:
-        ruby-version: ${{ env.development_ruby_version }}
+        # ruby-version: from <repo>/.ruby-version
         rubygems: ${{ env.development_rubygems_version }}
+        bundler: 'Gemfile.lock'
         bundler-cache: true
     - name: 🔑 Keycutter for GitHub
       run: make setup_github ${{ env.disable_rvm_proctoring }}
@@ -154,8 +156,9 @@ jobs:
     - name: 🔻 Set up Ruby
       uses: ruby/setup-ruby@354a1ad156761f5ee2b7b13fa8e09943a5e8d252 # v1.229.0
       with:
-        ruby-version: ${{ env.development_ruby_version }}
+        # ruby-version: from <repo>/.ruby-version
         rubygems: ${{ env.development_rubygems_version }}
+        bundler: 'Gemfile.lock'
         bundler-cache: true
     - name: 🧱 Install build dependencies
       run: make setup ${{ env.disable_rvm_proctoring }}

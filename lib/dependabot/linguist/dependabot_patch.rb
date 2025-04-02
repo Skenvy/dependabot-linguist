@@ -12,8 +12,8 @@
 #########################################################################################
 
 # Direct the requiring of the files that patch dependabot via this.
-# The current target version for dependabot is 0.217.0
-# https://github.com/dependabot/dependabot-core/tree/v0.217.0
+# The current target version for dependabot is 0.303.0
+# https://github.com/dependabot/dependabot-core/tree/v0.303.0
 
 require_relative "file_fetchers/bundler"
 require_relative "file_fetchers/go_modules"

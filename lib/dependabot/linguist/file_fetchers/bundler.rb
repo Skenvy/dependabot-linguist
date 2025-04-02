@@ -37,7 +37,7 @@ require "dependabot/bundler"
 module Dependabot
   module Bundler
     class FileFetcher
-      # https://github.com/dependabot/dependabot-core/blob/v0.217.0/bundler/lib/dependabot/bundler/file_fetcher.rb#L148-L150
+      # https://github.com/dependabot/dependabot-core/blob/v0.303.0/bundler/lib/dependabot/bundler/file_fetcher.rb#L162-L165
       def path_gemspec_paths
         swap_bundle_gemfile = ENV.fetch("BUNDLE_GEMFILE", nil)
         repo_dir_gemfile = "#{@repo_contents_path}#{source.directory}/Gemfile"
